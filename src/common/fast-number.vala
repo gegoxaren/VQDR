@@ -8,14 +8,14 @@ namespace VQDR.Common {
    * Math done on these numbers are done using standard integer operations, and
    * not floating point math.
    */
-  class FastNumber {
+  public class FastNumber {
     public const long MUL_FACTOR = 1000;
     
-    public long raw_number { public get; private set; }
+    public long raw_number { public get ; private set;}
     
     public long number {
-      get {return raw_number / MUL_FACTOR;}
-      set {raw_number = number * MUL_FACTOR;}
+      public get {return (this.raw_number / MUL_FACTOR);}
+      public set {this.raw_number = (MUL_FACTOR * value);}
     }
     
     public FastNumber (long val = 0) {
@@ -60,8 +60,10 @@ namespace VQDR.Common {
         return new FastNumber.copy (this);
       }
       
-      var v = new FastNumber (this.raw_number + other.raw_number);
+      Utils.print_ln ("this: %li, othre: %li", this.raw_number, other.raw_number);
       
+      var v = new FastNumber ();
+      v.raw_number = (this.raw_number + other.raw_number);
       return v;
     }
     
@@ -70,17 +72,19 @@ namespace VQDR.Common {
         return new FastNumber.copy (this);
       }
       
-      var v = new FastNumber (this.raw_number - other.raw_number);
-      
+      var v = new FastNumber ();
+      v.raw_number = (this.raw_number - other.raw_number);
       return v;
     }
     
     public FastNumber multiply (FastNumber? other) {
-      if (other == null || other.raw_value == 0) {
+      if (other == null || other.raw_number == 0) {
         return new FastNumber ();
       }
       
-      return new FastNumber ((this.raw_number * other.raw_number) / MUL_FACTOR);
+      var ret = new FastNumber ();
+      ret.raw_number = ((this.raw_number * other.raw_number) / MUL_FACTOR);
+      return ret;
     }
     
     public FastNumber divide (FastNumber? other) throws MathError {
@@ -88,8 +92,9 @@ namespace VQDR.Common {
         throw new MathError.DIVIDE_BY_ZERO
                                       ("FantNumber - trying to divide by zero");
       }
-      
-      return new FastNumber ((this.raw_number * MUL_FACTOR) / other.raw_number);
+      var ret = new FastNumber ();
+      ret.raw_number = ((this.raw_number * MUL_FACTOR) / other.raw_number);
+      return ret;
     }
     
   }
