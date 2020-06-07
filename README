@@ -1,0 +1,31 @@
+                       Vala/Very Quick Dice Roller
+
+To see README about libvqdr, please see ./src/libvqdr/README
+
+VQDR will consist of two parts, the backend library, and the front end.
+
+The backend libray, libvqdr, provides the logic for parsing dice expression
+strings, and doing the calculations needed to perform the dice rolls.
+
+The frontend has yet to be written.
+
+BUILDING
+------------
+$ mkdir build
+$ cd build
+$ meson ..
+$ ninja
+------------
+
+DICE EXPRESSION SYNTAX
+
+A dice expression is simple.
+
+---- Basics ----
+[n]d[m], [n]t[m] - [n] dices with [m] sides.
+[e1] [op] [e2]   - Use operator [op] on expressions [e1] and [e2]
+
+[func]([e...])   - Use function [func] on the expression(s) [e...]
+----------------
+
+
