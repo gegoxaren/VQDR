@@ -22,5 +22,6 @@ test2 = executable ('test2',
                      test2_files,
                      dependencies: [test_dependencies, libvqdr_dep])
 
+test ('Test Suit 2', test2)
 
 subdir_done ()
