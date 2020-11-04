@@ -49,7 +49,11 @@ namespace VQDR.Common.Utils {
       
       switch (prop_val.type ()) {
         case (GLib.Type.STRING):
-          str_builder.append (prop_val.get_string ());
+          if (prop_val.get_string () == null) {
+            str_builder.append ("(null string)");
+          } else {
+            str_builder.append (prop_val.get_string ());
+          }
         break;
         case (GLib.Type.INT):
           str_builder.append (prop_val.get_int ().to_string ());
