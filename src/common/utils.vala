@@ -1,3 +1,9 @@
+/*
+ * The contects of this file is in the Public Domain.
+ *
+ * Created by Gustav Hartivgsson.
+ */
+
 namespace VQDR.Common.Utils {
   public int str_cmp (string a, string b) {
     return a.collate (b);
@@ -40,7 +46,7 @@ namespace VQDR.Common.Utils {
       obj.get_property (prop_name, ref prop_val);
       
       
-      str_builder.append ("\t (")
+      str_builder.append ("\t(")
                  .append (prop_val.type_name ())
                  .append (") ")
                  .append (prop_name)
@@ -49,10 +55,10 @@ namespace VQDR.Common.Utils {
       
       switch (prop_val.type ()) {
         case (GLib.Type.STRING):
-          if (prop_val.get_string () == null) {
-            str_builder.append ("(null string)");
+          if (prop_val.dup_string () == null) {
+            str_builder.append ("(null)");
           } else {
-            str_builder.append (prop_val.get_string ());
+            str_builder.append (prop_val.dup_string ());
           }
         break;
         case (GLib.Type.INT):
@@ -75,7 +81,7 @@ namespace VQDR.Common.Utils {
           str_builder.append (prop_val.get_enum ().to_string ());
         break;
         case (GLib.Type.FLAGS):
-          // Probobly needs better handling, but this will do.
+          // TODO: Probobly needs better handling, but this will do.
           str_builder.append (prop_val.get_flags ().to_string ());
         break;
         case (GLib.Type.FLOAT):
@@ -88,17 +94,31 @@ namespace VQDR.Common.Utils {
           str_builder.append (prop_val.get_long ().to_string ());
         break;
         case (GLib.Type.OBJECT):
-          str_builder.append_printf ("%llX", (((long)((pointer)prop_val.get_object ()))));
+          str_builder.append_printf ("%llX", (((long)((pointer)prop_val.dup_object ()))));
         break;
+        /* /!\ NOTE: Invalid case /!\
+         * A ParamSpec can't "contain" a ParamSpec.
         case (GLib.Type.PARAM):
           var spsc = prop_val.get_param ();
-          str_builder.append ("name: ")
-                     .append (spsc.name)
-                     .append (" type: ")
-                     .append (spsc.value_type.name ());
+          if (spsc == null) {
+            str_builder.append ("(null)");
+          } else {
+            str_builder.append ("name: ")
+                       .append (spsc.name)
+                       .append (" type: ")
+                       .append (spsc.value_type.name ());
+          }
         break;
+        */
         case (GLib.Type.POINTER):
-          str_builder.append_printf ("%llX", (((long)prop_val.get_pointer ())));
+          str_builder.append ("(")
+                     .append_printf ("%llX", (((long)prop_val.get_pointer ())));
+          str_builder.append (")");
+        break;
+        case (GLib.Type.BOXED):
+          str_builder.append ("(")
+                     .append_printf ("%llX", (((long)prop_val.get_boxed ())));
+          str_builder.append (")");
         break;
         case (GLib.Type.UCHAR):
           var v = prop_val.get_uchar ();
@@ -117,14 +137,29 @@ namespace VQDR.Common.Utils {
           str_builder.append (prop_val.get_ulong ().to_string ());
         break;
         case (GLib.Type.VARIANT):
-          GLib.Variant v = prop_val.get_variant ();
-          str_builder.append ("(\n")
-                     .append (v.print (true))
-                     .append ("\n)");
+          GLib.Variant v = prop_val.dup_variant ();
+          GLib.Variant? tv = null;
+          unowned string ts1 = v.get_type_string ();
+          str_builder.append ("")
+                     .append (ts1)
+                     .append ("\n\t(\n");
+          GLib.VariantIter iter = v.iterator ();
+          tv = iter.next_value ();
+          while (tv != null) {
+            unowned string ts2 = tv.get_type_string ();
+            string tp = tv.print (true);
+            str_builder.append ("\t\t((")
+                       .append (ts2)
+                       .append ("): ")
+                       .append (tp)
+                       .append (")\n");
+            tv = iter.next_value ();
+          }
+          str_builder.append ("\t)");
+          
         break;
       }
       str_builder.append ("\n");
-      
     }
     
     return str_builder.str;

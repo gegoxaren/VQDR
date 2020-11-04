@@ -14,6 +14,7 @@ test1 = executable ('test1',
 test ('Test Suite 1', test1)
 
 test2_files = files ([
+  'common_test_runner.vala',
   'gobject_to_string.vala',
 ])
 
