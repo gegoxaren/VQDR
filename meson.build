@@ -15,7 +15,7 @@ glib_dep = dependency ('glib-2.0', required : true)
 gobject_dep = dependency ('gobject-2.0', required : true)
 gee_dep = dependency ('gee-0.8', required : true)
 gio_dep = dependency ('gio-2.0', required : true)
-gmodule_dep = dependency ('gmodule-2.0', requred : true)
+gmodule_dep = dependency ('gmodule-2.0', required : true)
 m_dep = cc.find_library('m', required : true)
 dependencies += [glib_dep, gobject_dep, gee_dep, gio_dep, gmodule_dep, m_dep]
 
