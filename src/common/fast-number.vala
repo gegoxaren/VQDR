@@ -8,11 +8,10 @@ namespace VQDR.Common {
    * Math done on these numbers are done using standard integer operations, and
    * not floating point math.
    */
-  
   public class FastNumber {
     public const long MUL_FACTOR = 1000;
     
-    private long real_raw_number;
+    protected long real_raw_number;
     public long raw_number { public get {return real_raw_number;}
                              private set {real_raw_number = value;}
     }
@@ -32,11 +31,11 @@ namespace VQDR.Common {
     }
     
     public FastNumber.copy (FastNumber other) {
-      this.raw_number = other.raw_number;
+      this.real_raw_number = other.real_raw_number;
     }
     
     public FastNumber.from_string (string str) {
-      this.raw_number = parse_raw_number (str);
+      this.real_raw_number = parse_raw_number (str);
     }
     
     private static long parse_raw_number (string str) {
@@ -70,7 +69,7 @@ namespace VQDR.Common {
       }
       
       var v = new FastNumber ();
-      v.raw_number = (this.raw_number + other.raw_number);
+      v.raw_number = (this.real_raw_number + other.real_raw_number);
       return v;
     }
     
@@ -80,27 +79,27 @@ namespace VQDR.Common {
       }
       
       var v = new FastNumber ();
-      v.raw_number = (this.raw_number - other.raw_number);
+      v.raw_number = (this.real_raw_number - other.real_raw_number);
       return v;
     }
     
     public FastNumber multiply (FastNumber? other) {
-      if (other == null || other.raw_number == 0) {
+      if (other == null || other.real_raw_number == 0) {
         return new FastNumber ();
       }
       
       var ret = new FastNumber ();
-      ret.raw_number = ((this.raw_number * other.raw_number) / MUL_FACTOR);
+      ret.raw_number = ((this.real_raw_number * other.real_raw_number) / MUL_FACTOR);
       return ret;
     }
     
     public FastNumber divide (FastNumber? other) throws MathError {
-      if (other.raw_number == 0) {
+      if (other.real_raw_number == 0) {
         throw new MathError.DIVIDE_BY_ZERO
                                       ("FantNumber - trying to divide by zero");
       }
       var ret = new FastNumber ();
-      ret.raw_number = ((this.raw_number * MUL_FACTOR) / other.raw_number);
+      ret.raw_number = ((this.real_raw_number * MUL_FACTOR) / other.real_raw_number);
       return ret;
     }
     
@@ -115,7 +114,5 @@ namespace VQDR.Common {
       masked = masked * MUL_FACTOR;
       number = masked + decimal;
     }
-    
   }
-  
 }
