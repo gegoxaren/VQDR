@@ -38,30 +38,13 @@ namespace VQDR.Common {
       this.real_raw_number = parse_raw_number (str);
     }
     
-    private static long parse_raw_number (string str) {
-      long ret_val = 0;
-      int i_of_dot = str.index_of_char ('.');
-      if (i_of_dot >= 0) {
-      
-        // Get the decimal number from the string, if such a thing exists.
-        if ((str.length - 1 > i_of_dot)) {
-          ret_val = long.parse ((str + "000").substring (i_of_dot + 1));
-        }
-        
-        // Normalise the digits.
-        while (ret_val > MUL_FACTOR) {
-          ret_val = ret_val / 10;
-        }
-        
-        // Add intiger number
-        ret_val = ret_val + (long.parse ("0" + str.substring (0, i_of_dot))
-                            * MUL_FACTOR);
-      } else {
-        ret_val = long.parse (str) * MUL_FACTOR;
-      }
-      return ret_val;
+    public FastNumber.raw (long raw) {
+      this.real_raw_number = raw;
     }
     
+    public void set_from_string (string str) {
+      this.real_raw_number = parse_raw_number (str);
+    }
     
     public FastNumber add (FastNumber? other) {
       if (other == null) {
@@ -103,6 +86,43 @@ namespace VQDR.Common {
       return ret;
     }
     
+    public long compare (FastNumber other) {
+      return this.real_raw_number - other.real_raw_number;
+    }
+    
+    public string to_string (bool decimal = false) {
+      if (decimal) {
+        return number.to_string () + "." + decimal.to_string ();
+      } else {
+        return number.to_string ();
+      }
+    } 
+    
+    // ***** STATIC FUNCTIONS ****//
+    public static long parse_raw_number (string str) {
+      long ret_val = 0;
+      int i_of_dot = str.index_of_char ('.');
+      if (i_of_dot >= 0) {
+      
+        // Get the decimal number from the string, if such a thing exists.
+        if ((str.length - 1 > i_of_dot)) {
+          ret_val = long.parse ((str + "000").substring (i_of_dot + 1));
+        }
+        
+        // Normalise the digits.
+        while (ret_val > MUL_FACTOR) {
+          ret_val = ret_val / 10;
+        }
+        
+        // Add intiger number
+        ret_val = ret_val + (long.parse ("0" + str.substring (0, i_of_dot))
+                            * MUL_FACTOR);
+      } else {
+        ret_val = long.parse (str) * MUL_FACTOR;
+      }
+      return ret_val;
+    }
+    
     private static long mask_and_normalize_decimal (long number) {
       var mask = number / MUL_FACTOR;
       mask = mask * MUL_FACTOR;
@@ -114,5 +134,6 @@ namespace VQDR.Common {
       masked = masked * MUL_FACTOR;
       number = masked + decimal;
     }
+    
   }
 }

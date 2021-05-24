@@ -62,7 +62,7 @@ test_value_token () {
       
       root_t.evaluate (ctx);
       
-      long out_val = root_t.result_value;
+      long out_val = root_t.result_value.number;
       
       if (out_val != in_val) {
         GLib.Test.message ("The values do not match");
@@ -87,7 +87,7 @@ test_value_token () {
         
         root_t.evaluate (ctx);
         
-        long out_val = root_t.result_value;
+        long out_val = root_t.result_value.number;
         
         if (out_val != i) {
           GLib.Test.message ("The values do not match");

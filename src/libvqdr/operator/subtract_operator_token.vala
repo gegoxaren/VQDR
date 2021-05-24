@@ -42,9 +42,9 @@ namespace VQDR.Expression {
         l_child.evaluate (instance);
         r_child.evaluate (instance);
         
-        result_value = l_child.result_value - l_child.result_value;
-        result_max_value = l_child.result_max_value - l_child.result_max_value;
-        result_min_value = l_child.result_min_value - l_child.result_min_value;
+        result_value = l_child.result_value.subtract (l_child.result_value);
+        result_max_value = l_child.result_max_value.subtract (l_child.result_max_value);
+        result_min_value = l_child.result_min_value.subtract (l_child.result_min_value);
         reorder_max_min_values ();
         result_string = l_child.result_string + "-" + l_child.result_string;
       }

@@ -20,7 +20,7 @@ namespace VQDR.Expression {
       
       // Division by zero is not somthing we want to do.
       // Black holes are bad.
-      if (l_child.result_value == 0) {
+      if (l_child.result_value.number == 0) {
         throw new VQDR.Common.MathError.DIVIDE_BY_ZERO
         ("(DivideOperationToken) The left value is less than zero.");
       }
@@ -49,8 +49,8 @@ namespace VQDR.Expression {
       
       sb.append (")");
       
-      result_value = l_child.result_value * l_child.result_value;
-      result_max_value = l_child.result_max_value * l_child.result_max_value;
+      result_value = l_child.result_value.divide (l_child.result_value);
+      result_max_value = l_child.result_max_value.divide (l_child.result_max_value);
       reorder_max_min_values ();
       result_string = sb.str;
        
