@@ -217,7 +217,7 @@ namespace VQDR.Expression {
      */
     protected abstract void evaluate_self (Context instance) throws GLib.Error;
     
-    /* *********** IGNORE THE MESS I HAVE CREATED FRO MY SELF *************** */
+    /* *********** IGNORE THE MESS I HAVE CREATED FOR MY SELF *************** */
     /** IGNORE ME */
     protected void __set_priority (int prio) {
       real_priority = prio;

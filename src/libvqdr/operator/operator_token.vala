@@ -12,17 +12,17 @@ namespace VQDR.Expression {
                                              throws ParseError {
       switch (name) {
         case "+": 
-          //return new AddOperatiorToken (position);
-        break;
+          return new AddOperatorToken (position);
+          //break;
         case "-":
-          //return new SubtractOperatiorTokes (position);
-        break;
+          return new SubtractOperatorToken (position);
+          //break;
         case "*":
-          //return new MultiplyOperatiorToken (position);
-        break;
+          return new MultiplyOperatorToken (position);
+          //break;
         case "/":
-          //return new DevideOperatiorToken (position);
-        break;
+          return new DivideOperatorToken (position);
+          //break;
         case "d":
         case "w":
         case "t":

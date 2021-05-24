@@ -33,8 +33,8 @@ namespace VQDR.Expression {
       int retval = modifier;
       for (size_t i = 1; i <= times; i++) {
         int r = (VQDR.Common.Random.get_static_int () % faces).abs ();
-        retval += r;
         
+        retval += r;
       }
       
       return retval;

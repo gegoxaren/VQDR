@@ -8,14 +8,23 @@ namespace VQDR.Common {
    * Math done on these numbers are done using standard integer operations, and
    * not floating point math.
    */
+  
   public class FastNumber {
     public const long MUL_FACTOR = 1000;
     
-    public long raw_number { public get ; private set;}
+    private long real_raw_number;
+    public long raw_number { public get {return real_raw_number;}
+                             private set {real_raw_number = value;}
+    }
     
     public long number {
-      public get {return (this.raw_number / MUL_FACTOR);}
-      public set {this.raw_number = (MUL_FACTOR * value);}
+      public get {return (this.real_raw_number / MUL_FACTOR);}
+      public set {this.real_raw_number = (MUL_FACTOR * value);}
+    }
+    
+    public long decimal {
+      public get {return mask_and_normalize_decimal (real_raw_number);}
+      public set {set_decimal_of_number (ref real_raw_number, value);}
     }
     
     public FastNumber (long val = 0) {
@@ -60,8 +69,6 @@ namespace VQDR.Common {
         return new FastNumber.copy (this);
       }
       
-      Utils.print_ln ("this: %li, othre: %li", this.raw_number, other.raw_number);
-      
       var v = new FastNumber ();
       v.raw_number = (this.raw_number + other.raw_number);
       return v;
@@ -95,6 +102,18 @@ namespace VQDR.Common {
       var ret = new FastNumber ();
       ret.raw_number = ((this.raw_number * MUL_FACTOR) / other.raw_number);
       return ret;
+    }
+    
+    private static long mask_and_normalize_decimal (long number) {
+      var mask = number / MUL_FACTOR;
+      mask = mask * MUL_FACTOR;
+      return number - mask;
+    }
+    
+    private static void set_decimal_of_number (ref long number, long decimal) {
+      var masked = number / MUL_FACTOR;
+      masked = masked * MUL_FACTOR;
+      number = masked + decimal;
     }
     
   }

@@ -7,7 +7,7 @@ namespace VQDR.Expression {
       priority = PRIO_MULTIPLICATIVE;
     }
     
-    protected DivideOperatorToken (int position) {
+    public DivideOperatorToken (int position) {
       base (position);
     }
     
