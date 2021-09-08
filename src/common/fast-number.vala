@@ -24,7 +24,6 @@ namespace VQDR.Common {
     }
     
     public FastNumber (long val = 0) {
-      print ("Hello: %li, %li \n", raw_number, number);
       this.number = val;
     }
     
