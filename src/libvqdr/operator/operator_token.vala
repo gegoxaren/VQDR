@@ -13,16 +13,12 @@ namespace VQDR.Expression {
       switch (name) {
         case "+": 
           return new AddOperatorToken (position);
-          //break;
         case "-":
           return new SubtractOperatorToken (position);
-          //break;
         case "*":
           return new MultiplyOperatorToken (position);
-          //break;
         case "/":
           return new DivideOperatorToken (position);
-          //break;
         case "d":
         case "w":
         case "t":

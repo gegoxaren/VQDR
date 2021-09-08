@@ -4,7 +4,7 @@ namespace VQDR.Expression {
     
     construct {
       mandatory_num_child = 2;
-      priority = PRIO_MULTIPLICATIVE;
+      priority = Prio.MULTIPLICATIVE;
     }
     
     public MultiplyOperatorToken (int position) {

@@ -71,7 +71,7 @@ namespace VQDR.Expression {
     
     construct {
       _allowed_functions = new Gee.HashMap<string, Type?> ();
-      this.priority = PRIO_FUNCTION;
+      this.priority = Prio.FUNCTION;
     }
     
     /**

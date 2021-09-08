@@ -6,9 +6,9 @@ namespace VQDR.Expression {
     
     public override int priority {protected get {
       if (is_unary) {
-        return PRIO_UNARY;
+        return Prio.UNARY;
       } else {
-        return PRIO_ADDICTIVE;
+        return Prio.ADDICTIVE;
       }
     } protected construct set {}} // set_priority will have no effect.
     

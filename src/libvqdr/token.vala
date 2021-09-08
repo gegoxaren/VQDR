@@ -26,34 +26,67 @@ namespace VQDR.Expression {
     public const int MAX_TOKEN_ITERATIONS = 500;
     /** Max iteration number for the expression */
     public const int MAX_TOTAL_ITERATIONS = 5000;
-
-    /* ************************************* */
-    /* Operator precedence and associativity */
-    /* ************************************* */
-    /** Priority for assignment "=" operator */
-    public const int PRIO_ASSIGNMENT = 0;
-    /** Priority for conditional OR "||" operator */
-    public const int PRIO_CONDITIONAL_OR = 2;
-    /** Priority for conditional AND "&&" operator */
-    public const int PRIO_CONDITIONAL_AND = 3;
-    /** Priority for equality "==" and "!=" operators */
-    public const int PRIO_EQUALITY = 4;
-    /** Priority for comparison ">", "<", ">=", etc operators */
-    public const int PRIO_COMPARISON = 5;
-    /** Priority for addictive "+" and "-" operators */
-    public const int PRIO_ADDICTIVE = 6;
-    /** Priority for multiplicative "*" and "/" operators */
-    public const int PRIO_MULTIPLICATIVE = 7;
-    /** Priority for unary "+" and "-" and "!" operators */
-    public const int PRIO_UNARY = 8;
-    /** Priority for label assignment ":" operator */
-    public const int PRIO_LABEL = 9;
-    /** Priority for dice "d" operator */
-    public const int PRIO_DICE = 10;
-    /** Priority for functions */
-    public const int PRIO_FUNCTION = 11;
-    /** Priority for values */
-    public const int PRIO_VALUE = 12;
+    
+    
+    /** Operator precedence and associativity
+     * 
+     * higher number is higher priority, and is to be done befroe those
+     * with lower number.
+     */
+    enum Prio {
+      /** Priority for assignment "=" operator */
+      ASSIGNMENT = 0,
+      /** Priority for conditional OR "||" operator */
+      CONDITIONAL_OR,
+      /** Priority for conditional AND "&&" operator */
+      CONDITIONAL_AND,
+      /** Priority for equality "==" and "!=" operators */
+      EQUALITY,
+      /** Priority for comparison ">", "<", ">=", etc operators */
+      COMPARISON,
+      /** Priority for addictive "+" and "-" operators */
+      ADDICTIVE,
+      /** Priority for multiplicative "*" and "/" operators */
+      MULTIPLICATIVE,
+      /** Priority for unary "+" and "-" and "!" operators */
+      UNARY,
+      /** Priority for label assignment ":" operator */
+      LABEL,
+      /** Priority for dice "d" operator */
+      DICE,
+      /** Priority for functions */
+      FUNCTION,
+      /** Priority for values */
+      VALUE;
+      
+      /** get the name of the priority */
+      string to_string () {
+        switch (this) {
+          case ASSIGNMENT:
+            return "prio: assigment";
+          case CONDITIONAL_OR:
+            return "prio: conditonal or";
+          case CONDITIONAL_AND:
+            return "prio: conidonal and";
+          case EQUALITY:
+            return "prio: equality";
+          case MULTIPLICATIVE:
+            return "prio: multiplicative";
+          case UNARY:
+            return "prio: unary";
+          case LABEL:
+            return "prio: label";
+          case DICE:
+            return "prio: dice";
+          case FUNCTION:
+            return "prio: function";
+          case VALUE:
+            return "prio: value";
+          default:
+            assert_not_reached ();
+        }
+      }
+    }
 
     /** Generation to use to get the root with {@link #getParent} */
     protected const int ROOT_GENERATION = int.MAX;

@@ -5,7 +5,7 @@ namespace VQDR.Expression {
     protected string name;
     
     construct {
-      this.priority = PRIO_VALUE;
+      this.priority = Prio.VALUE;
     }
     
     public VariableValueToken (string name, int position) {

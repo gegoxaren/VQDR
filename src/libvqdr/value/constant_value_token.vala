@@ -2,7 +2,7 @@ namespace VQDR.Expression {
   public class ConstantValueToken : ValueToken {
     
     construct {
-      this.priority = PRIO_VALUE;
+      this.priority = Prio.VALUE;
     }
     
     public ConstantValueToken (long value, int position) {
