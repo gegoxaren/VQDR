@@ -84,6 +84,7 @@ namespace VQDR.Common {
       return ret;
     }
     
+    [CCode (cname = "vqdr_common_fast_number_compare")]
     public long compare (FastNumber other) {
       return this.raw_number - other.raw_number;
     }
@@ -132,6 +133,9 @@ namespace VQDR.Common {
       masked = masked * MUL_FACTOR;
       number = masked + decimal;
     }
+    
+    [CCode (cname = "vqdr_common_fast_number_compare")]
+    public static extern long static_compare (FastNumber a, FastNumber b);
     
   }
 }
