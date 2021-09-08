@@ -4,12 +4,6 @@ using GLib;
 namespace VQDR.Expression {
   
   public abstract class Token : GLib.Object {
-    /** Precision used to perform evaluation */
-    public const int VALUES_PRECISION_DIGITS = 3;
-    /** Precision factor used to convert raw values to actual ones */
-    public const int VALUES_PRECISION_FACTOR = 1000;
-    //public static int VALUES_PRECISION_FACTOR = (int)Math.pow(10, VALUES_PRECISION_DIGITS);
-    
     /** Precision used to output values */
     public const int VALUES_OUTPUT_PRECISION_DIGITS = 2;
     /** Precision factor used to evaluate output */
@@ -141,17 +135,22 @@ namespace VQDR.Expression {
     /** all children of this token */
     private (unowned Token?)[] children;
     
-    
-    public long result_value {public get; protected set; default = 0;}
-    public long result_max_value {public get; protected set; default = 0;}
-    public long result_min_value {public get; protected set; default = 0;}
+    /*
+     * These values should have a protected setter, but I could not get it to
+     * work. So we will have to live with this.
+     */
+    public FastNumber result_value;
+    public FastNumber result_max_value;
+    public FastNumber result_min_value;
     public string result_string {public get; protected set; default = "";}
     
     construct {
-      // Valgrind says there is a memory leak here... But it's actually
-      // GObject's constructor that is leaking.
       children = new Token[max_num_child];
       next_child = 0;
+      
+      result_value = FastNumber ();
+      result_max_value = FastNumber ();
+      result_min_value = FastNumber ();
     }
     
     
@@ -165,8 +164,8 @@ namespace VQDR.Expression {
      * result_min_value is the smaller.
      */
     protected void reorder_max_min_values () {
-      if (result_max_value < result_min_value) {
-        long tmp = result_max_value;
+      if (result_max_value.compare (result_min_value) <= 0) {
+        FastNumber tmp = result_max_value;
         result_max_value = result_min_value;
         result_min_value = tmp;
       }

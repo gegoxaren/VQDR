@@ -62,10 +62,11 @@ test_value_token () {
       
       root_t.evaluate (ctx);
       
-      long out_val = root_t.result_value;
+      long out_val = root_t.result_value.number;
       
       if (out_val != in_val) {
-        GLib.Test.message ("The values do not match");
+        GLib.Test.message ("The values do not match: Expected %li, got %li.\n",
+                           in_val, out_val);
         GLib.Test.fail ();
       }
     } catch (GLib.Error? e) {
@@ -87,7 +88,7 @@ test_value_token () {
         
         root_t.evaluate (ctx);
         
-        long out_val = root_t.result_value;
+        long out_val = root_t.result_value.number;
         
         if (out_val != i) {
           GLib.Test.message ("The values do not match");

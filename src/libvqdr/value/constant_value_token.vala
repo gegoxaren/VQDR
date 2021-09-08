@@ -5,11 +5,13 @@ namespace VQDR.Expression {
       this.priority = Prio.VALUE;
     }
     
-    public ConstantValueToken (long value, int position) {
+    public ConstantValueToken (long val, int position) {
       base (position);
-      this.result_value = value;
-      this.result_min_value = value;
-      this.result_max_value = value;
+      this.result_value.number = val;
+      this.result_min_value.number = val;
+      this.result_max_value.number = val;
+      
+      print("bobobo: %li \n", result_value.number);
     }
     
     protected override void evaluate_self (Context instance) throws GLib.Error {

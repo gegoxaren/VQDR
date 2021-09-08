@@ -8,37 +8,97 @@ namespace VQDR.Common {
    * Math done on these numbers are done using standard integer operations, and
    * not floating point math.
    */
-  public class FastNumber {
+  public struct FastNumber {
     public const long MUL_FACTOR = 1000;
     
-    protected long real_raw_number;
-    public long raw_number { public get {return real_raw_number;}
-                             private set {real_raw_number = value;}
-    }
+    public long raw_number;
     
     public long number {
-      public get {return (this.real_raw_number / MUL_FACTOR);}
-      public set {this.real_raw_number = (MUL_FACTOR * value);}
+      public get {return (this.raw_number / MUL_FACTOR);}
+      public set {this.raw_number = (MUL_FACTOR * value);}
     }
     
     public long decimal {
-      public get {return mask_and_normalize_decimal (real_raw_number);}
-      public set {set_decimal_of_number (ref real_raw_number, value);}
+      public get {return mask_and_normalize_decimal (raw_number);}
+      public set {set_decimal_of_number (ref raw_number, value);}
     }
     
     public FastNumber (long val = 0) {
+      print ("Hello: %li, %li \n", raw_number, number);
       this.number = val;
     }
     
     public FastNumber.copy (FastNumber other) {
-      this.real_raw_number = other.real_raw_number;
+      this.raw_number = other.raw_number;
     }
     
     public FastNumber.from_string (string str) {
-      this.real_raw_number = parse_raw_number (str);
+      this.raw_number = parse_raw_number (str);
     }
     
-    private static long parse_raw_number (string str) {
+    public FastNumber.raw (long raw) {
+      this.raw_number = raw;
+    }
+    
+    public void set_from_string (string str) {
+      this.raw_number = parse_raw_number (str);
+    }
+    
+    public FastNumber add (FastNumber? other) {
+      if (other == null) {
+        return  FastNumber.copy (this);
+      }
+      
+      var v =  FastNumber ();
+      v.raw_number = (this.raw_number + other.raw_number);
+      return v;
+    }
+    
+    public FastNumber subtract (FastNumber? other) {
+      if (other == null) {
+        return  FastNumber.copy (this);
+      }
+      
+      var v =  FastNumber ();
+      v.raw_number = (this.raw_number - other.raw_number);
+      return v;
+    }
+    
+    public FastNumber multiply (FastNumber? other) {
+      if (other == null || other.raw_number == 0) {
+        return  FastNumber ();
+      }
+      
+      var ret =  FastNumber ();
+      ret.raw_number = ((this.raw_number * other.raw_number) / MUL_FACTOR);
+      return ret;
+    }
+    
+    public FastNumber divide (FastNumber other) throws MathError {
+      if (other.raw_number == 0) {
+        throw new MathError.DIVIDE_BY_ZERO
+                                      ("FantNumber - trying to divide by zero");
+      }
+      var ret =  FastNumber ();
+      ret.raw_number = ((this.raw_number * MUL_FACTOR) / other.raw_number);
+      return ret;
+    }
+    
+    [CCode (cname = "vqdr_common_fast_number_compare")]
+    public long compare (FastNumber other) {
+      return this.raw_number - other.raw_number;
+    }
+    
+    public string to_string (bool decimal = false) {
+      if (decimal) {
+        return number.to_string () + "." + decimal.to_string ();
+      } else {
+        return number.to_string ();
+      }
+    } 
+    
+    // ***** STATIC FUNCTIONS ****//
+    public static long parse_raw_number (string str) {
       long ret_val = 0;
       int i_of_dot = str.index_of_char ('.');
       if (i_of_dot >= 0) {
@@ -62,57 +122,20 @@ namespace VQDR.Common {
       return ret_val;
     }
     
-    
-    public FastNumber add (FastNumber? other) {
-      if (other == null) {
-        return new FastNumber.copy (this);
-      }
-      
-      var v = new FastNumber ();
-      v.raw_number = (this.real_raw_number + other.real_raw_number);
-      return v;
-    }
-    
-    public FastNumber subtract (FastNumber? other) {
-      if (other == null) {
-        return new FastNumber.copy (this);
-      }
-      
-      var v = new FastNumber ();
-      v.raw_number = (this.real_raw_number - other.real_raw_number);
-      return v;
-    }
-    
-    public FastNumber multiply (FastNumber? other) {
-      if (other == null || other.real_raw_number == 0) {
-        return new FastNumber ();
-      }
-      
-      var ret = new FastNumber ();
-      ret.raw_number = ((this.real_raw_number * other.real_raw_number) / MUL_FACTOR);
-      return ret;
-    }
-    
-    public FastNumber divide (FastNumber? other) throws MathError {
-      if (other.real_raw_number == 0) {
-        throw new MathError.DIVIDE_BY_ZERO
-                                      ("FantNumber - trying to divide by zero");
-      }
-      var ret = new FastNumber ();
-      ret.raw_number = ((this.real_raw_number * MUL_FACTOR) / other.real_raw_number);
-      return ret;
-    }
-    
-    private static long mask_and_normalize_decimal (long number) {
+    public static long mask_and_normalize_decimal (long number) {
       var mask = number / MUL_FACTOR;
       mask = mask * MUL_FACTOR;
       return number - mask;
     }
     
-    private static void set_decimal_of_number (ref long number, long decimal) {
+    public static void set_decimal_of_number (ref long number, long decimal) {
       var masked = number / MUL_FACTOR;
       masked = masked * MUL_FACTOR;
       number = masked + decimal;
     }
+    
+    [CCode (cname = "vqdr_common_fast_number_compare")]
+    public static extern long static_compare (FastNumber a, FastNumber b);
+    
   }
 }

@@ -1,6 +1,7 @@
 using Gee;
 
 using VQDR.Expression;
+using VQDR.Common;
 
 namespace VQDR.Expression {
   public abstract class FunctionToken : Token {
@@ -122,7 +123,7 @@ namespace VQDR.Expression {
       return ret_val;
     }
     
-    protected long get_optional_child_raw_result (Context instance,
+    protected FastNumber get_optional_child_raw_result (Context instance,
                                                   int index,
                                                   long default_result)
                                                   throws GLib.Error {
@@ -132,7 +133,7 @@ namespace VQDR.Expression {
          tmp_roll.evaluate (instance);
          return tmp_roll.result_value;
      } else {
-       return default_result;
+       return FastNumber.raw (default_result);
      }
     }
     

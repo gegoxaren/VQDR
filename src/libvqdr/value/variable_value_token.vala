@@ -19,10 +19,12 @@ namespace VQDR.Expression {
       // was null, this is not needed here as we don't allow null for that
       // value.
       try {
-        result_value = instance.get_value (name);
+        result_value.number = instance.get_value (name);
         result_string = "[" + name + ":" + result_value.to_string () + "]";
       } catch (GLib.Error? e) {
-        result_value = result_min_value = result_max_value = 0;
+        result_value.number = 0;
+        result_min_value.number = 0;
+        result_max_value.number = 0;
         result_string = "";
         
         GLib.Error? err = null;
