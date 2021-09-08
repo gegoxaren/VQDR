@@ -133,7 +133,7 @@ namespace VQDR.Expression {
          tmp_roll.evaluate (instance);
          return tmp_roll.result_value;
      } else {
-       return new FastNumber.raw (default_result);
+       return FastNumber.raw (default_result);
      }
     }
     

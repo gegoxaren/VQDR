@@ -102,19 +102,22 @@ namespace VQDR.Expression {
     /** all children of this token */
     private (unowned Token?)[] children;
     
-    
-    public FastNumber result_value {public get; protected set;}
-    public FastNumber result_max_value {public get; protected set;}
-    public FastNumber result_min_value {public get; protected set;}
+    /*
+     * These values should have a protected setter, but I could not get it to
+     * work. So we will have to live with this.
+     */
+    public FastNumber result_value;
+    public FastNumber result_max_value;
+    public FastNumber result_min_value;
     public string result_string {public get; protected set; default = "";}
     
     construct {
       children = new Token[max_num_child];
       next_child = 0;
       
-      result_value = new FastNumber ();
-      result_max_value = new FastNumber ();
-      result_min_value = new FastNumber ();
+      result_value = FastNumber ();
+      result_max_value = FastNumber ();
+      result_min_value = FastNumber ();
     }
     
     
