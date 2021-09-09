@@ -56,9 +56,9 @@ namespace VQDR.Expression {
           case ASSIGNMENT:
             return "prio: assigment";
           case CONDITIONAL_OR:
-            return "prio: conditonal or";
+            return "prio: conditonal OR";
           case CONDITIONAL_AND:
-            return "prio: conidonal and";
+            return "prio: conidonal AND";
           case EQUALITY:
             return "prio: equality";
           case MULTIPLICATIVE:
