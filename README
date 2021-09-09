@@ -9,6 +9,9 @@ strings, and doing the calculations needed to perform the dice rolls.
 
 The frontend has yet to be written.
 
+For up-to-date code, go to:
+https://launchpad.net/vqdr
+
 BUILDING
 ------------
 $ mkdir build

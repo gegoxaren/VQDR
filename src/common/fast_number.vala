@@ -1,3 +1,9 @@
+/*
+ * The contects of this file is in the Public Domain.
+ *
+ * Created by Gustav Hartivgsson.
+ */
+
 namespace VQDR.Common {
   
   /**
@@ -10,6 +16,11 @@ namespace VQDR.Common {
    */
   public struct FastNumber {
     public const long MUL_FACTOR = 1000;
+    
+    /** Precision used to output values */
+    public const int PRECISION_DIGITS = 2;
+    /** Precision factor used to evaluate output */
+    public const int PRECISION_FACTOR = 100;
     
     public long raw_number;
     
@@ -88,6 +99,29 @@ namespace VQDR.Common {
       return this.raw_number - other.raw_number;
     }
     
+    public FastNumber round_up () {
+      FastNumber ret;
+      long decimal = raw_number % PRECISION_FACTOR;
+      if (decimal > 0) {
+        ret = FastNumber.raw (raw_number + PRECISION_FACTOR - decimal);
+      } else {
+        ret = FastNumber.raw (raw_number - decimal);
+      }
+      return ret;
+    }
+    
+    public FastNumber round_down () {
+      FastNumber ret;
+      long decimal = raw_number % PRECISION_FACTOR;
+      if (decimal < 0) {
+        // Is this ever reached?
+        ret = FastNumber.raw (raw_number - PRECISION_FACTOR - decimal);
+      } else {
+        ret = FastNumber.raw (raw_number - decimal);
+      }
+      return ret;
+    }
+    
     public string to_string (bool decimal = false) {
       if (decimal) {
         return number.to_string () + "." + decimal.to_string ();
@@ -135,6 +169,5 @@ namespace VQDR.Common {
     
     [CCode (cname = "vqdr_common_fast_number_compare")]
     public static extern long static_compare (FastNumber a, FastNumber b);
-    
   }
 }

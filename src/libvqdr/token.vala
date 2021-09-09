@@ -4,10 +4,7 @@ using GLib;
 namespace VQDR.Expression {
   
   public abstract class Token : GLib.Object {
-    /** Precision used to output values */
-    public const int VALUES_OUTPUT_PRECISION_DIGITS = 2;
-    /** Precision factor used to evaluate output */
-    public const int VALUES_OUTPUT_PRECISION_FACTOR = 100;
+    
     //public static int VALUES_OUTPUT_PRECISION_FACTOR = (int)Math.pow(10, VALUES_OUTPUT_PRECISION_DIGITS);
     
     

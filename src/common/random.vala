@@ -1,3 +1,8 @@
+/*
+ * The contects of this file is in the Public Domain.
+ *
+ * Created by Gustav Hartivgsson.
+ */
 namespace VQDR.Common {
   
   /**

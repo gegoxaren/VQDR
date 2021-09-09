@@ -11,9 +11,9 @@ libvqdr_source_files += files([
   'variable.vala',
   
   'function/function_token.vala',
+  'function/round_up_function_token.vala',
   
   'operator/add_operator_token.vala',
-  'operator/dice_operator_token.vala',
   'operator/divide_operator_token.vala',
   'operator/multiply_operator_token.vala',
   'operator/operator_token.vala',
