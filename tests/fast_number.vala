@@ -89,6 +89,12 @@ void fast_number_test () {
     
   });
   
+  /*
+   * All decimls that have to be converted to float must be
+   * divicable by two. in these tests, or we will get rounding errors
+   * when converting to floating point preresentation.
+   */
+  
   Test.add_func ("/Common/Utils/FastNumber/parse_raw_number2", () => {
     var expected_val = 1128;
     var val = FastNumber.parse_raw_number ("1.128");
@@ -131,8 +137,8 @@ void fast_number_test () {
   });
   
   Test.add_func ("/Common/Utils/parse_raw_number4", () => {
-    var expected_val = 10128;
-    var val = FastNumber.parse_raw_number ("10.128");
+    var expected_val = 20128;
+    var val = FastNumber.parse_raw_number ("20.128");
     
     if (expected_val != val) {
       Test.fail ();
@@ -142,8 +148,41 @@ void fast_number_test () {
   });
   
   Test.add_func ("/Common/Utils/parse_raw_number5", () => {
-    var expected_val = 20128;
-    var val = FastNumber.parse_raw_number ("20.128");
+    var expected_val = 222128;
+    var val = FastNumber.parse_raw_number ("222.128");
+    
+    if (expected_val != val) {
+      Test.fail ();
+      Test.message ("The raw numbers does not match the exected value.");
+      Test.message (@"expected $expected_val, got $val");
+    }
+  });
+  
+  Test.add_func ("/Common/Utils/parse_raw_number6", () => {
+    var expected_val = 128;
+    var val = FastNumber.parse_raw_number ("0.128");
+    
+    if (expected_val != val) {
+      Test.fail ();
+      Test.message ("The raw numbers does not match the exected value.");
+      Test.message (@"expected $expected_val, got $val");
+    }
+  });
+  
+  Test.add_func ("/Common/Utils/parse_raw_number7", () => {
+    var expected_val = 160;
+    var val = FastNumber.parse_raw_number ("0.16");
+    
+    if (expected_val != val) {
+      Test.fail ();
+      Test.message ("The raw numbers does not match the exected value.");
+      Test.message (@"expected $expected_val, got $val");
+    }
+  });
+  
+  Test.add_func ("/Common/Utils/parse_raw_number8", () => {
+    var expected_val = 800;
+    var val = FastNumber.parse_raw_number ("0.8");
     
     if (expected_val != val) {
       Test.fail ();
