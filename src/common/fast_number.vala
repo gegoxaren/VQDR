@@ -34,6 +34,11 @@ namespace VQDR.Common {
       public set {set_decimal_of_number (ref raw_number, value);}
     }
     
+    public double float_rep {
+      public get {return double.parse (@"$number" + "." + @"$decimal");}
+      public set {this.raw_number = parse_raw_number (value.to_string ());}
+    }
+    
     public FastNumber (long val = 0) {
       this.number = val;
     }
@@ -44,6 +49,10 @@ namespace VQDR.Common {
     
     public FastNumber.from_string (string str) {
       this.raw_number = parse_raw_number (str);
+    }
+    
+    public FastNumber.from_float (double f) {
+      this.raw_number = parse_raw_number (f.to_string ());
     }
     
     public FastNumber.raw (long raw) {
@@ -135,20 +144,29 @@ namespace VQDR.Common {
       long ret_val = 0;
       int i_of_dot = str.index_of_char ('.');
       if (i_of_dot >= 0) {
-      
+        
+        debug (@"str: $str");
+        
         // Get the decimal number from the string, if such a thing exists.
         if ((str.length - 1 > i_of_dot)) {
           ret_val = long.parse ((str + "000").substring (i_of_dot + 1));
         }
+        
+        debug (@"i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
         
         // Normalise the digits.
         while (ret_val > MUL_FACTOR) {
           ret_val = ret_val / 10;
         }
         
+        debug (@"ret_val (normalised): $ret_val\n");
+        
         // Add intiger number
-        ret_val = ret_val + (long.parse ("0" + str.substring (0, i_of_dot))
+        ret_val = ret_val + (long.parse (str.substring (0, i_of_dot))
                             * MUL_FACTOR);
+        
+        debug (@"ret_val (finised): $ret_val\n");
+        
       } else {
         ret_val = long.parse (str) * MUL_FACTOR;
       }
