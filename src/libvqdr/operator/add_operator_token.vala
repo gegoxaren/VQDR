@@ -27,12 +27,12 @@ namespace VQDR.Expression {
        
       if (r_child == null || l_child == null) {
           var sb = new StringBuilder ("(AddOperationToken) Missing ");
-          if (r_child == null) {
-            sb.append ("left "); 
-          } else if (l_child == null) {
-            sb.append ("right ");
-          } else {
+          if (l_child == null && r_child == null) {
             sb.append ("both left and right ");
+          } else if (r_child == null) {
+            sb.append ("left "); 
+          } else {
+            sb.append ("right ");
           }
           sb.append ("tokens.");
           throw new VQDR.Common.EvaluationError.MISSING_TOKEN (sb.str);

@@ -3,6 +3,7 @@ namespace VQDR.Expression {
     
     construct {
       this.priority = Prio.VALUE;
+      mandatory_num_child = 0;
     }
     
     public ConstantValueToken (long val, int position) {

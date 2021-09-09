@@ -7,12 +7,13 @@ namespace VQDR.Expression {
   }
   
   public static ValueToken? init_constant_token (long val, int position) {
-    //return new ConstantValueToken (val, position);
-    return null;
+    return new ConstantValueToken (val, position);
   }
   
   public static ValueToken? init_variable_token (string name, int position) {
-    //return new VariableValueToken (name, position);
-    return null;
+    return new VariableValueToken (name, position);
   }
+  
+  
+  
 }

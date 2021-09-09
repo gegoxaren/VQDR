@@ -24,7 +24,7 @@ namespace VQDR.Expression {
      * higher number is higher priority, and is to be done befroe those
      * with lower number.
      */
-    enum Prio {
+    public enum Prio {
       /** Priority for assignment "=" operator */
       ASSIGNMENT = 0,
       /** Priority for conditional OR "||" operator */
@@ -51,7 +51,7 @@ namespace VQDR.Expression {
       VALUE;
       
       /** get the name of the priority */
-      string to_string () {
+      public string to_string () {
         switch (this) {
           case ASSIGNMENT:
             return "prio: assigment";
@@ -85,21 +85,14 @@ namespace VQDR.Expression {
     /* ********************************************************************** */
     
     /**
-     * tells weather the token is right associative or not.
+     * tells whether the token is right associative or not.
      */
     public bool right_assosiative {get;set; default = false;}
-    
-    
-    private int real_priority;
     
     /** The parent token of this token*/
     protected unowned Token? parent {protected get; protected set;}
     
-    public virtual int priority {public get {
-      return __get_priority ();
-     } protected construct set {
-       __set_priority (value);
-     }}
+    public virtual int priority {public get; protected construct set;}
     
     /** Starting position of the token in the expression */
     protected int position;
@@ -155,9 +148,10 @@ namespace VQDR.Expression {
       this.position = position;
     }
     
+    
     /**
      * Reorders result_min_value and result_max_value, so that
-     * result_max varue is the bigger of the two, and
+     * result_max_value is the bigger of the two, and
      * result_min_value is the smaller.
      */
     protected void reorder_max_min_values () {
@@ -245,19 +239,6 @@ namespace VQDR.Expression {
      * @throws GLib.Error an error if an error has orrured in the evaluation of the tree.
      */
     protected abstract void evaluate_self (Context instance) throws GLib.Error;
-    
-    /* *********** IGNORE THE MESS I HAVE CREATED FOR MY SELF *************** */
-    /** IGNORE ME */
-    protected void __set_priority (int prio) {
-      real_priority = prio;
-    }
-    
-    /** IGNORE ME*/
-    protected int __get_priority () {
-      return real_priority;
-    }
-    
-    
   }
   
 }

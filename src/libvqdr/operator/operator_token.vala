@@ -22,8 +22,9 @@ namespace VQDR.Expression {
         case "d":
         case "w":
         case "t":
-          //return new DiceOperatiorToken (position);
-        break;
+          return new DiceOperatorToken (position);
+        default:
+          break;
       }
       throw new ParseError.INVALID_CHARECTER (@"Could not decode $name," +
                                               " it is not a valid operation.");

@@ -96,8 +96,10 @@ namespace VQDR.Common.Utils {
         case (GLib.Type.OBJECT):
           str_builder.append_printf ("%llX", (((long)((pointer)prop_val.dup_object ()))));
         break;
+        #if 0
         /* /!\ NOTE: Invalid case /!\
          * A ParamSpec can't "contain" a ParamSpec.
+         */
         case (GLib.Type.PARAM):
           var spsc = prop_val.get_param ();
           if (spsc == null) {
@@ -109,7 +111,7 @@ namespace VQDR.Common.Utils {
                        .append (spsc.value_type.name ());
           }
         break;
-        */
+        #endif
         case (GLib.Type.POINTER):
           str_builder.append ("(")
                      .append_printf ("%llX", (((long)prop_val.get_pointer ())));
