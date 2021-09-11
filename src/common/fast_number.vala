@@ -97,13 +97,13 @@ namespace VQDR.Common {
     /**
      * Add this to an other FastNumber.
      * 
-     * {{
+     * {{{
      * var f1 = FastNumber (3);   // f1 = 3
      * var f2 = FastNumber (2);   // f2 = 2
      * var f3 = f1.add (f2);      // f3 = 5
-     * }}
+     * }}}
      * 
-     * @returns a newly inisialised FastNumber.
+     * @return a newly inisialised FastNumber.
      * 
      * @param other The other fast number you want to add to this value.
      */
@@ -120,13 +120,13 @@ namespace VQDR.Common {
     /**
      * Add this to an other FastNumber.
      * 
-     * {{
+     * {{{
      * var f1 = FastNumber (3);   // f1 = 3
      * var f2 = FastNumber (2);   // f2 = 2
      * var f3 = f1.subtract (f2); // f3 = 1
-     * }}
+     * }}}
      * 
-     * @returns a newly inisialised FastNumber.
+     * @return a newly inisialised FastNumber.
      * 
      * @param other  The other fast number you want to subtract from this 
      *               FastNumber.
@@ -144,13 +144,13 @@ namespace VQDR.Common {
     /**
      * Multiply this FastNumber with another FastNumber.
      * 
-     * {{
+     * {{{
      * var f1 = FastNumber (3);   // f1 = 3
      * var f2 = FastNumber (2);   // f2 = 2
      * var f3 = f1.multiply (f2); // f3 = 6
-     * }}
+     * }}}
      * 
-     * @returns a newly initalised FastNumber.
+     * @return a newly initalised FastNumber.
      * 
      * @param other The value you want to multiply this value with.
      */
@@ -167,13 +167,13 @@ namespace VQDR.Common {
     /**
      * Divide this FastNumbers with anothr FastNumber.
      * 
-     * {{
+     * {{{
      * var f1 = FastNumber (6);   // f1 = 6
      * var f2 = FastNumber (2);   // f2 = 2
      * var f3 = f1.multiply (f2); // f3 = 3
-     * }}
+     * }}}
      * 
-     * @returns a newly initalised FastNumber.
+     * @return a newly initalised FastNumber.
      * 
      * @param other The value you want to multiply this value with.
      */
@@ -195,7 +195,7 @@ namespace VQDR.Common {
     /**
      * Round up this FastNumber and retuns it.
      * 
-     * @returns a rounded up FastNumber.
+     * @return a rounded up FastNumber.
      */
     public FastNumber round_up () {
       FastNumber ret;
@@ -211,7 +211,7 @@ namespace VQDR.Common {
     /**
      * Round up this FastNumber and retuns it.
      * 
-     * @returns a rounded down FastNumber.
+     * @return a rounded down FastNumber.
      */
     public FastNumber round_down () {
       FastNumber ret;
@@ -228,7 +228,7 @@ namespace VQDR.Common {
     /**
      * FastNumber to string.
      * 
-     * @returns a string
+     * @return a string
      * 
      * @param decimal whether to return the decimal portion of the number in 
      *                the string. Default = false.

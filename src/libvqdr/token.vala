@@ -19,7 +19,8 @@ namespace VQDR.Expression {
     public const int MAX_TOTAL_ITERATIONS = 5000;
     
     
-    /** Operator precedence and associativity
+    /**
+     * Operator precedence and associativity
      * 
      * higher number is higher priority, and is to be done befroe those
      * with lower number.
@@ -79,7 +80,7 @@ namespace VQDR.Expression {
       }
     }
 
-    /** Generation to use to get the root with {@link #getParent} */
+    /** Generation to use to get the root with @link parent */
     protected const int ROOT_GENERATION = int.MAX;
     
     /* ********************************************************************** */

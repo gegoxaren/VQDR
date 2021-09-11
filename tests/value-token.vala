@@ -2,7 +2,7 @@ using VQDR.Expression;
 
 void
 test_value_token () {
-  GLib.Test.add_func ("/VQDR/Exprossion/Token/Value/sanity", () => {
+  GLib.Test.add_func ("/VQDR/Expression/Token/Value/sanity", () => {
     var ctx = new Context ();
     
     if (ctx == null) {
@@ -20,37 +20,52 @@ test_value_token () {
     var v1 = new ConstantValueToken (13,37);
     var v2 = new VariableValueToken ("my-val", 13);
     
-    #if 0
-    // This should work, but it does not... It is a vala parsing bug...
-    // I think...
-    bool value_test = ((v1 is typeof (ConstantValueToken)) ||
-                       (v1 is typeof (ValueToken)) ||
-                       (v1 is typeof (Token)));
-    
-    #endif
-    
     Type t1 = v1.get_type ();
-    if (!(t1.is_a (typeof (ConstantValueToken))) ||
-        !(t1.is_a (typeof (ValueToken))) ||
-        !(t1.is_a (typeof (Token)))) {
+    if (!(t1.is_a (typeof (ConstantValueToken)) &&
+          t1.is_a (typeof (ValueToken)) &&
+          t1.is_a (typeof (Token)))) {
       GLib.Test.message ("The ConstastValueToken is not the corret type.");
       GLib.Test.fail ();
       GLib.assert_not_reached ();
     }
     
    Type t2 = v2.get_type ();
-    if (!(t2.is_a (typeof (VariableValueToken))) ||
-        !(t2.is_a (typeof (ValueToken))) ||
-        !(t2.is_a (typeof (Token)))) {
+    if (!((t2.is_a (typeof (VariableValueToken))) &&
+          (t2.is_a (typeof (ValueToken))) &&
+          (t2.is_a (typeof (Token))))) {
       GLib.Test.message ("The VariableValueToken is not the corret type.");
       GLib.Test.fail ();
       GLib.assert_not_reached ();
     }
     
-    
   });
   
-  GLib.Test.add_func ("/VQDR/Exprossion/Token/Value/Constant", () => {
+  GLib.Test.add_func ("/VQDR/Expression/token/Value/Factory", () => {
+    var v3 = ValueToken.init_value_token (13L, 37);
+    var v4 = ValueToken.init_value_token ("foo", 12);
+    Type t4 = v4.get_type ();
+    Type t3 = v3.get_type ();
+    
+    
+    if (!(t3.is_a (typeof (ConstantValueToken))) &&
+          t3.is_a (typeof (ValueToken)) &&
+          t3.is_a (typeof (Token))) {
+      GLib.Test.message ("The ConstastValueToken is not the corret type.");
+      GLib.Test.fail ();
+      GLib.assert_not_reached ();
+    }
+    
+   
+    if (!((t4.is_a (typeof (VariableValueToken))) &&
+          (t4.is_a (typeof (ValueToken))) &&
+          (t4.is_a (typeof (Token))))) {
+      GLib.Test.message ("The VariableValueToken is not the corret type.");
+      GLib.Test.fail ();
+      GLib.assert_not_reached ();
+    }
+  });
+  
+  GLib.Test.add_func ("/VQDR/Expression/Token/Value/Constant", () => {
     try {
       long in_val = 12;
       
@@ -75,7 +90,7 @@ test_value_token () {
     }
   });
   
-  GLib.Test.add_func ("/VQDR/Exprossion/Token/Value/ConstantLoop", () => {
+  GLib.Test.add_func ("/VQDR/Expression/Token/Value/ConstantLoop", () => {
     
     
     try {
@@ -101,7 +116,7 @@ test_value_token () {
     }
   });
   
-  GLib.Test.add_func ("/VQDR/Exprossion/Token/Value/Varuable", () => {
+  GLib.Test.add_func ("/VQDR/Expression/Token/Value/Varuable", () => {
     try {
       var ctx = new Context ();
       ctx.set_value ("a", 0, 0, 13);
