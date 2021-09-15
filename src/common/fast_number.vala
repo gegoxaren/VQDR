@@ -8,22 +8,40 @@ using GLib;
 namespace VQDR.Common {
   
   /**
-   * Fast Numbers are a decimal representanion of numbers in the folm of 
-   * a normal integer value. All internal nummbers are multiples of 1000, so the
-   * there is room for two three decimal ponts.
+   * Fast Numbers are a decimal representation of numbers in the form of
+   * a normal integer value. All internal numbers are multiples of 1000, so the
+   * there is room for two three decimal points.
    * 
-   * Math done on these numbers are done using standard integer operations, and
-   * not floating point math.
+   * Maths done on these numbers are done using standard integer operations, and
+   * not floating point maths.
    * 
    * The decimal part of the FastNumber has a maximum of 3 decimals.
    * 
-   * How the value is devided internally is as follows:
+   * How the value is divided internally is as follows:
    * {{{
-     (base 10) [0 0 0 0 0 .... 0 | 0 0 0  ]
-             [non-decial part  | decimal]
+   *  (base 10) [0 0 0 0 0 .... 0 | 0 0 0  ]
+   *            [non-decial part  | decimal]
    * }}}
+   *
+   * Due to how some things work here, we can't reliably use the decimal part
+   * that referents a value less than 0.1. That is, like 5.05 will not work
+   * reliably.
    */
   public struct FastNumber {
+    /* FIXME
+     *
+     * The limitations in the comment above is something
+     * that needs to be fixed.
+     *
+     * Look into a different representation?
+     *
+     * Perhaps only use  raw_number ?
+     *
+     * Perhaps ripping out the things that are not needed?
+     *
+     * Implement BCD?
+     */
+    
     /** Precision used to output values */
     public const int PRECISION_DIGITS = 2;
     
@@ -32,8 +50,6 @@ namespace VQDR.Common {
     
     public const int MUL_FACTOR = PRECISION_FACTOR * 10;
     
-
-    
     public long raw_number;
     
     public long number {
@@ -41,6 +57,10 @@ namespace VQDR.Common {
       public set {this.raw_number = (MUL_FACTOR * value);}
     }
     
+    /**
+     * Due to implementation details, and how the numbers are normalised,
+     * this value might be wrong.
+     */
     public long decimal {
       public get {return mask_and_normalize_decimal (raw_number);}
       public set {set_decimal_of_number (ref raw_number, value);}
@@ -60,6 +80,10 @@ namespace VQDR.Common {
     
     /**
      * Initialises a FastNumber.
+     *
+     * Note: Due to implementation details, you can't pass a decimal part that
+     *       is less than .1, as we are normalising decimal values to the
+     *       correct place.
      * 
      * @param number   The number that are to be set as the none-decimal part of
      *                 the number. Defaults to 0.
@@ -67,8 +91,8 @@ namespace VQDR.Common {
      * @param decimal  The decimal part of the number. Defaults to 0.
      */
     public FastNumber (long number = 0, int decimal = 0) {
-      this.number = number;
-      this.decimal = decimal;
+      if (! (number == 0))  this.number = number;
+      if (! (decimal == 0)) this.decimal = decimal;
     }
     
     /**
@@ -90,7 +114,7 @@ namespace VQDR.Common {
     /**
      * Initialises a FastNumber from a double floating point value.
      * 
-     * Due to how floatinng point numbers works this may not be the exact value
+     * Due to how floating point numbers works this may not be the exact value
      * you expect it to be.
      */
     public FastNumber.from_float (double f) {
@@ -120,7 +144,7 @@ namespace VQDR.Common {
      * var f3 = f1.add (f2);      // f3 = 5
      * }}}
      * 
-     * @return a newly inisialised FastNumber.
+     * @return a newly initialised FastNumber.
      * 
      * @param other The other fast number you want to add to this value.
      */
@@ -143,7 +167,7 @@ namespace VQDR.Common {
      * var f3 = f1.subtract (f2); // f3 = 1
      * }}}
      * 
-     * @return a newly inisialised FastNumber.
+     * @return a newly initialised FastNumber.
      * 
      * @param other  The other fast number you want to subtract from this 
      *               FastNumber.
@@ -167,7 +191,7 @@ namespace VQDR.Common {
      * var f3 = f1.multiply (f2); // f3 = 6
      * }}}
      * 
-     * @return a newly initalised FastNumber.
+     * @return a newly initialised FastNumber.
      * 
      * @param other The value you want to multiply this value with.
      */
@@ -182,7 +206,7 @@ namespace VQDR.Common {
     }
     
     /**
-     * Divide this FastNumbers with anothr FastNumber.
+     * Divide this FastNumbers with another FastNumber.
      * 
      * {{{
      * var f1 = FastNumber (6);   // f1 = 6
@@ -190,7 +214,7 @@ namespace VQDR.Common {
      * var f3 = f1.multiply (f2); // f3 = 3
      * }}}
      * 
-     * @return a newly initalised FastNumber.
+     * @return a newly initialised FastNumber.
      * 
      * @param other The value you want to multiply this value with.
      */
@@ -209,7 +233,7 @@ namespace VQDR.Common {
     }
     
     /**
-     * Round up this FastNumber and retuns it.
+     * Round up this FastNumber and returns a new FastNumber.
      * 
      * @return a rounded up FastNumber.
      */
@@ -225,7 +249,7 @@ namespace VQDR.Common {
     }
     
     /**
-     * Round up this FastNumber and retuns it.
+     * Round up this FastNumber and returns a new FastNumber.
      * 
      * @return a rounded down FastNumber.
      */
@@ -251,6 +275,7 @@ namespace VQDR.Common {
      */
     public string to_string (bool decimal = false) {
       if (decimal) {
+        // FIXME: This will fail with decimal part less than 0.1..?
         return @"$number.$decimal";
       } else {
         return number.to_string ();
@@ -293,7 +318,7 @@ namespace VQDR.Common {
         ret_val = ret_val + (long.parse (str.substring (0, i_of_dot))
                             * MUL_FACTOR);
         
-        // debug (@"(parse_raw_number) ret_val (finised): $ret_val\n");
+        // debug (@"(parse_raw_number) ret_val (finished): $ret_val\n");
         
       } else {
         ret_val = long.parse (str) * MUL_FACTOR;
@@ -326,7 +351,7 @@ namespace VQDR.Common {
       masked = masked * MUL_FACTOR;
       // debug (@"(set_decimal_of_number) masked(2): $masked");
       
-      // Normalise didgits
+      // Normalise digits
       if (decimal != 0) {
         while (decimal < PRECISION_FACTOR) {
           decimal = decimal * 10;

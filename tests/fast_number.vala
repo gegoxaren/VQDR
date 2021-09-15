@@ -63,6 +63,18 @@ void fast_number_test () {
       Test.message ("Expected value: 5, got:" + f1.decimal.to_string ());
     }
     
+    f1 = FastNumber (10, 5);
+    if (f1.raw_number != 10500) {
+      Test.fail ();
+      Test.message ("Sanity4: Wrong value.");
+      Test.message ("expected: 10500, got: " + f1.raw_number.to_string ());
+    }
+    
+    if (f1.decimal != 5) {
+      Test.fail ();
+      Test.message ("Sanity4 - Decimal: Wrong value.");
+      Test.message ("Expected value: 5, got:" + f1.decimal.to_string ());
+    }
     
   });
   
