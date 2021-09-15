@@ -50,10 +50,10 @@ namespace VQDR.Common {
       public get {
         long dec = this.decimal;
         long nbr = this.number;
-        debug (@"(float_ret_get) Float str: $nbr.$dec");
+        // debug (@"(float_ret_get) Float str: $nbr.$dec");
         return double.parse (@"$nbr.$dec");
       } public set {
-        debug (@"(float_ret_set) set float: $value");
+        // debug (@"(float_ret_set) set float: $value");
         this.raw_number = parse_raw_number (value.to_string ());
       }
     }
@@ -273,27 +273,27 @@ namespace VQDR.Common {
       int i_of_dot = str.index_of_char ('.');
       if (i_of_dot >= 0) {
         
-        debug (@"str: $str");
+        // debug (@"str: $str");
         // Get the decimal number from the string, if such a thing exists.
         if ((str.length - 1 > i_of_dot)) {
           ret_val = long.parse ((str + "000").substring (i_of_dot + 1));
         }
         
-        debug (@"(parse_raw_number) i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
+        // debug (@"(parse_raw_number) i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
         
         // Normalise the digits.
         while (ret_val > MUL_FACTOR) {
           ret_val = ret_val / 10;
-          debug (@"(parse_raw_number) retval (loop): $ret_val");
+          // debug (@"(parse_raw_number) retval (loop): $ret_val");
         }
         
-        debug (@"ret_val (normalised): $ret_val\n");
+        // debug (@"ret_val (normalised): $ret_val\n");
         
         // get intiger number
         ret_val = ret_val + (long.parse (str.substring (0, i_of_dot))
                             * MUL_FACTOR);
         
-        debug (@"(parse_raw_number) ret_val (finised): $ret_val\n");
+        // debug (@"(parse_raw_number) ret_val (finised): $ret_val\n");
         
       } else {
         ret_val = long.parse (str) * MUL_FACTOR;
@@ -302,11 +302,11 @@ namespace VQDR.Common {
     }
     
     public static long mask_and_normalize_decimal (long number) {
-      debug (@"(mask_and_normalize_decimal) number: $number");
+      // debug (@"(mask_and_normalize_decimal) number: $number");
       long mask = number / MUL_FACTOR;
-      debug (@"(mask_and_normalize_decimal) mask(1): $mask");
+      // debug (@"(mask_and_normalize_decimal) mask(1): $mask");
       mask = mask * MUL_FACTOR;
-      debug (@"(mask_and_normalize_decimal) mask(2): $mask");
+      // debug (@"(mask_and_normalize_decimal) mask(2): $mask");
       long ret = number - mask;
       // normalise
       // This is a rathor expensive operation.
@@ -315,27 +315,27 @@ namespace VQDR.Common {
           ret = ret / 10;
         }
       }
-      debug (@"(mask_and_normalize_decimal) ret: $ret");
+      // debug (@"(mask_and_normalize_decimal) ret: $ret");
       return ret;
     }
     
     public static void set_decimal_of_number (ref long number, long decimal) {
-      debug (@"(set_decimal_of_number) number(0): $number, decimal(0): $decimal");
+      // debug (@"(set_decimal_of_number) number(0): $number, decimal(0): $decimal");
       long masked = number / MUL_FACTOR;
-      debug (@"(set_decimal_of_number) masked(1): $masked");
+      // debug (@"(set_decimal_of_number) masked(1): $masked");
       masked = masked * MUL_FACTOR;
-      debug (@"(set_decimal_of_number) masked(2): $masked");
+      // debug (@"(set_decimal_of_number) masked(2): $masked");
       
       // Normalise didgits
       if (decimal != 0) {
         while (decimal < PRECISION_FACTOR) {
           decimal = decimal * 10;
-          debug (@"(set_decimal_of_number) loop, decimal: $decimal");
+          // debug (@"(set_decimal_of_number) loop, decimal: $decimal");
         }
       }
       
       number = masked + decimal;
-      debug (@"(set_decimal_of_number) number(1): $number");
+      // debug (@"(set_decimal_of_number) number(1): $number");
       
     }
       
