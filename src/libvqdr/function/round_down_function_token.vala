@@ -15,7 +15,7 @@ public class VQDR.Expression.RoundDownFunctionToken : FunctionToken {
     result_max_value = param.result_max_value.round_down ();
     result_min_value = param.result_min_value.round_down ();
     
-    result_string = CH_RND_OP + param.result_string + CH_RND_CL;
+    result_string = CH_RDN_OP + param.result_string + CH_RDN_CL;
   }
   
 }

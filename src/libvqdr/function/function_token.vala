@@ -9,6 +9,12 @@ namespace VQDR.Expression {
       base (0);
     }
     
+    private struct Entry {
+      public string key;
+      public Type? val;
+    }
+    
+    
     // We only store the type, as that is what is important.
     private static Gee.HashMap<string, Type?> _allowed_functions;
     
@@ -71,9 +77,9 @@ namespace VQDR.Expression {
     protected const string SYM_TRUNK_END = SYM_END; //"]"
     
     construct {
-      _allowed_functions = new Gee.HashMap<string, Type?> ();
       this.priority = Prio.FUNCTION;
     }
+    
     
     /**
      * Ititialise the right functon token by it's name.
@@ -83,6 +89,23 @@ namespace VQDR.Expression {
      * @return An instance representing the function, or @c null if not found.
      */
     public static FunctionToken? init_token (string token, int position) {
+      
+      if (_allowed_functions == null) {
+        // Intialise the HashMap if it is not created.
+        _allowed_functions = new Gee.HashMap<string, Type?> ();
+        
+        Entry[] entries = {
+            {"round_up", typeof (RoundUpFunctionToken)},
+            {"round_down", typeof (RoundDownFunctionToken)},
+            {null, null}
+        };
+        
+        foreach (Entry e in entries) {
+          _allowed_functions.@set (e.key, e.val);
+        }
+        
+      }
+      
       FunctionToken? retval = null;
       
       // We get the token type.
@@ -135,9 +158,7 @@ namespace VQDR.Expression {
      } else {
        return FastNumber.raw (default_result);
      }
+     
     }
-    
-    
-    
   }
 }
