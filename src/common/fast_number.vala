@@ -3,6 +3,7 @@
  *
  * Created by Gustav Hartivgsson.
  */
+using GLib;
 
 namespace VQDR.Common {
   
@@ -15,14 +16,23 @@ namespace VQDR.Common {
    * not floating point math.
    * 
    * The decimal part of the FastNumber has a maximum of 3 decimals.
+   * 
+   * How the value is devided internally is as follows:
+   * {{{
+     (base 10) [0 0 0 0 0 .... 0 | 0 0 0  ]
+             [non-decial part  | decimal]
+   * }}}
    */
   public struct FastNumber {
-    public const int MUL_FACTOR = 1000;
-    
     /** Precision used to output values */
     public const int PRECISION_DIGITS = 2;
+    
     /** Precision factor used to evaluate output */
     public const int PRECISION_FACTOR = 100;
+    
+    public const int MUL_FACTOR = PRECISION_FACTOR * 10;
+    
+
     
     public long raw_number;
     
@@ -37,8 +47,15 @@ namespace VQDR.Common {
     }
     
     public double float_rep {
-      public get {return double.parse (@"$number.$decimal");}
-      public set {this.raw_number = parse_raw_number (value.to_string ());}
+      public get {
+        long dec = this.decimal;
+        long nbr = this.number;
+        debug (@"(float_ret_get) Float str: $nbr.$dec");
+        return double.parse (@"$nbr.$dec");
+      } public set {
+        debug (@"(float_ret_set) set float: $value");
+        this.raw_number = parse_raw_number (value.to_string ());
+      }
     }
     
     /**
@@ -179,8 +196,7 @@ namespace VQDR.Common {
      */
     public FastNumber divide (FastNumber other) throws MathError {
       if (other.raw_number == 0) {
-        throw new MathError.DIVIDE_BY_ZERO
-                                      ("FantNumber - trying to divide by zero");
+        throw new MathError.DIVIDE_BY_ZERO ("trying to divide by zero");
       }
       var ret =  FastNumber ();
       ret.raw_number = ((this.raw_number * MUL_FACTOR) / other.raw_number);
@@ -241,6 +257,16 @@ namespace VQDR.Common {
       }
     } 
     
+    /**
+     * Check if two FastNumbers are equal.
+     * 
+     * @return true if this is equal to the other.
+     * @return false if this is not equal to the other.
+     */
+    public bool equals (FastNumber other) {
+      return (this.raw_number == other.raw_number);
+    }
+    
     // ***** STATIC FUNCTIONS ****//
     public static long parse_raw_number (string str) {
       long ret_val = 0;
@@ -248,26 +274,26 @@ namespace VQDR.Common {
       if (i_of_dot >= 0) {
         
         debug (@"str: $str");
-        
         // Get the decimal number from the string, if such a thing exists.
         if ((str.length - 1 > i_of_dot)) {
           ret_val = long.parse ((str + "000").substring (i_of_dot + 1));
         }
         
-        debug (@"i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
+        debug (@"(parse_raw_number) i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
         
         // Normalise the digits.
         while (ret_val > MUL_FACTOR) {
           ret_val = ret_val / 10;
+          debug (@"(parse_raw_number) retval (loop): $ret_val");
         }
         
         debug (@"ret_val (normalised): $ret_val\n");
         
-        // Add intiger number
+        // get intiger number
         ret_val = ret_val + (long.parse (str.substring (0, i_of_dot))
                             * MUL_FACTOR);
         
-        debug (@"ret_val (finised): $ret_val\n");
+        debug (@"(parse_raw_number) ret_val (finised): $ret_val\n");
         
       } else {
         ret_val = long.parse (str) * MUL_FACTOR;
@@ -276,17 +302,43 @@ namespace VQDR.Common {
     }
     
     public static long mask_and_normalize_decimal (long number) {
-      var mask = number / MUL_FACTOR;
+      debug (@"(mask_and_normalize_decimal) number: $number");
+      long mask = number / MUL_FACTOR;
+      debug (@"(mask_and_normalize_decimal) mask(1): $mask");
       mask = mask * MUL_FACTOR;
-      return number - mask;
+      debug (@"(mask_and_normalize_decimal) mask(2): $mask");
+      long ret = number - mask;
+      // normalise
+      // This is a rathor expensive operation.
+      if (ret != 0) {
+        while ((ret % 10) == 0) {
+          ret = ret / 10;
+        }
+      }
+      debug (@"(mask_and_normalize_decimal) ret: $ret");
+      return ret;
     }
     
     public static void set_decimal_of_number (ref long number, long decimal) {
-      var masked = number / MUL_FACTOR;
+      debug (@"(set_decimal_of_number) number(0): $number, decimal(0): $decimal");
+      long masked = number / MUL_FACTOR;
+      debug (@"(set_decimal_of_number) masked(1): $masked");
       masked = masked * MUL_FACTOR;
+      debug (@"(set_decimal_of_number) masked(2): $masked");
+      
+      // Normalise didgits
+      if (decimal != 0) {
+        while (decimal < PRECISION_FACTOR) {
+          decimal = decimal * 10;
+          debug (@"(set_decimal_of_number) loop, decimal: $decimal");
+        }
+      }
+      
       number = masked + decimal;
+      debug (@"(set_decimal_of_number) number(1): $number");
+      
     }
-    
+      
     [CCode (cname = "vqdr_common_fast_number_compare")]
     public static extern long static_compare (FastNumber a, FastNumber b);
   }
