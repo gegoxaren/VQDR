@@ -23,24 +23,8 @@ namespace VQDR.Common {
    *            [non-decial part  | decimal]
    * }}}
    *
-   * Due to how some things work here, we can't reliably use the decimal part
-   * that referents a value less than 0.1. That is, like 5.05 will not work
-   * reliably.
    */
   public struct FastNumber {
-    /* FIXME
-     *
-     * The limitations in the comment above is something
-     * that needs to be fixed.
-     *
-     * Look into a different representation?
-     *
-     * Perhaps only use  raw_number ?
-     *
-     * Perhaps ripping out the things that are not needed?
-     *
-     * Implement BCD?
-     */
     
     /** Precision used to output values */
     public const int PRECISION_DIGITS = 2;
@@ -52,29 +36,16 @@ namespace VQDR.Common {
     
     public long raw_number;
     
+    public long leading_zeros;
+    
+    /* XXX
+     * I'm not happy using getters/setters in this struct...
+     * But I tink it'll have to do for simplicity.
+     */
     public long number {
       public get {return (this.raw_number / MUL_FACTOR);}
-      public set {this.raw_number = (MUL_FACTOR * value);}
-    }
-    
-    /**
-     * Due to implementation details, and how the numbers are normalised,
-     * this value might be wrong.
-     */
-    public long decimal {
-      public get {return mask_and_normalize_decimal (raw_number);}
-      public set {set_decimal_of_number (ref raw_number, value);}
-    }
-    
-    public double float_rep {
-      public get {
-        long dec = this.decimal;
-        long nbr = this.number;
-        // debug (@"(float_ret_get) Float str: $nbr.$dec");
-        return double.parse (@"$nbr.$dec");
-      } public set {
-        // debug (@"(float_ret_set) set float: $value");
-        this.raw_number = parse_raw_number (value.to_string ());
+      public set {
+        this.raw_number = (MUL_FACTOR * value);
       }
     }
     
@@ -90,9 +61,12 @@ namespace VQDR.Common {
      * 
      * @param decimal  The decimal part of the number. Defaults to 0.
      */
-    public FastNumber (long number = 0, int decimal = 0) {
-      if (! (number == 0))  this.number = number;
-      if (! (decimal == 0)) this.decimal = decimal;
+    public FastNumber (long number = 0) {
+      if (number != 0) {
+        this.raw_number = (number * MUL_FACTOR);
+      } else {
+        this.raw_number = 0;
+      }
     }
     
     /**
@@ -108,19 +82,8 @@ namespace VQDR.Common {
      * Can be a decimal representation.
      */
     public FastNumber.from_string (string str) {
-      this.raw_number = parse_raw_number (str);
+      parse_raw_number (str);
     }
-    
-    /**
-     * Initialises a FastNumber from a double floating point value.
-     * 
-     * Due to how floating point numbers works this may not be the exact value
-     * you expect it to be.
-     */
-    public FastNumber.from_float (double f) {
-      this.raw_number = parse_raw_number (f.to_string ());
-    }
-    
     /**
      * Initialises a FastNumber with the internal representation of that number.
      */
@@ -128,11 +91,9 @@ namespace VQDR.Common {
       this.raw_number = raw;
     }
     
-    /**
-     * Sets the value of this FastNumber from a string, 
-     */
-    public void set_from_string (string str) {
-      this.raw_number = parse_raw_number (str);
+    public FastNumber.from_float (double float_number) {
+      // XXX Do we need a faster way of doing this?
+      parse_raw_number (float_number.to_string ()); 
     }
     
     /**
@@ -274,13 +235,49 @@ namespace VQDR.Common {
      *                the string. Default = false.
      */
     public string to_string (bool decimal = false) {
-      if (decimal) {
-        // FIXME: This will fail with decimal part less than 0.1..?
-        return @"$number.$decimal";
+      string ret_val = null;
+      if (!decimal) {
+        ret_val = (this.raw_number / MUL_FACTOR).to_string ();
       } else {
-        return number.to_string ();
+        // Copy stuff so we don't accidentality stomp them.
+        long _raw_number = this.raw_number;
+        
+        long _integer_part = (_raw_number / MUL_FACTOR);
+        long _decimal_part = (_raw_number - (_integer_part * MUL_FACTOR));
+        
+        var strbldr = new GLib.StringBuilder ();
+        
+        // normalise the decimal part.
+        // (XXX This is rather expensive, is there a better way of doing this?).
+        if (_decimal_part != 0) {
+          while ((_decimal_part % 10) == 0) {
+            _decimal_part = _decimal_part / 10;
+          }
+        }
+        
+        strbldr.append (_integer_part.to_string ())
+               .append_c ('.');
+        
+        
+        for ( var i = this.leading_zeros ; i > 0 ; i--) {
+          strbldr.append_c ('0');
+        }
+        
+        strbldr.append (_decimal_part.to_string ());
+        
+        ret_val = strbldr.str;
       }
-    } 
+      return ret_val;
+    }
+    
+    public double to_float () {
+      // XXX This probobly needs to something faster?
+      return double.parse (this.to_string (true));
+    }
+    
+    public long to_int () {
+       return (this.raw_number / MUL_FACTOR);
+    }
     
     /**
      * Check if two FastNumbers are equal.
@@ -292,16 +289,26 @@ namespace VQDR.Common {
       return (this.raw_number == other.raw_number);
     }
     
-    // ***** STATIC FUNCTIONS ****//
-    public static long parse_raw_number (string str) {
+    
+    [CCode (cname = "vqdr_common_fast_number_compare")]
+    public static extern long static_compare (FastNumber a, FastNumber b);
+    
+    private void parse_raw_number (string str) {
+      debug (@"(parse_raw_number) str: $str");
       long ret_val = 0;
       int i_of_dot = str.index_of_char ('.');
       if (i_of_dot >= 0) {
-        
-        // debug (@"str: $str");
         // Get the decimal number from the string, if such a thing exists.
         if ((str.length - 1 > i_of_dot)) {
-          ret_val = long.parse ((str + "000").substring (i_of_dot + 1));
+          var intr_str = (str + "000").substring (i_of_dot + 1);
+          // count leading zeros.
+          long i;
+          for (i = 0; intr_str.@get (i) == '0'; i++){}
+          this.leading_zeros = i;
+          // remove leading zeros
+          intr_str = intr_str.substring (i);
+          debug (@"(parse_raw_number) Intermediate string: $intr_str");
+          ret_val = long.parse (intr_str);
         }
         
         // debug (@"(parse_raw_number) i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
@@ -312,59 +319,22 @@ namespace VQDR.Common {
           // debug (@"(parse_raw_number) retval (loop): $ret_val");
         }
         
+        for (var i = leading_zeros; i > 0; i--) {
+          ret_val = ret_val / 10;
+          // debug (@"(parse_raw_number) retval (loop2): $ret_val");
+        }
+        
         // debug (@"ret_val (normalised): $ret_val\n");
         
-        // get intiger number
+        // get integer number
         ret_val = ret_val + (long.parse (str.substring (0, i_of_dot))
                             * MUL_FACTOR);
         
-        // debug (@"(parse_raw_number) ret_val (finished): $ret_val\n");
-        
       } else {
-        ret_val = long.parse (str) * MUL_FACTOR;
+        ret_val = (long.parse (str) * MUL_FACTOR);
       }
-      return ret_val;
+      debug (@"(parse_raw_number) ret_val (finished): $ret_val\n");
+      this.raw_number = ret_val;
     }
-    
-    public static long mask_and_normalize_decimal (long number) {
-      // debug (@"(mask_and_normalize_decimal) number: $number");
-      long mask = number / MUL_FACTOR;
-      // debug (@"(mask_and_normalize_decimal) mask(1): $mask");
-      mask = mask * MUL_FACTOR;
-      // debug (@"(mask_and_normalize_decimal) mask(2): $mask");
-      long ret = number - mask;
-      // normalise
-      // This is a rathor expensive operation.
-      if (ret != 0) {
-        while ((ret % 10) == 0) {
-          ret = ret / 10;
-        }
-      }
-      // debug (@"(mask_and_normalize_decimal) ret: $ret");
-      return ret;
-    }
-    
-    public static void set_decimal_of_number (ref long number, long decimal) {
-      // debug (@"(set_decimal_of_number) number(0): $number, decimal(0): $decimal");
-      long masked = number / MUL_FACTOR;
-      // debug (@"(set_decimal_of_number) masked(1): $masked");
-      masked = masked * MUL_FACTOR;
-      // debug (@"(set_decimal_of_number) masked(2): $masked");
-      
-      // Normalise digits
-      if (decimal != 0) {
-        while (decimal < PRECISION_FACTOR) {
-          decimal = decimal * 10;
-          // debug (@"(set_decimal_of_number) loop, decimal: $decimal");
-        }
-      }
-      
-      number = masked + decimal;
-      // debug (@"(set_decimal_of_number) number(1): $number");
-      
-    }
-      
-    [CCode (cname = "vqdr_common_fast_number_compare")]
-    public static extern long static_compare (FastNumber a, FastNumber b);
   }
 }
