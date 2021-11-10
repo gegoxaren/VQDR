@@ -11,6 +11,7 @@ libvqdr_source_files += files([
   'variable.vala',
   
   'function/function_token.vala',
+  'function/roll_and_keep_functon_token.vala',
   'function/round_up_function_token.vala',
   'function/round_down_function_token.vala',
   

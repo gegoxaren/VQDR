@@ -31,29 +31,6 @@ namespace VQDR.Expression {
       }
       return 0;
       
-      // // this should be correct.
-      // return (current_val.compare (other.current_val)) +
-      //        (max_val.compare (other.max_val)) +
-      //        (min_val.compare (other.min_val));
-      // ------------------------------------------
-      // if (this.current_val > other.current_val) {
-      //   return -1;
-      // } else if (this.current_val < other.current_val) {
-      //   return 1;
-      // } else {
-      //   if (this.max_val > other.max_val) {
-      //     return -1;
-      //   } else if (this.max_val < other.max_val) {
-      //     return 1;
-      //   } else {
-      //     if (this.min_val > other.min_val) {
-      //       return -1;
-      //     } else if (this.min_val < other.min_val) {
-      //       return 1;
-      //     } // End min_val comp.
-      //   } // End max_val comp
-      // } // End current_val Comp
-      // return 0; // They are exacly the same.
     }
     
     /**

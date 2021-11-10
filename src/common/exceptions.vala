@@ -16,5 +16,9 @@ namespace VQDR.Common {
     MISSING_TOKEN,
     INVALID_TOKEN,
   }
+
+  public errordomain ParamError {
+    OUT_OF_BOUNDS
+  }
   
 }
