@@ -74,7 +74,7 @@ public class VQDR.Expression.Dice {
         retval.append (modifier.to_string ());
     }
     
-    return (string) retval.data;
+    return retval.str;
   }
   
 }

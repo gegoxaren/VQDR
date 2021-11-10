@@ -48,22 +48,22 @@ namespace VQDR.Expression {
        }
     }
     
-    public int get_value (string name) throws ArgError {
+    public FastNumber get_value (string name) throws ArgError {
       throw_name (name);
       return values.@get (name.down ()).current_val;
     }
     
-    public int get_min_value (string name) throws ArgError {
+    public FastNumber get_min_value (string name) throws ArgError {
       throw_name (name);
       return values.@get (name.down ()).min_val;
     }
     
-    public int get_max_value (string name) throws ArgError {
+    public FastNumber get_max_value (string name) throws ArgError {
       throw_name (name);
       return values.@get (name.down ()).max_val;
     }
 
-    public int get_current_value (string name) throws ArgError {
+    public FastNumber get_current_value (string name) throws ArgError {
       throw_name (name);
       return values.@get (name.down ()).current_val;
     }

@@ -150,7 +150,7 @@ void fast_number_test () {
   
   Test.add_func ("/Common/FastNumber/to_string1", () => {
     var expected = "7.999";
-    var f1 = new FastNumber.from_string (expected);
+    var f1 = FastNumber.from_string (expected);
     var result = f1.to_string (true);
     
     if (expected != result) {
@@ -159,7 +159,7 @@ void fast_number_test () {
     }
     
     expected = "7.099";
-    f1 = new FastNumber.from_string (expected);
+    f1 = FastNumber.from_string (expected);
     result = f1.to_string (true);
     
     if (expected != result) {
@@ -168,7 +168,7 @@ void fast_number_test () {
     }
     
     expected = "7.009";
-    f1 = new FastNumber.from_string (expected);
+    f1 = FastNumber.from_string (expected);
     result = f1.to_string (true);
     
     if (expected != result) {

@@ -1,47 +1,59 @@
+using VQDR.Common;
 namespace VQDR.Expression {
-  
-  
   /**
    * Represents a variable.
    */
   public struct Variable {
-    public int min_val;
-    public int max_val;
-    public int current_val;
+    public FastNumber min_val;
+    public FastNumber max_val;
+    public FastNumber current_val;
     
     public Variable (int min = 0, int max = 0, int current = 0) {
-      this.max_val = max;
-      this.min_val = min;
-      this.current_val = current;
+      this.max_val.number = max;
+      this.min_val.number = min;
+      this.current_val.number = current;
     }
     
     [CCode (cname = "vqdr_expression_variable_copy")]
     public Variable.copy (Variable other) {
-      this.max_val = other.max_val;
-      this.min_val = other.min_val;
-      this.current_val = other.current_val;
+      this.max_val.copy (other.max_val);
+      this.min_val.copy (other.min_val);
+      this.current_val.copy (other.current_val);
     }
     
-    public int compare (Variable other) {
+    public long compare (Variable other) {
+      if (! this.current_val.equals (other.current_val)) {
+        return this.current_val.compare (other.current_val);
+      } else if (! this.max_val.equals (other.max_val)) {
+        return this.max_val.compare (other.max_val);
+      } else if (! this.min_val.equals (other.min_val)) {
+        return this.min_val.compare (other.min_val);
+      }
+      return 0;
       
-      if (this.current_val > other.current_val) {
-        return -1;
-      } else if (this.current_val < other.current_val) {
-        return 1;
-      } else {
-        if (this.max_val > other.max_val) {
-          return -1;
-        } else if (this.max_val < other.max_val) {
-          return 1;
-        } else {
-          if (this.min_val > other.min_val) {
-            return -1;
-          } else if (this.min_val < other.min_val) {
-            return 1;
-          } // End min_val comp.
-        } // End max_val comp
-      } // End current_val Comp
-      return 0; // They are exacly the same.
+      // // this should be correct.
+      // return (current_val.compare (other.current_val)) +
+      //        (max_val.compare (other.max_val)) +
+      //        (min_val.compare (other.min_val));
+      // ------------------------------------------
+      // if (this.current_val > other.current_val) {
+      //   return -1;
+      // } else if (this.current_val < other.current_val) {
+      //   return 1;
+      // } else {
+      //   if (this.max_val > other.max_val) {
+      //     return -1;
+      //   } else if (this.max_val < other.max_val) {
+      //     return 1;
+      //   } else {
+      //     if (this.min_val > other.min_val) {
+      //       return -1;
+      //     } else if (this.min_val < other.min_val) {
+      //       return 1;
+      //     } // End min_val comp.
+      //   } // End max_val comp
+      // } // End current_val Comp
+      // return 0; // They are exacly the same.
     }
     
     /**
@@ -56,13 +68,13 @@ namespace VQDR.Expression {
      * Is this instance equal to the other?
      */
     public bool equals (Variable other) {
-      return equals_values (other.min_val, other.max_val, other.current_val);
+      return !(bool) this.compare (other);
     }
     
     public bool equals_values (int min, int max, int current) {
-      return (max == this.max_val) &&
-             (min == this.min_val) &&
-             (current == this.current_val);
+      return (this.current_val.number == current) &&
+             (this.max_val.number == max) &&
+             (this.min_val.number == min);
     }
     
     
@@ -70,9 +82,9 @@ namespace VQDR.Expression {
     public string to_string () {
       StringBuilder s = new StringBuilder ();
       s.append("(Variable: ");
-      s.append_printf ("(max_val: %i, ", max_val);
-      s.append_printf ("min_val: %i, ", max_val);
-      s.append_printf ("current_val: %i)", current_val);
+      s.append_printf ("(max_val: %s, ", max_val.to_string (true));
+      s.append_printf ("min_val: %s, ", max_val.to_string (true));
+      s.append_printf ("current_val: %s)", current_val.to_string (true));
       s.append(")");
       return s.str;
     }

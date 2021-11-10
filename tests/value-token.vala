@@ -123,7 +123,7 @@ test_value_token () {
       ctx.set_value ("not a", 0, 0, 37);
       
       // Context variable santy check.
-      if ((ctx.get_value ("a") != 13) || (ctx.get_value ("not a") != 37)) {
+      if ((ctx.get_value ("a").number != 13) || (ctx.get_value ("not a").number != 37)) {
           GLib.Test.message ("The values do not match");
           
           GLib.Test.fail ();
@@ -132,6 +132,8 @@ test_value_token () {
       var v1 = new VariableValueToken ("a", 1);
       var v2 = new VariableValueToken ("not a", 1);
       
+      print (v1.result_string + "\n");
+      print (v2.result_string + "\n");
     } catch (GLib.Error? e) {
        GLib.Test.message ("An error occured: domain: %s, message: %s", e.domain.to_string (), e.message);
        GLib.Test.fail ();
