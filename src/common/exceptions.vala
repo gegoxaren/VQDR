@@ -20,5 +20,10 @@ namespace VQDR.Common {
   public errordomain ParamError {
     OUT_OF_BOUNDS
   }
+
+  public errordomain  LoopError {
+    TO_LONG,
+    INFINITE
+  }
   
 }

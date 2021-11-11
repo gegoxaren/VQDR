@@ -1,7 +1,7 @@
 using VQDR.Expression;
 using VQDR.Common;
 
-public class RollAndKeepFunctionToken : FunctionToken {
+public class VQDR.Expression.RollAndKeepFunctionToken : FunctionToken {
   private const int INDEX_ROLL = 1;
   private const int INDEX_POOL = 1;
   private const int INDEX_KEEP = 2;
@@ -32,7 +32,8 @@ public class RollAndKeepFunctionToken : FunctionToken {
     pool_size = get_child (INDEX_POOL).result_value.to_int ();
 
     if (pool_size > MAX_POOL_SIZE) {
-      throw new ParamError.OUT_OF_BOUNDS (@"Max value $MAX_POOL_SIZE, got $pool_size");
+      throw new ParamError.OUT_OF_BOUNDS
+        (@"($(get_function_name (this.get_type ()))) Max value $MAX_POOL_SIZE, got $pool_size");
     }
 
     if (pool_size < 0) {

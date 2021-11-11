@@ -1,7 +1,7 @@
 using GLib;
 using VQDR.Expression;
 void test_t_v_c () {
-  Test.add_func (T_V_C_PREFIX, () => {
+  Test.add_func (T_V_C_PREFIX + "/Sanity", () => {
     var val1 = (long) Test.rand_int ();
     var val2 = (int) Test.rand_int ();
     var cv = new ConstantValueToken (val1, val2); 

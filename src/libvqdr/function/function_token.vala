@@ -97,6 +97,7 @@ namespace VQDR.Expression {
         Entry[] entries = {
             {"round_up", typeof (RoundUpFunctionToken)},
             {"round_down", typeof (RoundDownFunctionToken)},
+            {"roll_and_keep", typeof (RollAndKeepFunctionToken)},
             {null, null}
         };
         

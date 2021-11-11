@@ -35,6 +35,12 @@ public class VQDR.Expression.Dice {
     this.modifier = modifier;
   }
   
+  public Dice.singel (int faces) {
+    this.times = 1;
+    this.faces = faces;
+    this.modifier = 0;
+  }
+  
   public int roll () {
     if (faces <= 0) {
       return modifier;
