@@ -25,4 +25,6 @@ test2 = executable ('test2',
 
 test ('Test Suit 2', test2)
 
+subdir ('tokens')
+
 subdir_done ()

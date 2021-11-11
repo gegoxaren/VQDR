@@ -4,8 +4,10 @@ using VQDR.Common.Utils;
 using VQDR.Common;
 using VQDR.Expression;
 
+const string FAST_NR_PREFIX = "/Common/FastNumber/";
+
 void fast_number_test () {
-  Test.add_func ("/Common/FastNumber/new/raw", () => {
+  Test.add_func (FAST_NR_PREFIX + "new/raw", () => {
     FastNumber f1;
     
     
@@ -48,7 +50,7 @@ void fast_number_test () {
     
   });
   
-  Test.add_func ("/Common/FastNumber/add", () => {
+  Test.add_func (FAST_NR_PREFIX + "add", () => {
     var expected_val = 2670;
     var f1 = FastNumber (1337);
     var f2 = FastNumber (1333);
@@ -60,7 +62,7 @@ void fast_number_test () {
       Test.message (@"Expected: $expected_val, got: $out_num.");
     }
   });
-  Test.add_func ("/Common/FastNumber/subtract", () => {
+  Test.add_func (FAST_NR_PREFIX + "subtract", () => {
     var expected_val = 4;
     var f1 = FastNumber (1337);
     var f2 = FastNumber (1333);
@@ -72,7 +74,7 @@ void fast_number_test () {
       Test.message (@"Expeted: $expected_val, got: $out_val.");
     }
   });
-  Test.add_func ("/Common/FastNumber/divide", () => {
+  Test.add_func (FAST_NR_PREFIX + "divide", () => {
     var expected_val = 0;
     var f1 = FastNumber (1338);
     var f2 = FastNumber (2);
@@ -91,7 +93,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/divide2", () => {
+  Test.add_func (FAST_NR_PREFIX + "divide2", () => {
     var expected_val = 0;
     var f1 = FastNumber (4444);
     var f2 = FastNumber (1111);
@@ -110,7 +112,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/multiply", () => {
+  Test.add_func (FAST_NR_PREFIX + "multiply", () => {
     var expected_val = 4444;
     var f1 = FastNumber (1111);
     var f2 = FastNumber (4);
@@ -125,7 +127,7 @@ void fast_number_test () {
   
   
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number1", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number1", () => {
     var expected_val = 1000;
     var val = FastNumber.from_string ("1");
     
@@ -148,7 +150,7 @@ void fast_number_test () {
     
   });
   
-  Test.add_func ("/Common/FastNumber/to_string1", () => {
+  Test.add_func (FAST_NR_PREFIX + "to_string1", () => {
     var expected = "7.999";
     var f1 = FastNumber.from_string (expected);
     var result = f1.to_string (true);
@@ -177,7 +179,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number2", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number2", () => {
     var expected_val = 1128;
     var val = FastNumber.from_string ("1.128");
     
@@ -212,7 +214,7 @@ void fast_number_test () {
   
   
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number3", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number3", () => {
     var expected_val = 15128;
     var val = FastNumber.from_string ("15.128");
     
@@ -224,7 +226,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number4", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number4", () => {
     var expected_val = 20128;
     var val = FastNumber.from_string ("20.128");
     var raw = val.raw_number;
@@ -235,7 +237,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number5", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number5", () => {
     var expected_val = 222128;
     var val = FastNumber.from_string ("222.128");
     
@@ -247,7 +249,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number6", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number6", () => {
     var expected_val = 128;
     var val = FastNumber.from_string ("0.128");
     
@@ -259,7 +261,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number7", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number7", () => {
     var expected_val = 160;
     var val = FastNumber.from_string ("0.16");
     
@@ -271,7 +273,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/parse_raw_number8", () => {
+  Test.add_func (FAST_NR_PREFIX + "parse_raw_number8", () => {
     var expected_val = 800;
     var val = FastNumber.from_string ("0.8");
     
@@ -284,7 +286,7 @@ void fast_number_test () {
   });
   
   
-  Test.add_func ("/Common/FastNumber/float", () => {
+  Test.add_func (FAST_NR_PREFIX + "float", () => {
     var expected_val = 10.128;
     var f1 = FastNumber.from_float (expected_val);
     var flt = f1.to_float ();
@@ -296,7 +298,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func ("/Common/FastNumber/divide/decimal1", () => {
+  Test.add_func (FAST_NR_PREFIX + "divide/decimal1", () => {
       var expected_val = FastNumber.from_string ("1.5");
       var f1 = FastNumber (3);
       var f2 = FastNumber (2);
@@ -318,7 +320,7 @@ void fast_number_test () {
       }
   });
   
-  Test.add_func ("/Common/FastNumber/divide/decimal2", () => {
+  Test.add_func (FAST_NR_PREFIX + "divide/decimal2", () => {
       var expected_val = FastNumber.from_string ("0.25");
       var f1 = FastNumber (1);
       var f2 = FastNumber (4);
@@ -340,7 +342,7 @@ void fast_number_test () {
       }
   });
   
-  Test.add_func ("/Common/FastNumber/divide/decimal3", () => {
+  Test.add_func (FAST_NR_PREFIX + "divide/decimal3", () => {
       var expected_val = FastNumber.from_string ("0.09");
       var f1 = FastNumber (1);
       var f2 = FastNumber (11);
