@@ -22,7 +22,7 @@ namespace VQDR.Expression {
       // Black holes are bad.
       if (l_child.result_value.number == 0) {
         throw new VQDR.Common.MathError.DIVIDE_BY_ZERO
-        ("(DivideOperationToken) The left value is less than zero.");
+        ("(DivideOperationToken) The left value is zero.");
       }
       
       var sb = new GLib.StringBuilder ("(");

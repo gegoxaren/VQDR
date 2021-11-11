@@ -1,4 +1,3 @@
-/* vim: set tabstop=2:softtabstop=2:shiftwidth=2:expandtab */ 
 using VQDR.Expression;
 using VQDR.Common;
 
@@ -140,3 +139,4 @@ public class RollAndKeepFunctionToken : FunctionToken {
   }
   
 }
+/* vim: set tabstop=2:softtabstop=2:shiftwidth=2:expandtab */ 
