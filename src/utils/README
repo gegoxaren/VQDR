@@ -1,0 +1,27 @@
+                       Utils
+            Utilities for numbers and Objects.
+
+The files in this directory are Public Domain.
+
+fast_number.vala:
+            Use decimal point values without having to do floating point
+            maths. It uses normal Integer (long) values to store all the
+            information about the numbers, and thus skips the advanced maths
+            needed for Floating point values. Useful for divices without an
+            FPU or where the FPU is slow.
+
+
+utils.vala:
+            Collection of useful functions.
+
+            gobject_to_string ():
+            Just creates a string of all the properties in a gobject.
+
+            str_cmp ():
+            comprae two string (static function).
+
+            print_ln ():
+            print on a new line.
+
+exeptions.vala:
+            Useful exeption types.
