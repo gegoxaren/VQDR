@@ -26,15 +26,19 @@ namespace Utils {
   }
 
   private unowned StringBuilder internal_object_to_string (GLib.Object obj,
-                                                  ref StringBuilder str_builder) {
-    GLib.ObjectClass real_obj = (GLib.ObjectClass) obj.get_type ().class_ref ();
+                                                  ref StringBuilder str_builder,
+                                                  int nesting = 0) {
+    GLib.ObjectClass obj_class = (GLib.ObjectClass) obj.get_type ().class_ref ();
     
+    for (var i = 0; i < nesting; i++) {
+     str_builder.append ("\t");
+    }
     
-    str_builder.append ("(")
+    str_builder.append ("((")
                .append (obj.get_type().name ())
-               .append ("):\n");
+               .append_printf (")->(%p):\n", obj);
     
-    foreach (GLib.ParamSpec ps in real_obj.list_properties ()) {
+    foreach (GLib.ParamSpec ps in obj_class.list_properties ()) {
       
       if (ps.value_type == 0 || ps.value_type == GLib.Type.INVALID) {
         continue;
@@ -47,15 +51,20 @@ namespace Utils {
       if (prop_val.type () == GLib.Type.INVALID || prop_val.type () == 0) {
         continue;
       }
-      
+
       obj.get_property (prop_name, ref prop_val);
       
-      
+      for (var i = 0; i < nesting; i++) {
+        str_builder.append ("\t");
+      }
+
       str_builder.append ("\t(")
                  .append (prop_val.type_name ())
                  .append (") ")
                  .append (prop_name)
-                 .append (": ");
+                 .append (":");
+
+
       
       
       switch (prop_val.type ()) {
@@ -98,28 +107,6 @@ namespace Utils {
         case (GLib.Type.LONG):
           str_builder.append (prop_val.get_long ().to_string ());
         break;
-        case (GLib.Type.OBJECT):
-          str_builder.append_printf ("(Object: %p): \n", prop_val.dup_object ());
-          str_builder.append_c ('(');
-          internal_object_to_string (obj, ref str_builder)
-          .append (")\n");
-        break;
-        #if 0
-        /* /!\ NOTE: Invalid case /!\
-         * A ParamSpec can't "contain" a ParamSpec.
-         */
-        case (GLib.Type.PARAM):
-          var spsc = prop_val.get_param ();
-          if (spsc == null) {
-            str_builder.append ("(null)");
-          } else {
-            str_builder.append ("name: ")
-                       .append (spsc.name)
-                       .append (" type: ")
-                       .append (spsc.value_type.name ());
-          }
-        break;
-        #endif
         case (GLib.Type.POINTER):
           str_builder.append ("(")
                      .append_printf ("%p", prop_val.get_pointer ());
@@ -165,13 +152,23 @@ namespace Utils {
                        .append (")\n");
             tv = iter.next_value ();
           }
-          str_builder.append ("\t)");
           
         break;
+
       }
+      if (prop_val.type ().is_a (typeof (GLib.Object))) {
+        var new_nesting = nesting + 1;
+        GLib.Object? dup_obj = prop_val.dup_object ();
+        str_builder.append_printf ("->(%p):\n", dup_obj);
+        internal_object_to_string (dup_obj, ref str_builder, new_nesting);
+      }
+
       str_builder.append ("\n");
     }
-    
+    for (var i = 0; i < nesting; i++) {
+      str_builder.append ("\t");
+    }
+    str_builder.append (")\n");
     return str_builder;
   }
   
