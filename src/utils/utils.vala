@@ -94,7 +94,7 @@ namespace Utils {
           str_builder.append (prop_val.get_long ().to_string ());
         break;
         case (GLib.Type.OBJECT):
-          str_builder.append_printf ("%llX", (((long)((pointer)prop_val.dup_object ()))));
+          str_builder.append_printf ("0x%p", prop_val.dup_object ());
         break;
         #if 0
         /* /!\ NOTE: Invalid case /!\
