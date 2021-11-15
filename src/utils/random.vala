@@ -3,7 +3,7 @@
  *
  * Created by Gustav Hartivgsson.
  */
-namespace VQDR.Common {
+namespace Utils {
   
   /**
    * At the moment this just wraps the GLib Rand things.

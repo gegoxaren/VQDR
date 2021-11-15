@@ -1,6 +1,6 @@
 source_files = []
 
-subdir ('common')
+subdir ('utils')
 
 subdir ('libvqdr')
 

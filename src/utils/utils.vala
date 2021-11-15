@@ -4,7 +4,7 @@
  * Created by Gustav Hartivgsson.
  */
 
-namespace VQDR.Common.Utils {
+namespace Utils {
   public int str_cmp (string a, string b) {
     return a.collate (b);
   }

@@ -21,7 +21,7 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
 
     pool_size = get_pool_size (instance);
     if (pool_size > MAX_TOKEN_ITERATIONS) {
-        throw new Common.ParamError.OUT_OF_BOUNDS
+        throw new Utils.ParamError.OUT_OF_BOUNDS
           (@"$(this.get_type ().name ()) Pool index: $(get_pool_size (instance))");
     }
 
@@ -69,7 +69,7 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
         
         total_roll_number++;
         if (total_roll_number > MAX_TOKEN_ITERATIONS) {
-          throw new Common.LoopError.TO_LONG 
+          throw new Utils.LoopError.TO_LONG 
             (@"$(get_function_name (this.get_type ())): Loop took more than $MAX_TOKEN_ITERATIONS to complete.");
         }
         is_roll_again = true;

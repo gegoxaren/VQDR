@@ -1,4 +1,4 @@
-namespace VQDR.Common {
+namespace Utils {
   public errordomain ArgError {
     INVALID_ARGUMENT,
     INDEX_OUT_OF_BOUNDS,

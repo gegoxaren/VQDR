@@ -56,7 +56,7 @@ public class VQDR.Expression.Dice {
     
     int retval = modifier;
     for (size_t i = 1; i <= times; i++) {
-      int r = (VQDR.Common.Random.get_static_int () % faces).abs ();
+      int r = (Utils.Random.get_static_int () % faces).abs ();
       
       retval += r;
     }

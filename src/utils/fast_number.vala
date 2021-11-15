@@ -5,7 +5,7 @@
  */
 using GLib;
 
-namespace VQDR.Common {
+namespace Utils {
   
   /**
    * Fast Numbers are a decimal representation of numbers in the form of

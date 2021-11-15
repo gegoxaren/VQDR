@@ -13,18 +13,9 @@ test1 = executable ('test1',
                      dependencies: [test_dependencies, libvqdr_dep])
 test ('Test Suite 1', test1)
 
-test2_files = files ([
-  'common_test_runner.vala',
-  'gobject_to_string.vala',
-  'fast_number.vala',
-])
-
-test2 = executable ('test2',
-                     test2_files,
-                     dependencies: [test_dependencies, libvqdr_dep])
-
-test ('Test Suit 2', test2)
 
 subdir ('tokens')
+
+subdir ('utils')
 
 subdir_done ()

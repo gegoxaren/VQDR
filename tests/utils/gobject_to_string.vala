@@ -1,7 +1,8 @@
 using GLib;
 
-using VQDR.Common.Utils;
+using Utils;
 using VQDR.Expression;
+
 
 class MyTestClass : GLib.Object {
    public int prop_int {get; set;}
@@ -28,7 +29,7 @@ class MyTestClassVariant : GLib.Object {
 
 void gobject_to_string_test () {
   
-  Test.add_func ("/Common/Utils/gobject_to_string_int", () => {
+  Test.add_func (UTIL_TEST_GOBJECT_PREFIX + "int", () => {
     var v1 = GLib.Object.new (typeof (MyTestClassInt),
                                      prop_int: 1337);
     string got_string = object_to_string (v1);
@@ -45,7 +46,7 @@ void gobject_to_string_test () {
     }
   });
   
-  Test.add_func ("/Common/Utils/gobject_to_string_string", () => {
+  Test.add_func (UTIL_TEST_GOBJECT_PREFIX + "string", () => {
     var v1 = GLib.Object.new (typeof (MyTestClassString),
                                      prop_string: "string");
     
@@ -63,7 +64,7 @@ void gobject_to_string_test () {
     }
   });
   
-  Test.add_func ("/Common/Utils/gobject_to_string_bool", () => {
+  Test.add_func (UTIL_TEST_GOBJECT_PREFIX + "bool", () => {
     var v1 = GLib.Object.new (typeof (MyTestClassBool),
                                      prop_bool: true);
     
@@ -81,7 +82,7 @@ void gobject_to_string_test () {
     }
   });
   
-  Test.add_func ("/Common/Utils/gobject_to_string_variant", () => {
+  Test.add_func (UTIL_TEST_GOBJECT_PREFIX + "variant", () => {
     var my_var = new Variant ("(ssibb)", "aa", "bb", 10, false, true);
     var v1 = GLib.Object.new (typeof (MyTestClassVariant),
                                      prop_var: my_var);
