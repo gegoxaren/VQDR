@@ -20,9 +20,14 @@ namespace Utils {
   }
   
   public string object_to_string (GLib.Object obj) {
+     StringBuilder strbldr = new StringBuilder ();
+     internal_object_to_string (obj, ref strbldr);
+     return strbldr.str;
+  }
+
+  private unowned StringBuilder internal_object_to_string (GLib.Object obj,
+                                                  ref StringBuilder str_builder) {
     GLib.ObjectClass real_obj = (GLib.ObjectClass) obj.get_type ().class_ref ();
-    
-    var str_builder = new GLib.StringBuilder ();
     
     
     str_builder.append ("(")
@@ -94,7 +99,10 @@ namespace Utils {
           str_builder.append (prop_val.get_long ().to_string ());
         break;
         case (GLib.Type.OBJECT):
-          str_builder.append_printf ("0x%p", prop_val.dup_object ());
+          str_builder.append_printf ("(Object: %p): \n", prop_val.dup_object ());
+          str_builder.append_c ('(');
+          internal_object_to_string (obj, ref str_builder)
+          .append (")\n");
         break;
         #if 0
         /* /!\ NOTE: Invalid case /!\
@@ -114,12 +122,12 @@ namespace Utils {
         #endif
         case (GLib.Type.POINTER):
           str_builder.append ("(")
-                     .append_printf ("%llX", (((long)prop_val.get_pointer ())));
+                     .append_printf ("%p", prop_val.get_pointer ());
           str_builder.append (")");
         break;
         case (GLib.Type.BOXED):
           str_builder.append ("(")
-                     .append_printf ("%llX", (((long)prop_val.get_boxed ())));
+                     .append_printf ("%p", prop_val.get_boxed ());
           str_builder.append (")");
         break;
         case (GLib.Type.UCHAR):
@@ -164,7 +172,7 @@ namespace Utils {
       str_builder.append ("\n");
     }
     
-    return str_builder.str;
+    return str_builder;
   }
   
 }
