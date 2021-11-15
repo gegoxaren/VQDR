@@ -1,7 +1,7 @@
 util_test_files = files ([
   'prefixes.vala',
   'fast_number.vala',
-  'gobject_to_string.vala',
+  #'gobject_to_string.vala',
 
   'test_runner.vala'
 ])
