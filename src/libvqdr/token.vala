@@ -26,8 +26,10 @@ namespace VQDR.Expression {
      * with lower number.
      */
     public enum Prio {
+      /** invalid case. Prevents null-trap. */
+      INVALID = 0,
       /** Priority for assignment "=" operator */
-      ASSIGNMENT = 0,
+      ASSIGNMENT = 1,
       /** Priority for conditional OR "||" operator */
       CONDITIONAL_OR,
       /** Priority for conditional AND "&&" operator */
@@ -74,6 +76,44 @@ namespace VQDR.Expression {
             return "prio: function";
           case VALUE:
             return "prio: value";
+          default:
+            assert_not_reached ();
+        }
+      }
+
+      public Prio from_string (string name) {
+        var collected = collect_string (name.split (" ")).up ();
+        switch (collected) {
+          case "ASSIGMENT":
+          case "PRIO:ASSIGNMENT":
+            return ASSIGNMENT;
+          case "CONDITIONAL_OR":
+          case "PRIO:CONDITIONAL_OR":
+            return CONDITIONAL_OR;
+          case "CONDITIONAL_AND":
+          case "PRINO:CONDITIONAL_AND":
+            return CONDITIONAL_AND;
+          case "EQUALITY":
+          case "PRINO:EQUALITY":
+            return EQUALITY;
+          case "MULTIPLICATIVE":
+          case "PRINO:MULTIPLICATIVE":
+            return MULTIPLICATIVE;
+          case "UNARY":
+          case "PRINO:UNARY":
+            return UNARY;
+          case "LABEL":
+          case "PRINO:LABEL":
+            return LABEL;
+          case "DICE":
+          case "PRINO:DICE":
+            return DICE;
+          case "FUNCTON":
+          case "PRINO:FUNCTON":
+            return FUNCTION;
+          case "VALUE":
+          case "PRINO:VALUE":
+            return VALUE;
           default:
             assert_not_reached ();
         }

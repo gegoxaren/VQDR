@@ -11,18 +11,34 @@ namespace Utils {
   
   public void print_ln (string str, ...) {
     var va = va_list ();
-    
-    // Reallocate the string as it is not owned by the function.
     var tmp = str + "\n";
-    
-    // Hopefully this does not create any memony leaks. :-)
-    print (tmp.vprintf (va));
+    stdout.vprintf (tmp, va);
+  }
+
+  public void err_print_ln (string str, ...) {
+    var va = va_list ();
+    var tmp = str + "\n";
+    stderr.vprintf (tmp, va);
   }
   
   public string object_to_string (GLib.Object obj) {
      StringBuilder strbldr = new StringBuilder ();
      internal_object_to_string (obj, ref strbldr);
      return strbldr.str;
+  }
+
+  string collect_string (string[] segments) {
+    if (segments.length == 0) {
+      return "";
+    }
+    if (segments.length == 1) {
+      return segments[0];
+    }
+    StringBuilder strbldr = new StringBuilder ();
+    foreach (var segment in segments) {
+      strbldr.append (segment);
+    }
+    return strbldr.str;
   }
 
   private unowned StringBuilder internal_object_to_string (GLib.Object obj,

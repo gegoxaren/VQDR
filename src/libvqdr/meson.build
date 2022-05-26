@@ -9,6 +9,7 @@ libvqdr_source_files += files([
   'root_token.vala',
   'token.vala',
   'variable.vala',
+  'parser.vala',
   
   'function/abstract_pool_token.vala',
   'function/function_token.vala',
