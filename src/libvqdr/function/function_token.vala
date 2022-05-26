@@ -107,18 +107,14 @@ namespace VQDR.Expression {
         
       }
       
-      FunctionToken? retval = null;
-      
       // We get the token type.
       Type? t = _allowed_functions.@get (token.down ());
       
       if (t != null) {
           // Construct a new instance of the token.
-          retval = (FunctionToken) GLib.Object.@new (t, null, null);
-          
+          return (FunctionToken) GLib.Object.@new (t, null, null);
       }
-      
-      return retval;
+      return null;
     }
     
     /**

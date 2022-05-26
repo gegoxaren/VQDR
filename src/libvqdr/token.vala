@@ -53,7 +53,7 @@ namespace VQDR.Expression {
       /** Priority for values */
       VALUE,
       /** The number of values. */
-      NUM_VAL;
+      _NUM_VAL;
       
       /** get the name of the priority */
       public string to_string () {
