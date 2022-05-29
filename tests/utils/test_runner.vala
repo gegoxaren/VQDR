@@ -7,6 +7,8 @@ int main (string[] args) {
   
   //gobject_to_string_test ();
   fast_number_test ();
+
+  stack_test ();
   
   return Test.run ();
 }
