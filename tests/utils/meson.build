@@ -3,7 +3,8 @@ util_test_files = files ([
   'fast_number.vala',
   #'gobject_to_string.vala',
 
-  'test_runner.vala'
+  'test_runner.vala',
+  'stack.vala',
 ])
 
 utils_test_runnner = executable ('utils_test_runnner',
