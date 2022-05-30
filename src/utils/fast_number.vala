@@ -294,7 +294,7 @@ namespace Utils {
     public static extern long static_compare (FastNumber a, FastNumber b);
     
     private void parse_raw_number (string str) {
-      debug (@"(parse_raw_number) str: $str");
+      //debug (@"(parse_raw_number) str: $str");
       long ret_val = 0;
       int i_of_dot = str.index_of_char ('.');
       if (i_of_dot >= 0) {
@@ -307,7 +307,7 @@ namespace Utils {
           this.leading_zeros = i;
           // remove leading zeros
           intr_str = intr_str.substring (i);
-          debug (@"(parse_raw_number) Intermediate string: $intr_str");
+          //debug (@"(parse_raw_number) Intermediate string: $intr_str");
           ret_val = long.parse (intr_str);
         }
         
@@ -333,7 +333,7 @@ namespace Utils {
       } else {
         ret_val = (long.parse (str) * MUL_FACTOR);
       }
-      debug (@"(parse_raw_number) ret_val (finished): $ret_val\n");
+      //debug (@"(parse_raw_number) ret_val (finished): $ret_val\n");
       this.raw_number = ret_val;
     }
   }
