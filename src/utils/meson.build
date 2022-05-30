@@ -5,4 +5,8 @@ common_source_files += files ([
   'random.vala',
   'exceptions.vala',
   'fast_number.vala',
+  'stack.vala',
+  'range.vala',
+  'named_vector.vala',
+  'pair.vala',
 ])

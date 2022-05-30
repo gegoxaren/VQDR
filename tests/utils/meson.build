@@ -5,6 +5,7 @@ util_test_files = files ([
 
   'test_runner.vala',
   'stack.vala',
+  'named_vector.vala',
 ])
 
 utils_test_runnner = executable ('utils_test_runnner',
