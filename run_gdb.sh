@@ -10,7 +10,7 @@ while [ -h "$CWD_SOURCE" ]; do # resolve $SOURCE until the file is no longer a s
 done
 CWD="$( cd -P "$( dirname "$CWD_SOURCE" )" >/dev/null 2>&1 && pwd )"
 
-SOURCES_DIRS=(
+declare -a SOURCES_DIRS=(
   "src/"
   "src/common/"
   "src/libvqdr/"
@@ -27,9 +27,19 @@ SOURCES_DIRS=(
   "build/tests/"
   "build/tests/test1.p/"
   "build/tests/test2.p/"
+  "build/tests/utils"
 )
 
-SOURCES_DIRS2=()
+declare -a SOURCES_DIRS2=()
+
+# build param string
+PARAM_STR=""
+
+for str in "${SOURCES_DIRS[@]}"; do
+  PARAM_STR+=" --directory "
+  PARAM_STR+="${str}"
+done
+
 
 for val in "${SOURCES_DIRS[@]}"
 do
@@ -45,4 +55,4 @@ done
 #  fi
 # done
 
-
+gdb $PARAM_STR $@
