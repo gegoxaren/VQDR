@@ -18,6 +18,7 @@ declare -a SOURCES_DIRS=(
   "src/libvqdr/value/"
   "src/libvqdr/operator/"
   "build/libvqdr.so.p/"
+  "build/libvqdr.so.p/src/utils/"
   "build/libvqdr.so.p/src/"
   "build/libvqdr.so.p/src/common/"
   "build/libvqdr.so.p/src/libvqdr/"
@@ -27,7 +28,7 @@ declare -a SOURCES_DIRS=(
   "build/tests/"
   "build/tests/test1.p/"
   "build/tests/test2.p/"
-  "build/tests/utils"
+  "build/tests/utils/"
 )
 
 declare -a SOURCES_DIRS2=()
