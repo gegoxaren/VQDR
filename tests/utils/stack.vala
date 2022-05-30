@@ -14,6 +14,7 @@ void stack_test () {
       Test.message ("The newly created Stack" +
                     " has the reports it's not empty.");
     }
+    
   });
 
   Test.add_func (UTIL_TEST_STACK_PREFIX + "push_pop", () => {

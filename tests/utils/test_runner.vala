@@ -9,6 +9,8 @@ int main (string[] args) {
   fast_number_test ();
 
   stack_test ();
+
+  named_vector_test ();
   
   return Test.run ();
 }
