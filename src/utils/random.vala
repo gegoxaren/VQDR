@@ -14,7 +14,7 @@ namespace Utils {
   [CCode (cname = "VRandom", cprefix = "v_random_")]
   public class Random {
     
-    private static Random? _instance = null;
+    private static GLib.Once<Utils.Random> _instance;
     
     private GLib.Rand rand;
     
@@ -23,10 +23,9 @@ namespace Utils {
     }
     
     public static Random get_instance () {
-      if (_instance == null) {
-       _instance = new Random ();
-      }
-      return _instance;
+      return _instance.once (() => {
+        return new Random ();
+      });
     }
     
     /* **** Instance versions *** */
