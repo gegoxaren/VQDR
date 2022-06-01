@@ -40,7 +40,7 @@ void d6_test () {
       int32 count[7] = {0};
       int32 rolls = 1000000;
       for (size_t i = 0; i < rolls; i++) {
-        int32 r = d.roll ();
+        uint32 r = d.roll ();
         
         count[r] += 1;
       }
@@ -60,7 +60,7 @@ void d6_test () {
       int32 count[7] = {0};
       int32 rolls = 1000000;
       for (size_t i = 0; i < rolls; i++) {
-        int32 r = d.roll ();
+        uint32 r = d.roll ();
         
         count[r] += 1;
       }

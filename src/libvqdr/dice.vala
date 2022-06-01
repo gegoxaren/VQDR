@@ -41,7 +41,7 @@ public class VQDR.Expression.Dice {
     this.modifier = 0;
   }
   
-  public int32 roll () {
+  public uint32 roll () {
     if (faces <= 0) {
       return modifier;
     }
@@ -51,14 +51,12 @@ public class VQDR.Expression.Dice {
     }
     
     if (faces == 1) {
-      return ((int32) times) + modifier;
+      return times + modifier;
     }
     
-    int32 retval = modifier;
+    uint32 retval = modifier;
     for (size_t i = 1; i <= times; i++) {
-      // we have to do this ugly mess, as int32 is missing the abs () method.
-      // bug: https://gitlab.gnome.org/GNOME/vala/-/issues/1328
-      int32 r = ((int)(Utils.Random.get_static_int () % (int)faces)).abs ();
+      uint32 r = Utils.Random.get_static_int () % faces;
       
       retval += r;
     }

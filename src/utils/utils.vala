@@ -5,6 +5,10 @@
  */
 [CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
+  // int32 is missinng the abs method. This will have to do for the time being.
+  // BUG: https://gitlab.gnome.org/GNOME/vala/-/issues/1328
+  static int32 int32_abs (int32 N) { return ((N < 0) ? ( -N ) : (N)); }
+
   [CCode (cname = "v_str_cmp")]
   public int str_cmp (string a, string b) {
     return a.collate (b);
