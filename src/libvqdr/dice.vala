@@ -24,24 +24,24 @@ using GLib;
  * A Simple Represetation of a dice.
  */
 public class VQDR.Expression.Dice {
-  public uint times { get; set; }
-  public uint faces { get; set; }
-  public int modifier { get; set; }
+  public uint32 times { get; set; }
+  public uint32 faces { get; set; }
+  public int32 modifier { get; set; }
   
   
-  public Dice (uint times = 1, uint faces = 6, int modifier = 0) {
+  public Dice (uint32 times = 1, uint32 faces = 6, int32 modifier = 0) {
     this.times = times;
     this.faces = faces;
     this.modifier = modifier;
   }
   
-  public Dice.singel (int faces) {
+  public Dice.singel (int32 faces) {
     this.times = 1;
     this.faces = faces;
     this.modifier = 0;
   }
   
-  public int roll () {
+  public int32 roll () {
     if (faces <= 0) {
       return modifier;
     }
@@ -51,12 +51,14 @@ public class VQDR.Expression.Dice {
     }
     
     if (faces == 1) {
-      return ((int) times) + modifier;
+      return ((int32) times) + modifier;
     }
     
     int32 retval = modifier;
     for (size_t i = 1; i <= times; i++) {
-      int32 r = (Utils.Random.get_static_int () % (int)faces).abs ();
+      // we have to do this ugly mess, as int32 is missing the abs () method.
+      // bug: https://gitlab.gnome.org/GNOME/vala/-/issues/1328
+      int32 r = ((int)(Utils.Random.get_static_int () % (int)faces)).abs ();
       
       retval += r;
     }

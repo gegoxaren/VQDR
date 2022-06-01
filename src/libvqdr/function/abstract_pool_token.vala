@@ -8,9 +8,9 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
   }
 
   protected override void evaluate_self (Context instance) throws GLib.Error {
-    int roll_res = 0;
-    int pool_size = 0;
-    int successes = 0;
+    int32 roll_res = 0;
+    int32 pool_size = 0;
+    int32 successes = 0;
 
     this.result_value.number = 0;
 
@@ -26,9 +26,9 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
     }
 
     bool is_roll_again;
-    int total_roll_number = 0;
+    int32 total_roll_number = 0;
     // XXX
-    for (int i = 1; i <= pool_size; i++) {
+    for (int32 i = 1; i <= pool_size; i++) {
       is_roll_again = false;
       do {
         if (strbldr.len < MAX_TOKEN_STRING_LENGTH) {
@@ -102,7 +102,7 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
    *
    * @return ''true'' if another roll is required, ''false'' otherwise.
    */
-  protected virtual bool roll_again (Context instance, int roll_result, int pool_roll_number) {
+  protected virtual bool roll_again (Context instance, int32 roll_result, int32 pool_roll_number) {
     return false;
   }
 
@@ -114,18 +114,18 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
   /**
    * Return the pool size, or the number of rolls to performe.
    */
-  protected abstract int get_pool_size (Context instance);
+  protected abstract int32 get_pool_size (Context instance);
 
   /**
    * Returns the index of the parameter that contains the pool_size.
    */
-  protected abstract int get_pool_index ();
+  protected abstract int32 get_pool_index ();
 
 
   /**
    * Perform a roll and return the result.
    */
-  protected abstract int get_roll (Context instance) throws GLib.Error;
+  protected abstract int32 get_roll (Context instance) throws GLib.Error;
 
   /**
    * Count the number of successes obtained with this roll.
@@ -133,7 +133,7 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
    *
    * @return the number of Successes for this roll.
    */
-  protected abstract int count_successes (Context instance, int roll_result) throws GLib.Error;
+  protected abstract int32 count_successes (Context instance, int32 roll_result) throws GLib.Error;
 
   /**
    * Used to evetually performe controls after the pool rolls.

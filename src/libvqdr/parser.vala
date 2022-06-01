@@ -73,7 +73,7 @@ namespace VQDR {
       private size_t data_size = 0;
       private Array<Token> tokens = null;
       private char cur_char = 0;
-      private int index = -1;
+      private int32 index = -1;
 
       public Lexer (string data) {
         assert (data.length != 0);

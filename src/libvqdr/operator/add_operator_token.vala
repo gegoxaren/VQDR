@@ -4,7 +4,7 @@ namespace VQDR.Expression {
     
     public override bool is_unary {get; set; default = false;}
     
-    public override int priority {protected get {
+    public override int32 priority {protected get {
       if (is_unary) {
         return Prio.UNARY;
       } else {
@@ -17,7 +17,7 @@ namespace VQDR.Expression {
       
     }
     
-    public AddOperatorToken (int position) {
+    public AddOperatorToken (int32 position) {
       base (position);
     }
     

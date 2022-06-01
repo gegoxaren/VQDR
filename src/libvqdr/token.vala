@@ -5,18 +5,18 @@ namespace VQDR.Expression {
   
   public abstract class Token : GLib.Object {
     
-    //public static int VALUES_OUTPUT_PRECISION_FACTOR = (int)Math.pow(10, VALUES_OUTPUT_PRECISION_DIGITS);
+    //public static int32 VALUES_OUTPUT_PRECISION_FACTOR = (int)Math.pow(10, VALUES_OUTPUT_PRECISION_DIGITS);
     
     
     /** Max size of a single token */
-    public const int MAX_TOKEN_STRING_LENGTH = 64;
+    public const int32 MAX_TOKEN_STRING_LENGTH = 64;
     /** Max size of an expression */
-    public const int MAX_TOTAL_STRING_LENGTH = 200;
+    public const int32 MAX_TOTAL_STRING_LENGTH = 200;
 
     /** Max iteration number for a token (function) */
-    public const int MAX_TOKEN_ITERATIONS = 500;
+    public const int32 MAX_TOKEN_ITERATIONS = 500;
     /** Max iteration number for the expression */
-    public const int MAX_TOTAL_ITERATIONS = 5000;
+    public const int32 MAX_TOTAL_ITERATIONS = 5000;
     
     
     /**
@@ -123,7 +123,7 @@ namespace VQDR.Expression {
     }
 
     /** Generation to use to get the root with @link parent */
-    protected const int ROOT_GENERATION = int.MAX;
+    protected const int32 ROOT_GENERATION = int.MAX;
     
     /* ********************************************************************** */
     
@@ -135,23 +135,23 @@ namespace VQDR.Expression {
     /** The parent token of this token*/
     protected unowned Token? parent {protected get; protected set;}
     
-    public virtual int priority {public get; protected construct set;}
+    public virtual int32 priority {public get; protected construct set;}
     
     /** Starting position of the token in the expression */
-    protected int position;
+    protected int32 position;
     
     /** The index of the next child */
-    private int next_child;
+    private int32 next_child;
     
     /** 
      * The optional that this child represents.
      * 
      * 
      */
-    public int optional_num_child {public get; protected construct set;}
+    public int32 optional_num_child {public get; protected construct set;}
     
     /** The mandatory number of child this token can have */
-    public int mandatory_num_child {public get; protected construct set;}
+    public int32 mandatory_num_child {public get; protected construct set;}
     
     /** 
      * The maximum number of chidren 
@@ -161,7 +161,7 @@ namespace VQDR.Expression {
      * 
      * Can not be set.
      */
-    public int max_num_child {get {
+    public int32 max_num_child {get {
       return optional_num_child + mandatory_num_child;
      }}
      
@@ -187,7 +187,7 @@ namespace VQDR.Expression {
     }
     
     
-    protected Token (int position) {
+    protected Token (int32 position) {
       this.position = position;
     }
     
@@ -212,7 +212,7 @@ namespace VQDR.Expression {
      * 
      * and index of 0 is illegal.
      */
-    public unowned Token? get_child (int index) requires (index > 0 && index <= max_num_child) {
+    public unowned Token? get_child (int32 index) requires (index > 0 && index <= max_num_child) {
       
       return children[index -1 ];
     }
@@ -225,7 +225,7 @@ namespace VQDR.Expression {
      * 
      * and index of 0 is illegal.
      */
-    public void set_child (int index, Token? child) requires (index > 0 && index <= max_num_child) {
+    public void set_child (int32 index, Token? child) requires (index > 0 && index <= max_num_child) {
       
       children[index - 1] = child;
       

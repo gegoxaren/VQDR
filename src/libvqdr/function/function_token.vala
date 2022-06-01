@@ -88,7 +88,7 @@ namespace VQDR.Expression {
      * @param position Token position.
      * @return An instance representing the function, or @c null if not found.
      */
-    public static FunctionToken? init_token (string token, int position) {
+    public static FunctionToken? init_token (string token, int32 position) {
       
       if (_allowed_functions == null) {
         // Intialise the HashMap if it is not created.
@@ -144,7 +144,7 @@ namespace VQDR.Expression {
     }
     
     protected FastNumber get_optional_child_raw_result (Context instance,
-                                                  int index,
+                                                  int32 index,
                                                   int64 default_result)
                                                   throws GLib.Error {
      Token? tmp_roll = get_child (index);

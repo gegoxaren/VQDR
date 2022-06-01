@@ -1,9 +1,9 @@
 namespace Utils {
   [CCode (cname = "VStack", cprefix = "v_stack_")]
   public class Stack <T> {
-    private static int step_size = 11;
+    private static int32 step_size = 11;
     private T[] stack;
-    private int pntr;
+    private int32 pntr;
     public size_t elements {get {return pntr + 1;}}
     private size_t size;
     

@@ -8,7 +8,7 @@ namespace VQDR.Expression {
     public FastNumber max_val;
     public FastNumber current_val;
     
-    public Variable (int min = 0, int max = 0, int current = 0) {
+    public Variable (int32 min = 0, int32 max = 0, uint32 current = 0) {
       this.max_val.number = max;
       this.min_val.number = min;
       this.current_val.number = current;
@@ -39,7 +39,7 @@ namespace VQDR.Expression {
      * This is the same as @c compare. It is an alias to the same C function.
      */
     [CCode (cname = "vqdr_expression_variable_equals")]
-    public static extern int static_compare (Variable a, Variable b);
+    public static extern int32 static_compare (Variable a, Variable b);
     
     /**
      * Is this instance equal to the other?
@@ -48,7 +48,7 @@ namespace VQDR.Expression {
       return !(bool) this.compare (other);
     }
     
-    public bool equals_values (int min, int max, int current) {
+    public bool equals_values (int32 min, int32 max, int32 current) {
       return (this.current_val.number == current) &&
              (this.max_val.number == max) &&
              (this.min_val.number == min);

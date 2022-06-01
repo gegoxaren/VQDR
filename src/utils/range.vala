@@ -2,12 +2,12 @@ namespace Utils {
 
   public class RangeIterator {
     private Range range;
-    private int current;
+    private int32 current;
     public RangeIterator (Range range) {
       this.range = range;
       this.current = this.range.start;
     }
-     public int get () {
+     public int32 get () {
        return this.current;
      }
 
@@ -33,10 +33,10 @@ namespace Utils {
 
   public class Range {
     public bool reverse {get; private set;}
-    public int start {get; private set;}
-    public int end {get; private set;}
+    public int32 start {get; private set;}
+    public int32 end {get; private set;}
 
-    public Range (int start, int end) {
+    public Range (int32 start, int32 end) {
       if (start <= end) {
         this.reverse = false;
       } else {
