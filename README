@@ -13,22 +13,112 @@ For up-to-date code, go to:
 https://launchpad.net/vqdr
 
 BUILDING
-------------
-$ mkdir build
-$ cd build
-$ meson ..
-$ ninja
-------------
+
+  -------------
+  $ mkdir build
+  $ cd build
+  $ meson ..
+  $ ninja
+  -------------
 
 DICE EXPRESSION SYNTAX
 
-A dice expression is simple.
+  A dice expression is simple.
 
----- Basics ----
-[n]d[m], [n]t[m] - [n] dices with [m] sides.
-[e1] [op] [e2]   - Use operator [op] on expressions [e1] and [e2]
+  ---- Basics ----
+  [n]d[m], [n]t[m] - [n] dices with [m] sides.
+  [e1] [op] [e2]   - Use operator [op] on expressions [e1] and [e2]
+  
+  [func]([e...])   - Use function [func] on the expression(s) [e...]
+  ----------------
 
-[func]([e...])   - Use function [func] on the expression(s) [e...]
-----------------
+HACKING (DEVELOPMENT GUIDELINES)
 
+  Please use stardard vala naming convetion. This to make it as easy to read as
+  passible, and minimise any errors when interating with other libraries.
 
+  INDENTATION
+
+    Always use two spaces for indentation detween levels.
+  
+  INTEGER TYPES
+
+    Use int[n] types instead of int and long. This to guarentee that the
+    behviour is the same on all platforms.
+
+  TYPE NAMES
+    
+    All type names should start with a capital letter, and each word in the name
+    should start with a capital letter. No seperation should be made between
+    the words in the name.
+
+    --- vala ---
+    class ClownFactory {...}
+    ------------
+
+  FUNCTIONS AND METHODS
+    
+    Function and method namse should has the standard naming convetion of vala:
+    
+    --- vala ---
+    void foo_bar (int something);
+    -----------
+
+    * There should be a space befor the paranthesis.
+    * Use underlines to seperate words in the function name.
+
+    It is advicable to have the function names as short as possible, but also
+    descriptive. Sometimes this leads to a copromise between readability, and
+    brevity.
+
+  VARIABELS
+
+    When defining variables use underlines between words:
+
+    --- vala ---
+    string my_fun_string;
+    -----------
+
+  ENUMS
+   
+    When defining enums, make sure that the 0'th value is invalid, this to avoid
+    any potential NULL traps.
+
+    Always define a last value named _NUM_VAL, this will be used for validation
+    of data.
+
+    --- vala ---
+    enum Clowns {
+      INVALID = 0,
+      BENNY = 1,
+      CARL,
+      CRUSTY,
+      HOMER,
+      _NUM_VAL;
+    }
+    ------------
+
+    It is advicable to define a to_string method for the enums. To keep track
+    of the to_string functions cases, it is advicable to add a static assert
+    to the body of the function to catch problems at compile time.
+    
+    --- vala ---
+    enum Clowns {
+      ...,
+      _NUM_VAL;
+
+      public string to_string () {
+        static_assert (Clowns._NUM_VAL = 4 + 1);
+        switch (this) {
+          case (BENNY):
+            return "BENNY";
+          case (CARL):
+            return "CARL";
+          ....
+          default:
+            assert_not_reached ();
+        }
+      }
+    }
+    ------------
+    
