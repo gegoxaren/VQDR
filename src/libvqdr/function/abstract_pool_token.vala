@@ -150,7 +150,7 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
    *
    * @return the maximum pool size.
    */
-  protected virtual long get_max_pool_size (Context instance) throws GLib.Error {
+  protected virtual int64 get_max_pool_size (Context instance) throws GLib.Error {
     return get_pool_size (instance);
   }
 

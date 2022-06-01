@@ -302,6 +302,7 @@ namespace Utils {
         if ((str.length - 1 > i_of_dot)) {
           var intr_str = (str + "000").substring (i_of_dot + 1);
           // count leading zeros.
+          // (Must be type long, as that is what string.substring () expects.)
           long i;
           for (i = 0; intr_str.@get (i) == '0'; i++){}
           this.leading_zeros = i;
