@@ -3,7 +3,7 @@ namespace VQDR.Expression {
   public class RootToken : Token {
     
     construct {
-      this.priority = 0;
+      this.priority = Prio.ASSIGNMENT;
       this.mandatory_num_child = 1;
       this.optional_num_child = 0;
     }

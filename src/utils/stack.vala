@@ -1,3 +1,9 @@
+/*
+ * The contects of this file is in the Public Domain.
+ *
+ * Created by Gustav Hartivgsson.
+ */
+[CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
   [CCode (cname = "VStack", cprefix = "v_stack_")]
   public class Stack <T> {

@@ -30,7 +30,7 @@ namespace VQDR.Expression {
       // We check the precidence of the token, and inclose the value if
       // it has a lower precidence than multiply, if it is, we enclose it in a
       // praranthesis.
-      if (l_child.priority > 0 && l_child.priority < priority) {
+      if (l_child.priority > Prio.ASSIGNMENT && l_child.priority < priority) {
         sb.append ("(").append (l_child.result_string).append (")");
         //l_child.result_string = "(" + l_child.result_string + ")";
       } else {
@@ -40,7 +40,7 @@ namespace VQDR.Expression {
       sb.append ("*");
       
       // We do the same with the othre child.
-      if (r_child.priority > 0 && r_child.priority < priority) {
+      if (r_child.priority > Prio.ASSIGNMENT && r_child.priority < priority) {
         sb.append ("(").append (r_child.result_string).append (")");
         //r_child.result_string = "(" + r_child.result_string + ")";
       } else {

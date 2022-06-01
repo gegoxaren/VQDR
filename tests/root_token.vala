@@ -8,6 +8,6 @@ void root_token_test () {
   
   Test.add_func ("/VQDR/Expression/TokenRoot/priority", () => {
      RootToken t = new RootToken ();
-     assert (t.priority == 0);
+     assert (t.priority == Token.Prio.ASSIGNMENT);
   });
 }

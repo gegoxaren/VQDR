@@ -57,64 +57,66 @@ namespace VQDR.Expression {
       
       /** get the name of the priority */
       public string to_string () {
+        // We have to add 1 as we have an invalid case at zero.
+        static_assert (_NUM_VAL == 12 + 1);
         switch (this) {
           case ASSIGNMENT:
-            return "prio: assigment";
+            return "ASSIGNMENT";
           case CONDITIONAL_OR:
-            return "prio: conditonal OR";
+            return "CONDITIONAL_OR";
           case CONDITIONAL_AND:
-            return "prio: conidonal AND";
+            return "CONDITIONAL_AND";
           case EQUALITY:
-            return "prio: equality";
+            return "EQUALITY";
+          case COMPARISON:
+            return "COMPARISON";
+          case ADDICTIVE:
+            return "ADDICTIVE";
           case MULTIPLICATIVE:
-            return "prio: multiplicative";
+            return "MULTIPLICATIVE";
           case UNARY:
-            return "prio: unary";
+            return "UNARY";
           case LABEL:
-            return "prio: label";
+            return "LABEL";
           case DICE:
-            return "prio: dice";
+            return "DICE";
           case FUNCTION:
-            return "prio: function";
+            return "FUNCTION";
           case VALUE:
-            return "prio: value";
+            return "VALUE";
           default:
             assert_not_reached ();
         }
       }
 
       public Prio from_string (string name) {
-        var collected = collect_string (name.split (" ")).up ();
+        // We have to add 1 as we have an invalid case at zero.
+        static_assert (_NUM_VAL == 12 + 1);
+        var collected = name.up ();
         switch (collected) {
           case "ASSIGMENT":
-          case "PRIO:ASSIGNMENT":
             return ASSIGNMENT;
           case "CONDITIONAL_OR":
-          case "PRIO:CONDITIONAL_OR":
             return CONDITIONAL_OR;
           case "CONDITIONAL_AND":
-          case "PRINO:CONDITIONAL_AND":
             return CONDITIONAL_AND;
           case "EQUALITY":
-          case "PRINO:EQUALITY":
             return EQUALITY;
+          case "COMPARISON":
+            return COMPARISON;
+          case "ADDICTIVE":
+            return ADDICTIVE;
           case "MULTIPLICATIVE":
-          case "PRINO:MULTIPLICATIVE":
             return MULTIPLICATIVE;
           case "UNARY":
-          case "PRINO:UNARY":
             return UNARY;
           case "LABEL":
-          case "PRINO:LABEL":
             return LABEL;
           case "DICE":
-          case "PRINO:DICE":
             return DICE;
           case "FUNCTON":
-          case "PRINO:FUNCTON":
             return FUNCTION;
           case "VALUE":
-          case "PRINO:VALUE":
             return VALUE;
           default:
             assert_not_reached ();
@@ -135,13 +137,15 @@ namespace VQDR.Expression {
     /** The parent token of this token*/
     protected unowned Token? parent {protected get; protected set;}
     
-    public virtual int priority {public get; protected construct set;}
+    public virtual Prio priority {public get; protected construct set;}
     
     /** Starting position of the token in the expression */
-    protected int position;
+    public int position {get; protected set;}
     
+    private int internal_next_child_num;
     /** The index of the next child */
-    private int next_child;
+    public int next_child_num {get {return internal_next_child_num;}
+                 protected set{internal_next_child_num = value;}}
     
     /** 
      * The optional that this child represents.
@@ -179,7 +183,7 @@ namespace VQDR.Expression {
     
     construct {
       children = new Token[max_num_child];
-      next_child = 0;
+      next_child_num = 0;
       
       result_value = FastNumber ();
       result_max_value = FastNumber ();
@@ -217,6 +221,10 @@ namespace VQDR.Expression {
       return children[index -1 ];
     }
     
+    public void set_next_child (Token child) throws ArgError {
+      next_child_num++;
+      set_child (next_child_num, child);
+    }
     
     /**
      * Set a child token to this this token.

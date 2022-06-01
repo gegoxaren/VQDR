@@ -4,7 +4,7 @@
  * Created by Gustav Hartivgsson.
  */
 using GLib;
-
+[CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
   
   /**
@@ -24,6 +24,7 @@ namespace Utils {
    * }}}
    *
    */
+  [CCode (cname = "VFastNumber", cprefix = "v_fast_number_")]
   public struct FastNumber {
     
     /** Precision used to output values */

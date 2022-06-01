@@ -1,5 +1,11 @@
+/*
+ * The contects of this file is in the Public Domain.
+ *
+ * Created by Gustav Hartivgsson.
+ */
+[CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
-
+  [CCode (cname = "VRangeIterator", cprefix = "v_range_iterator_")]
   public class RangeIterator {
     private Range range;
     private int current;
@@ -30,7 +36,7 @@ namespace Utils {
     }
   }
 
-
+  [CCode (cname = "VRange", cprefix = "v_range_")]
   public class Range {
     public bool reverse {get; private set;}
     public int start {get; private set;}

@@ -20,7 +20,6 @@ declare -a SOURCES_DIRS=(
   "build/libvqdr.so.p/"
   "build/libvqdr.so.p/src/utils/"
   "build/libvqdr.so.p/src/"
-  "build/libvqdr.so.p/src/common/"
   "build/libvqdr.so.p/src/libvqdr/"
   "build/libvqdr.so.p/src/libvqdr/function/"
   "build/libvqdr.so.p/src/libvqdr/operator/"

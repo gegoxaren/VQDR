@@ -3,24 +3,28 @@
  *
  * Created by Gustav Hartivgsson.
  */
-
+[CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
+  [CCode (cname = "v_str_cmp")]
   public int str_cmp (string a, string b) {
     return a.collate (b);
   }
   
+  [CCode (cname = "v_print_ln")]
   public void print_ln (string str, ...) {
     var va = va_list ();
     var tmp = str + "\n";
     stdout.vprintf (tmp, va);
   }
 
+  [CCode (cname = "v_err_print_ln")]
   public void err_print_ln (string str, ...) {
     var va = va_list ();
     var tmp = str + "\n";
     stderr.vprintf (tmp, va);
   }
-  
+
+  [CCode (cname = "v_object_to_string")]
   public string object_to_string (GLib.Object obj) {
      StringBuilder strbldr = new StringBuilder ();
      internal_object_to_string (obj, ref strbldr);
@@ -41,7 +45,8 @@ namespace Utils {
     return strbldr.str;
   }
 
-  private unowned StringBuilder internal_object_to_string (GLib.Object obj,
+  [CCode (cname = "v_internal_object_to_string")]
+  internal unowned StringBuilder internal_object_to_string (GLib.Object obj,
                                                   ref StringBuilder str_builder,
                                                   int nesting = 0) {
     GLib.ObjectClass obj_class = (GLib.ObjectClass) obj.get_type ().class_ref ();

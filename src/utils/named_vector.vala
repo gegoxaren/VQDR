@@ -1,5 +1,11 @@
+/*
+ * The contects of this file is in the Public Domain.
+ *
+ * Created by Gustav Hartivgsson.
+ */
+[CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
-  [Compact] // Using compact does not compile for some reason.
+  [CCode (cname = "VNamedVector", cprefix = "v_named_vector_")]
   public class NamedVector<T> {
     public T[] values;
     public string[] names;

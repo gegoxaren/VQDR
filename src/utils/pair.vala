@@ -1,5 +1,11 @@
+/*
+ * The contects of this file is in the Public Domain.
+ *
+ * Created by Gustav Hartivgsson.
+ */
+[CCode (cname = "V", cprefix = "v_")]
 namespace  Utils {
-  [Compact]
+  [CCode (cname = "VPair", cprefix = "v_pair_")]
   public class Pair<T1, T2> {
     public T1 v1;
     public T2 v2;

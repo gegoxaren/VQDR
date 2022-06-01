@@ -3,6 +3,7 @@
  *
  * Created by Gustav Hartivgsson.
  */
+[CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
   
   /**
@@ -10,6 +11,7 @@ namespace Utils {
    * 
    * This also provides a static version of the methods.
    */
+  [CCode (cname = "VRandom", cprefix = "v_random_")]
   public class Random {
     
     private static Random? _instance = null;
