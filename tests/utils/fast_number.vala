@@ -71,8 +71,9 @@ void fast_number_test () {
       Test.message (@"Expeted: $expected_val, got: $out_val.");
     }
   });
+
   Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "divide", () => {
-    var expected_val = 0;
+    var expected_val = 669;
     var f1 = FastNumber (1338);
     var f2 = FastNumber (2);
     FastNumber f3 = {0};
@@ -83,15 +84,16 @@ void fast_number_test () {
       Utils.print_ln ("Error: %s\n", e.message);
     }
     var out_val = f3.number;
-    if (out_val != 669) {
+    if (out_val != expected_val) {
       Test.fail ();
       Test.message ("The added numbers do not match the expected value");
       Test.message (@"Expeted: $expected_val, got: $out_val.");
+      Test.message (@"Raw value: $(f3.raw_number)");
     }
   });
-  
+
   Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "divide2", () => {
-    var expected_val = 0;
+    var expected_val = 4;
     var f1 = FastNumber (4444);
     var f2 = FastNumber (1111);
     FastNumber f3 = {0};
@@ -102,10 +104,11 @@ void fast_number_test () {
       Utils.print_ln ("Error: %s\n", e.message);
     }
     var out_val = f3.number;
-    if (out_val != 4) {
+    if (out_val != expected_val) {
       Test.fail ();
       Test.message ("The added numbers do not match the expected value");
       Test.message (@"Expeted: $expected_val, got: $out_val.");
+      Test.message (@"Raw value: $(f3.raw_number)");
     }
   });
   

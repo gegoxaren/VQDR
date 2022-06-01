@@ -1,5 +1,4 @@
 namespace Utils {
-  [Compact] // Using compact does not compile for some reason.
   public class NamedVector<T> {
     public T[] values;
     public string[] names;

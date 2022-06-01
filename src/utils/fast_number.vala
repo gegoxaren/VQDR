@@ -27,22 +27,22 @@ namespace Utils {
   public struct FastNumber {
     
     /** Precision used to output values */
-    public const int PRECISION_DIGITS = 2;
+    public const int32 PRECISION_DIGITS = 2;
     
     /** Precision factor used to evaluate output */
-    public const int PRECISION_FACTOR = 100;
+    public const int32 PRECISION_FACTOR = 100;
     
-    public const int MUL_FACTOR = PRECISION_FACTOR * 10;
+    public const int32 MUL_FACTOR = PRECISION_FACTOR * 10;
     
-    public long raw_number;
+    public int64 raw_number;
     
-    public long leading_zeros;
+    public int64 leading_zeros;
     
     /* XXX
      * I'm not happy using getters/setters in this struct...
      * But I tink it'll have to do for simplicity.
      */
-    public long number {
+    public int64 number {
       public get {return (this.raw_number / MUL_FACTOR);}
       public set {
         this.raw_number = (MUL_FACTOR * value);
@@ -61,7 +61,7 @@ namespace Utils {
      * 
      * @param decimal  The decimal part of the number. Defaults to 0.
      */
-    public FastNumber (long number = 0) {
+    public FastNumber (int64 number = 0) {
       if (number != 0) {
         this.raw_number = (number * MUL_FACTOR);
       } else {
@@ -87,7 +87,7 @@ namespace Utils {
     /**
      * Initialises a FastNumber with the internal representation of that number.
      */
-    public FastNumber.raw (long raw) {
+    public FastNumber.raw (int64 raw) {
       this.raw_number = raw;
     }
     
@@ -189,7 +189,7 @@ namespace Utils {
     }
     
     [CCode (cname = "vqdr_common_fast_number_compare")]
-    public long compare (FastNumber other) {
+    public int64 compare (FastNumber other) {
       return this.raw_number - other.raw_number;
     }
     
@@ -200,7 +200,7 @@ namespace Utils {
      */
     public FastNumber round_up () {
       FastNumber ret;
-      long decimal = raw_number % PRECISION_FACTOR;
+      int64 decimal = raw_number % PRECISION_FACTOR;
       if (decimal > 0) {
         ret = FastNumber.raw (raw_number + PRECISION_FACTOR - decimal);
       } else {
@@ -216,7 +216,7 @@ namespace Utils {
      */
     public FastNumber round_down () {
       FastNumber ret;
-      long decimal = raw_number % PRECISION_FACTOR;
+      int64 decimal = raw_number % PRECISION_FACTOR;
       if (decimal < 0) {
         // Is this ever reached?
         ret = FastNumber.raw (raw_number - PRECISION_FACTOR - decimal);
@@ -240,10 +240,10 @@ namespace Utils {
         ret_val = (this.raw_number / MUL_FACTOR).to_string ();
       } else {
         // Copy stuff so we don't accidentality stomp them.
-        long _raw_number = this.raw_number;
+        int64 _raw_number = this.raw_number;
         
-        long _integer_part = (_raw_number / MUL_FACTOR);
-        long _decimal_part = (_raw_number - (_integer_part * MUL_FACTOR));
+        int64 _integer_part = (_raw_number / MUL_FACTOR);
+        int64 _decimal_part = (_raw_number - (_integer_part * MUL_FACTOR));
         
         var strbldr = new GLib.StringBuilder ();
         
@@ -275,7 +275,7 @@ namespace Utils {
       return double.parse (this.to_string (true));
     }
     
-    public long to_int () {
+    public int64 to_int () {
        return (this.raw_number / MUL_FACTOR);
     }
     
@@ -291,11 +291,11 @@ namespace Utils {
     
     
     [CCode (cname = "vqdr_common_fast_number_compare")]
-    public static extern long static_compare (FastNumber a, FastNumber b);
+    public static extern int64 static_compare (FastNumber a, FastNumber b);
     
     private void parse_raw_number (string str) {
       //debug (@"(parse_raw_number) str: $str");
-      long ret_val = 0;
+      int64 ret_val = 0;
       int i_of_dot = str.index_of_char ('.');
       if (i_of_dot >= 0) {
         // Get the decimal number from the string, if such a thing exists.
@@ -308,7 +308,7 @@ namespace Utils {
           // remove leading zeros
           intr_str = intr_str.substring (i);
           //debug (@"(parse_raw_number) Intermediate string: $intr_str");
-          ret_val = long.parse (intr_str);
+          ret_val = int64.parse (intr_str);
         }
         
         // debug (@"(parse_raw_number) i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
@@ -327,11 +327,11 @@ namespace Utils {
         // debug (@"ret_val (normalised): $ret_val\n");
         
         // get integer number
-        ret_val = ret_val + (long.parse (str.substring (0, i_of_dot))
+        ret_val = ret_val + (int64.parse (str.substring (0, i_of_dot))
                             * MUL_FACTOR);
         
       } else {
-        ret_val = (long.parse (str) * MUL_FACTOR);
+        ret_val = (int64.parse (str) * MUL_FACTOR);
       }
       //debug (@"(parse_raw_number) ret_val (finished): $ret_val\n");
       this.raw_number = ret_val;

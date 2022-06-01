@@ -12,22 +12,15 @@ CWD="$( cd -P "$( dirname "$CWD_SOURCE" )" >/dev/null 2>&1 && pwd )"
 
 declare -a SOURCES_DIRS=(
   "src/"
-  "src/common/"
   "src/libvqdr/"
-  "src/libvqdr/function/"
-  "src/libvqdr/value/"
-  "src/libvqdr/operator/"
+  "src/libvqdr/utils/"
   "build/libvqdr.so.p/"
   "build/libvqdr.so.p/src/"
-  "build/libvqdr.so.p/src/common/"
   "build/libvqdr.so.p/src/libvqdr/"
-  "build/libvqdr.so.p/src/libvqdr/function/"
-  "build/libvqdr.so.p/src/libvqdr/operator/"
-  "build/libvqdr.so.p/src/libvqdr/value/"
+  "build/libvqdr.so.p/src/libvqdr/untils/"
   "build/tests/"
   "build/tests/test1.p/"
-  "build/tests/test2.p/"
-  "build/tests/utils"
+  "build/tests/utils/"
 )
 
 declare -a SOURCES_DIRS2=()

@@ -24,12 +24,12 @@ using GLib;
  * A Simple Represetation of a dice.
  */
 public class VQDR.Expression.Dice {
-  public int times { get; set; }
-  public int faces { get; set; }
+  public uint times { get; set; }
+  public uint faces { get; set; }
   public int modifier { get; set; }
   
   
-  public Dice (int times = 1, int faces = 6, int modifier = 0) {
+  public Dice (uint times = 1, uint faces = 6, int modifier = 0) {
     this.times = times;
     this.faces = faces;
     this.modifier = modifier;
@@ -51,12 +51,12 @@ public class VQDR.Expression.Dice {
     }
     
     if (faces == 1) {
-      return times + modifier;
+      return ((int) times) + modifier;
     }
     
-    int retval = modifier;
+    int32 retval = modifier;
     for (size_t i = 1; i <= times; i++) {
-      int r = (Utils.Random.get_static_int () % faces).abs ();
+      int32 r = (Utils.Random.get_static_int () % (int)faces).abs ();
       
       retval += r;
     }

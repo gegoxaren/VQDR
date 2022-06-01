@@ -6,7 +6,7 @@ namespace VQDR.Expression {
       mandatory_num_child = 0;
     }
     
-    public ConstantValueToken (long val, int position) {
+    public ConstantValueToken (int64 val, int position) {
       base (position);
       this.result_value.number = val;
       this.result_min_value.number = val;

@@ -21,7 +21,7 @@ namespace VQDR.Expression {
       this.current_val.copy (other.current_val);
     }
     
-    public long compare (Variable other) {
+    public int64 compare (Variable other) {
       if (! this.current_val.equals (other.current_val)) {
         return this.current_val.compare (other.current_val);
       } else if (! this.max_val.equals (other.max_val)) {

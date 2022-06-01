@@ -33,8 +33,8 @@ namespace VQDR.Expression {
       Dice dice;
       
       int l_result;
-      long l_max_result;
-      long l_min_result;
+      int64 l_max_result;
+      int64 l_min_result;
       
       var r_child = get_left_child ();
       var l_child = get_right_child ();
