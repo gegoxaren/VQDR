@@ -22,7 +22,8 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
     pool_size = get_pool_size (instance);
     if (pool_size > MAX_TOKEN_ITERATIONS) {
         throw new Utils.ParamError.OUT_OF_BOUNDS
-          (@"$(this.get_type ().name ()) Pool index: $(get_pool_size (instance))");
+          (@"$(this.get_type ().name ())" +
+           " Pool index: $(get_pool_size (instance))");
     }
 
     bool is_roll_again;

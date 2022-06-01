@@ -5,9 +5,6 @@ namespace VQDR.Expression {
   
   public abstract class Token : GLib.Object {
     
-    //public static int32 VALUES_OUTPUT_PRECISION_FACTOR = (int)Math.pow(10, VALUES_OUTPUT_PRECISION_DIGITS);
-    
-    
     /** Max size of a single token */
     public const int32 MAX_TOKEN_STRING_LENGTH = 64;
     /** Max size of an expression */
@@ -140,7 +137,7 @@ namespace VQDR.Expression {
     public virtual Prio priority {public get; protected construct set;}
     
     /** Starting position of the token in the expression */
-    protected int32 position;
+    public int32 position {public get; protected set;}
     
     private int internal_next_child_num;
     /** The index of the next child */
@@ -216,7 +213,8 @@ namespace VQDR.Expression {
      * 
      * and index of 0 is illegal.
      */
-    public unowned Token? get_child (int32 index) requires (index > 0 && index <= max_num_child) {
+    public unowned Token? get_child (int32 index)
+                          requires (index > 0 && index <= max_num_child) {
       
       return children[index -1 ];
     }
@@ -233,7 +231,8 @@ namespace VQDR.Expression {
      * 
      * and index of 0 is illegal.
      */
-    public void set_child (int32 index, Token? child) requires (index > 0 && index <= max_num_child) {
+    public void set_child (int32 index, Token? child)
+                requires (index > 0 && index <= max_num_child) {
       
       children[index - 1] = child;
       

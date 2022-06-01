@@ -4,6 +4,10 @@ using GLib;
 void named_vector_test () {
   Test.add_func (UTIL_TEST_NAMED_VECTOR_PREFIX + "new", () => {
     var nv = new NamedVector<int> ("Hello,", 13, "world", 37, "!!", 69);
+    if (nv == null) {
+      Test.fail ();
+      Test.message ("`new NamedVector ()` returned a null.");
+    }
   });
 
   Test.add_func (UTIL_TEST_NAMED_VECTOR_PREFIX + "sanity", () => {

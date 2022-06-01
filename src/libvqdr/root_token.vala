@@ -13,7 +13,8 @@ namespace VQDR.Expression {
       this.set_child (1, root);
     }
     
-    protected override void evaluate_self (Context instance) throws GLib.Error {
+    protected override void evaluate_self (Context instance)
+                            throws GLib.Error {
       Token? child = get_child (1);
       child.evaluate (instance);
       this.result_value = child.result_value;

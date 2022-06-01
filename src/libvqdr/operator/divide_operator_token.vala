@@ -49,8 +49,10 @@ namespace VQDR.Expression {
       
       sb.append (")");
       
-      result_value = l_child.result_value.divide (l_child.result_value);
-      result_max_value = l_child.result_max_value.divide (l_child.result_max_value);
+      result_value = l_child.result_value
+                     .divide (l_child.result_value);
+      result_max_value = l_child.result_max_value
+                         .divide (l_child.result_max_value);
       reorder_max_min_values ();
       result_string = sb.str;
        

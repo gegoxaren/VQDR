@@ -196,7 +196,8 @@ namespace VQDR.Expression {
       if (context != null) {
         try {
           foreach (var key in variable_keys) {
-            variable_cache.insert (key, Variable.copy (context.get_variable (key)));
+            variable_cache.insert (key, Variable.copy
+                                   (context.get_variable (key)));
           }
         } catch (Error e) {
           err_print_ln ("Something went wrong: (%: %)", e.domain, e.message);
@@ -251,7 +252,8 @@ namespace VQDR.Expression {
      * @param operand_stack stack
      * @param operator operator.
      */
-    protected void add_node (Stack<Token> operand_stack, Token operator) throws Error {
+    protected void add_node (Stack<Token> operand_stack,
+                             Token operator) throws Error {
       if (operator is FunctionToken) {
         FunctionToken funk = (FunctionToken) operator;
         int32 param_num = funk.next_child_num;
@@ -261,13 +263,16 @@ namespace VQDR.Expression {
 
           operand_stack.push (funk);
         }
-      } else if (operator is UnaryOperator && ((UnaryOperator) operator).is_unary) {
+      } else if (operator is UnaryOperator &&
+                 ((UnaryOperator) operator).is_unary) {
         if (operand_stack.elements < 1) {
-          throw new OperandError.MISSING_OPERAND (@"Missing operand. Position: $(operator.position)");
+          throw new OperandError.MISSING_OPERAND
+                    (@"Missing operand. Position: $(operator.position)");
         }
       } else {
         if (operand_stack.elements < 2) {
-          throw new OperandError.MISSING_OPERAND (@"Missing operand. Position: $(operator.position)");
+          throw new OperandError.MISSING_OPERAND
+                    (@"Missing operand. Position: $(operator.position)");
         }
         operator.set_right_child (operand_stack.pop ());
         operator.set_left_child (operand_stack.pop ());

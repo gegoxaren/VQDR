@@ -57,14 +57,14 @@ namespace VQDR.Expression {
       dice = new Dice (l_result, (int32) r_child.result_value.number);
       result_value = FastNumber (dice.roll ());
       
-      /*Max Result: The max of the dice faces multiplied my the max of the dice
-       * numbers.
+      /* Max Result: The max of the dice faces multiplied my the max of the
+       * dice numbers.
        */
       // This was very complicated for no reason in the original code...
       result_max_value = FastNumber (l_max_result * 
                                      r_child.result_max_value.number);
-      /* Min Result: The min of the dice faces multiplied my the max of the dice
-       * numbers.
+      /* Min Result: The min of the dice faces multiplied my the max of the
+       * dice numbers.
        */
       // This was very complicated for no reason in the original code...
       result_max_value = FastNumber (l_min_result * 

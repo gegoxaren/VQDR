@@ -80,11 +80,13 @@ test_value_token () {
       int64 out_val = root_t.result_value.number;
       
       if (out_val != in_val) {
-        GLib.Test.message (@"The values do not match: Expected $(in_val), got $(out_val).\n");
+        GLib.Test.message (@"The values do not match: Expected $(in_val), " +
+                           " got $(out_val).\n");
         GLib.Test.fail ();
       }
     } catch (GLib.Error? e) {
-       GLib.Test.message (@"An error occured: domain: $(e.domain), message: $(e.message)");
+       GLib.Test.message (@"An error occured: domain: $(e.domain)," +
+                          " message: $(e.message)");
        GLib.Test.fail ();
     }
   });

@@ -9,7 +9,8 @@ namespace VQDR.Expression {
       return new ConstantValueToken (val, position);
     }
     
-    public static ValueToken? init_variable_token (string name, int32 position) {
+    public static ValueToken? init_variable_token (string name,
+                                                   int32 position) {
       return new VariableValueToken (name, position);
     }
     

@@ -18,7 +18,8 @@ namespace VQDR.Expression {
     // We only store the type, as that is what is important.
     private static Gee.HashMap<string, Type?> _allowed_functions;
     
-    protected const int64 UNDEFINED = int64.MIN + 1; //+1 so that I can still use int64.MIN_VALUE.
+    // +1 so that I can still use int64.MIN_VALUE.
+    protected const int64 UNDEFINED = int64.MIN + 1; 
     /** Right arrow */
     protected const string CH_RARR = "\u2192";
     /** Left arrow */
@@ -72,7 +73,9 @@ namespace VQDR.Expression {
     /** Truncated output: equal */
     protected const string SYM_TRUNK_PART_EQUAL = CH_EQUAL; //"="
     /** Truncated output: begin */
-    protected const string SYM_TRUNK_BEGIN = SYM_BEGIN + SYM_TRUNK_PART_ELLIPSIS + SYM_TRUNK_PART_EQUAL; //"[...="
+    protected const string SYM_TRUNK_BEGIN = SYM_BEGIN
+                                           + SYM_TRUNK_PART_ELLIPSIS
+                                           + SYM_TRUNK_PART_EQUAL; //"[...="
     /** Truncated output: end */
     protected const string SYM_TRUNK_END = SYM_END; //"]"
     

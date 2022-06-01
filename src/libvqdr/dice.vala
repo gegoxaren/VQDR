@@ -74,7 +74,9 @@ public class VQDR.Expression.Dice {
     StringBuilder retval = new StringBuilder ();
     
     if (times > 0) {
-      retval.append (times.to_string ()).append_c ('d').append (faces.to_string ());
+      retval.append (times.to_string ())
+            .append_c ('d')
+            .append (faces.to_string ());
     }
     if (modifier > 0) {
         retval.append_c ('+').append (modifier.to_string ());
