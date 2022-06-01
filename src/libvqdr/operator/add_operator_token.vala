@@ -17,7 +17,7 @@ namespace VQDR.Expression {
       
     }
     
-    public AddOperatorToken (int position) {
+    public AddOperatorToken (int32 position) {
       base (position);
     }
     

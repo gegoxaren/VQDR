@@ -67,7 +67,7 @@ test_value_token () {
   
   GLib.Test.add_func ("/VQDR/Expression/Token/Value/Constant", () => {
     try {
-      long in_val = 12;
+      int64 in_val = 12;
       
       var ctx = new Context ();
       
@@ -77,15 +77,14 @@ test_value_token () {
       
       root_t.evaluate (ctx);
       
-      long out_val = root_t.result_value.number;
+      int64 out_val = root_t.result_value.number;
       
       if (out_val != in_val) {
-        GLib.Test.message ("The values do not match: Expected %li, got %li.\n",
-                           in_val, out_val);
+        GLib.Test.message (@"The values do not match: Expected $(in_val), got $(out_val).\n");
         GLib.Test.fail ();
       }
     } catch (GLib.Error? e) {
-       GLib.Test.message ("An error occured: domain: %s, message: %s", e.domain.to_string (), e.message);
+       GLib.Test.message (@"An error occured: domain: $(e.domain), message: $(e.message)");
        GLib.Test.fail ();
     }
   });
@@ -103,7 +102,7 @@ test_value_token () {
         
         root_t.evaluate (ctx);
         
-        long out_val = root_t.result_value.number;
+        int64 out_val = root_t.result_value.number;
         
         if (out_val != i) {
           GLib.Test.message ("The values do not match");

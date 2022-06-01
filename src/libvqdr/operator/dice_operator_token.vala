@@ -23,7 +23,7 @@ using Utils;
 namespace VQDR.Expression {
   public class DiceOperatorToken : OperatorToken, UnaryOperator {
     
-    public DiceOperatorToken (int position) {
+    public DiceOperatorToken (int32 position) {
       base (position);
     }
     
@@ -32,16 +32,16 @@ namespace VQDR.Expression {
     public override void evaluate_self (Context instance) throws GLib.Error {
       Dice dice;
       
-      int l_result;
-      long l_max_result;
-      long l_min_result;
+      int32 l_result;
+      int64 l_max_result;
+      int64 l_min_result;
       
       var r_child = get_left_child ();
       var l_child = get_right_child ();
       
       if (! is_unary) {
         l_child.evaluate (instance);
-        l_result = (int) l_child.result_value.number;
+        l_result = (int32) l_child.result_value.number;
         l_max_result = l_child.result_max_value.number;
         l_min_result = l_child.result_min_value.number;
       } else {
@@ -54,7 +54,7 @@ namespace VQDR.Expression {
         l_min_result =  1;
       }
       
-      dice = new Dice (l_result, (int) r_child.result_value.number);
+      dice = new Dice (l_result, (int32) r_child.result_value.number);
       result_value = FastNumber (dice.roll ());
       
       /*Max Result: The max of the dice faces multiplied my the max of the dice

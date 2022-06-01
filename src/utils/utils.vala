@@ -48,7 +48,7 @@ namespace Utils {
   [CCode (cname = "v_internal_object_to_string")]
   internal unowned StringBuilder internal_object_to_string (GLib.Object obj,
                                                   ref StringBuilder str_builder,
-                                                  int nesting = 0) {
+                                                  int32 nesting = 0) {
     GLib.ObjectClass obj_class = (GLib.ObjectClass) obj.get_type ().class_ref ();
     
     for (var i = 0; i < nesting; i++) {

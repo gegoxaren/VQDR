@@ -2,13 +2,13 @@ using VQDR.Expression;
 using Utils;
 
 public class VQDR.Expression.RollAndKeepFunctionToken : FunctionToken {
-  private const int INDEX_ROLL = 1;
-  private const int INDEX_POOL = 1;
-  private const int INDEX_KEEP = 2;
+  private const int32 INDEX_ROLL = 1;
+  private const int32 INDEX_POOL = 1;
+  private const int32 INDEX_KEEP = 2;
 
-  private const int MAX_POOL_SIZE = 50;
+  private const int32 MAX_POOL_SIZE = 50;
 
-  private long[] roll_values  = null; // = new long[MAX_POOL_SIZE];
+  private int64[] roll_values  = null; // = new long[MAX_POOL_SIZE];
   private bool[] valid_values = null; // = new bool[MAX_POOL_SIZE];
 
   construct {
@@ -18,8 +18,8 @@ public class VQDR.Expression.RollAndKeepFunctionToken : FunctionToken {
 
   protected override void evaluate_self (VQDR.Expression.Context instance) throws GLib.Error {
     Token? roll;
-    long  pool_size;
-    long keep_size;
+    int64  pool_size;
+    int64 keep_size;
     
     roll = get_child (INDEX_ROLL);
     try {
@@ -56,16 +56,16 @@ public class VQDR.Expression.RollAndKeepFunctionToken : FunctionToken {
 
     /* */
 
-    long roll_result;
-    long min_keep = long.MAX;
-    int min_keep_index = 0;
+    int64 roll_result;
+    int64 min_keep = int64.MAX;
+    int32 min_keep_index = 0;
     
     if (roll_values == null || roll_values.length < pool_size) {
-      roll_values  = new long[pool_size];
+      roll_values  = new int64[pool_size];
       valid_values = new bool[pool_size];
     }
 
-    for (int i = 0; i < pool_size; i++) {
+    for (int32 i = 0; i < pool_size; i++) {
       roll.evaluate (instance);
       roll_result = roll.result_value.raw_number;
       
@@ -85,10 +85,10 @@ public class VQDR.Expression.RollAndKeepFunctionToken : FunctionToken {
           valid_values[min_keep_index] = false;
 
           // Search for new Minimum value
-          min_keep = long.MAX;
+          min_keep = int64.MAX;
           min_keep_index = 0;
 
-          for (int j = 0; j <= i; j++) {
+          for (int32 j = 0; j <= i; j++) {
             if (valid_values[j]) {
               if (min_keep > roll_values[j]) {
                 min_keep = roll_values[j];
@@ -107,7 +107,7 @@ public class VQDR.Expression.RollAndKeepFunctionToken : FunctionToken {
     
     FastNumber tmp_fstnmbr;
 
-    for (int i = 0; i < pool_size; i++) {
+    for (int32 i = 0; i < pool_size; i++) {
       if (strbldr.len < MAX_TOKEN_STRING_LENGTH) {
         //we don't start with a seperator mark.
         if (i > 0) {

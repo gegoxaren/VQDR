@@ -18,9 +18,9 @@ namespace VQDR.Expression {
     }
     
     public void set_value (string name, 
-                           int min_val,
-                           int max_val,
-                           int current_val) {
+                           int32 min_val,
+                           int32 max_val,
+                           int32 current_val) {
       set_variable (name, Variable (min_val, max_val, current_val));
     }
     

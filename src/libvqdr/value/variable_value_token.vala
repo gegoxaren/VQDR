@@ -8,7 +8,7 @@ namespace VQDR.Expression {
       this.priority = Prio.VALUE;
     }
     
-    public VariableValueToken (string name, int position) {
+    public VariableValueToken (string name, int32 position) {
       base (position);
       this.name = name;
     }

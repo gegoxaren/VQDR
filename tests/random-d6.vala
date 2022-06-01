@@ -37,15 +37,15 @@ void d6_test () {
     
     Test.add_func ("/VQDR/Expression/Dice/d6/roll_count", () => {
       Dice d = new Dice ();
-      int count[7] = {0};
-      int rolls = 1000000;
+      int32 count[7] = {0};
+      int32 rolls = 1000000;
       for (size_t i = 0; i < rolls; i++) {
-        int r = d.roll ();
+        int32 r = d.roll ();
         
         count[r] += 1;
       }
-      int total = 0;
-      for (int i = 0; i < 6; i++) {
+      int32 total = 0;
+      for (int32 i = 0; i < 6; i++) {
         total += count[i];
       }
       
@@ -57,14 +57,14 @@ void d6_test () {
     
     Test.add_func ("/VQDR/Expression/Dice/d6/roll_probability", () => {
       Dice d = new Dice ();
-      int count[7] = {0};
-      int rolls = 1000000;
+      int32 count[7] = {0};
+      int32 rolls = 1000000;
       for (size_t i = 0; i < rolls; i++) {
-        int r = d.roll ();
+        int32 r = d.roll ();
         
         count[r] += 1;
       }
-      for (int i = 0; i < 6; i++) {
+      for (int32 i = 0; i < 6; i++) {
         print ("------------\n");
         print ("count for %d : %\n", i + 1, count[i] );
         double procentile = ((double )count[i] / rolls) * 100;

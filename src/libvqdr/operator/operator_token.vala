@@ -3,12 +3,12 @@ using Utils;
 namespace VQDR.Expression {
   public abstract class OperatorToken : Token {
     
-    protected OperatorToken (int position) {
+    protected OperatorToken (int32 position) {
       base (position);
     }
     
     public static OperatorToken? init_token (string name,
-                                             int position)
+                                             int32 position)
                                              throws ParseError {
       switch (name) {
         case "+": 

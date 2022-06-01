@@ -103,7 +103,7 @@ namespace VQDR.Expression {
     }
     private size_t expression_size = 0;
     private char cur_char = 0;
-    private int index = -1;
+    private int32 index = -1;
 
     private FastNumber result_value;
     private FastNumber result_max_value;
@@ -254,7 +254,7 @@ namespace VQDR.Expression {
     protected void add_node (Stack<Token> operand_stack, Token operator) throws Error {
       if (operator is FunctionToken) {
         FunctionToken funk = (FunctionToken) operator;
-        int param_num = funk.next_child_num;
+        int32 param_num = funk.next_child_num;
         for (var i = 0; i < param_num; i++) {
           Token param_child = operand_stack.pop ();
           funk.set_child (param_num - 1, param_child);

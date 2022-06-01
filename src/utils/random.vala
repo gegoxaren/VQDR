@@ -38,21 +38,21 @@ namespace Utils {
       return rand.double_range (begin, end);
     }
     
-    public int get_int () {
-      return (int) rand.next_int ();
+    public int32 get_int () {
+      return (int32) rand.next_int ();
     }
     
-    public int get_int_range (int begin, int end) {
+    public int32 get_int_range (int32 begin, int32 end) {
       return rand.int_range ((int32) begin, (int32) end);
     }
     
-    public void seed (int seed) {
+    public void seed (int32 seed) {
       rand.set_seed ((uint32) seed);
     }
     
     
     /* **** Static versions *** */
-    public static int get_static_int () {
+      public static int32 get_static_int () {
       Random r = Random.get_instance ();
       return r.get_int ();
     }
@@ -62,7 +62,7 @@ namespace Utils {
       return r.get_double ();
     }
     
-    public static int get_static_int_range (int begin, int end) {
+    public static int32 get_static_int_range (int32 begin, int32 end) {
       Random r = Random.get_instance ();
       return r.get_int_range (begin, end);
     }
