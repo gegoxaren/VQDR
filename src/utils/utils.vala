@@ -7,6 +7,7 @@
 namespace Utils {
   // int32 is missinng the abs method. This will have to do for the time being.
   // BUG: https://gitlab.gnome.org/GNOME/vala/-/issues/1328
+  [CCode (cname = "v_int32_abs")]
   static int32 int32_abs (int32 N) { return ((N < 0) ? ( -N ) : (N)); }
 
   [CCode (cname = "v_str_cmp")]
@@ -35,17 +36,28 @@ namespace Utils {
      return strbldr.str;
   }
 
-  string collect_string (string[] segments) {
-    if (segments.length == 0) {
+  [CCode (cname = "v_collect_string")]
+  string collect_string (string[] segments, string? separator = null) {
+    var _len = segments.length;
+    if (_len == 0) {
       return "";
     }
-    if (segments.length == 1) {
+    if (_len == 1) {
       return segments[0];
     }
     StringBuilder strbldr = new StringBuilder ();
-    foreach (var segment in segments) {
-      strbldr.append (segment);
-    }
+    if (separator != null) {
+      for (var i = 0; i <= _len; i++) {
+        strbldr.append (segments[i]);
+        if (i < _len) {
+          strbldr.append (separator);
+        }
+      }
+    } else {
+      for (var i = 0; i <= _len; i++) {
+        strbldr.append (segments[i]);
+      }
+    } 
     return strbldr.str;
   }
 
@@ -90,9 +102,6 @@ namespace Utils {
                  .append (prop_name)
                  .append (":");
 
-
-      
-      
       switch (prop_val.type ()) {
         case (GLib.Type.STRING):
           if (prop_val.dup_string () == null) {
