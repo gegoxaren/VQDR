@@ -1,7 +1,7 @@
 using Gee;
 
 using VQDR.Expression;
-using Utils;
+using Vee;
 
 namespace VQDR.Expression {
   public abstract class FunctionToken : Token {

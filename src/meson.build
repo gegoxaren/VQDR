@@ -1,6 +1,6 @@
 source_files = []
 
-subdir ('utils')
+subdir ('libvee')
 
 subdir ('libvqdr')
 

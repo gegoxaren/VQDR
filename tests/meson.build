@@ -16,6 +16,6 @@ test ('Test Suite 1', test1)
 
 subdir ('tokens')
 
-subdir ('utils')
+subdir ('libvee')
 
 subdir_done ()

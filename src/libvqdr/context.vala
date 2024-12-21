@@ -1,5 +1,5 @@
 using Gee;
-using Utils;
+using Vee;
 
 namespace VQDR.Expression {
   /**
@@ -14,7 +14,7 @@ namespace VQDR.Expression {
     construct {
       changed = false;
       values = new Gee.TreeMap<string, Variable?>
-                              (Utils.str_cmp, null);
+                              (Vee.str_cmp, null);
     }
     
     public Context () {

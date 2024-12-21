@@ -3,38 +3,37 @@
  *
  * Created by Gustav Hartivgsson.
  */
-[CCode (cname = "V", cprefix = "v_")]
-namespace Utils {
-  [CCode (cname = "VFreeFunc")]
+
+namespace Vee {
   public delegate void FreeFunc (void * ptr);
 
-  [CCode (cname = "v_str_cmp")]
+
   public int str_cmp (string a, string b) {
     return a.collate (b);
   }
   
-  [CCode (cname = "v_print_ln")]
+
   public void print_ln (string str, ...) {
     var va = va_list ();
     var tmp = str + "\n";
     stdout.vprintf (tmp, va);
   }
 
-  [CCode (cname = "v_err_print_ln")]
+
   public void err_print_ln (string str, ...) {
     var va = va_list ();
     var tmp = str + "\n";
     stderr.vprintf (tmp, va);
   }
 
-  [CCode (cname = "v_object_to_string")]
+
   public string object_to_string (GLib.Object obj) {
      StringBuilder strbldr = new StringBuilder ();
      internal_object_to_string (obj, ref strbldr);
      return strbldr.str;
   }
 
-  [CCode (cname = "v_collect_string")]
+
   string collect_string (string[] segments, string? separator = null) {
     var _len = segments.length;
     if (_len == 0) {
@@ -59,7 +58,7 @@ namespace Utils {
     return strbldr.str;
   }
 
-  [CCode (cname = "v_internal_object_to_string")]
+
   internal unowned StringBuilder internal_object_to_string (GLib.Object obj,
                                                   ref StringBuilder str_builder,
                                                   int32 nesting = 0) {

@@ -56,7 +56,7 @@ public class VQDR.Expression.Dice {
     
     uint32 retval = modifier;
     for (size_t i = 1; i <= times; i++) {
-      uint32 r = Utils.Random.get_static_int () % faces;
+      uint32 r = Vee.Random.get_static_int () % faces;
       
       retval += r;
     }

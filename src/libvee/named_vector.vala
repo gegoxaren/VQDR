@@ -3,9 +3,8 @@
  *
  * Created by Gustav Hartivgsson.
  */
-[CCode (cname = "V", cprefix = "v_")]
-namespace Utils {
-  [CCode (cname = "VNamedVector", cprefix = "v_named_vector_")]
+
+namespace Vee {
   [Compact]
   public class NamedVector<T> {
     public T[] values;

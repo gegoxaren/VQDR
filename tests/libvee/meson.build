@@ -1,4 +1,4 @@
-util_test_files = files ([
+libvee_test_files = files ([
   'prefixes.vala',
   'fast_number.vala',
   #'gobject_to_string.vala',
@@ -8,8 +8,8 @@ util_test_files = files ([
   'named_vector.vala',
 ])
 
-utils_test_runnner = executable ('utils_test_runnner',
-                     util_test_files,
+libvee_test_runnner = executable ('libvee_test_runnner',
+                     libvee_test_files,
                      dependencies: [test_dependencies, libvqdr_dep])
 
-test ('Utils Tests', utils_test_runnner)
+test ('LibVee Tests', libvee_test_runnner)

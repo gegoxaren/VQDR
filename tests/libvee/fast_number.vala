@@ -1,10 +1,9 @@
 using GLib;
 
-using Utils;
-using VQDR.Expression;
+using Vee;
 
 void fast_number_test () {
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "new/raw", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "new/raw", () => {
     FastNumber f1;
     
     
@@ -47,7 +46,7 @@ void fast_number_test () {
     
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "add", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "add", () => {
     var expected_val = 2670;
     var f1 = FastNumber (1337);
     var f2 = FastNumber (1333);
@@ -59,7 +58,7 @@ void fast_number_test () {
       Test.message (@"Expected: $expected_val, got: $out_num.");
     }
   });
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "subtract", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "subtract", () => {
     var expected_val = 4;
     var f1 = FastNumber (1337);
     var f2 = FastNumber (1333);
@@ -68,51 +67,51 @@ void fast_number_test () {
     if (out_val != 4) {
       Test.fail ();
       Test.message ("The subtracted numbers do not match the expected value");
-      Test.message (@"Expeted: $expected_val, got: $out_val.");
+      Test.message (@"Experted: $expected_val, got: $out_val.");
     }
   });
 
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "divide", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "divide", () => {
     var expected_val = 669;
     var f1 = FastNumber (1338);
     var f2 = FastNumber (2);
     FastNumber f3 = {0};
     try {
       f3 = f1.divide (f2);
-      Utils.print_ln ("f3.number: %i", f3.number);
+      Vee.print_ln ("f3.number: %i", f3.number);
     } catch (Error e) {
-      Utils.print_ln ("Error: %s\n", e.message);
+      Vee.print_ln ("Error: %s\n", e.message);
     }
     var out_val = f3.number;
     if (out_val != expected_val) {
       Test.fail ();
       Test.message ("The added numbers do not match the expected value");
-      Test.message (@"Expeted: $expected_val, got: $out_val.");
+      Test.message (@"Experted: $expected_val, got: $out_val.");
       Test.message (@"Raw value: $(f3.raw_number)");
     }
   });
 
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "divide2", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "divide2", () => {
     var expected_val = 4;
     var f1 = FastNumber (4444);
     var f2 = FastNumber (1111);
     FastNumber f3 = {0};
     try {
       f3 = f1.divide (f2);
-      Utils.print_ln ("f3.number: %i", f3.number);
+      Vee.print_ln ("f3.number: %i", f3.number);
     } catch (Error e) {
-      Utils.print_ln ("Error: %s\n", e.message);
+      Vee.print_ln ("Error: %s\n", e.message);
     }
     var out_val = f3.number;
     if (out_val != expected_val) {
       Test.fail ();
       Test.message ("The added numbers do not match the expected value");
-      Test.message (@"Expeted: $expected_val, got: $out_val.");
+      Test.message (@"Experted: $expected_val, got: $out_val.");
       Test.message (@"Raw value: $(f3.raw_number)");
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "multiply", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "multiply", () => {
     var expected_val = 4444;
     var f1 = FastNumber (1111);
     var f2 = FastNumber (4);
@@ -120,21 +119,21 @@ void fast_number_test () {
     var out_val = f3.number;
     if (out_val != expected_val) {
       Test.fail ();
-      Test.message ("The multiplied numbers does not match the exected value.");
+      Test.message ("The multiplied numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $out_val");
     }
   });
   
   
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number1", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number1", () => {
     var expected_val = 1000;
     var val = FastNumber.from_string ("1");
     
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $val");
     }
     
@@ -143,14 +142,14 @@ void fast_number_test () {
     
       if ((expected_val * i) != val.raw_number) {
         Test.fail ();
-        Test.message ("The raw numbers does not match the exected value.");
+        Test.message ("The raw numbers does not match the expected value.");
         Test.message (@"expected $expected_val, got $raw");
       }
     }
     
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "to_string1", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "to_string1", () => {
     var expected = "7.999";
     var f1 = FastNumber.from_string (expected);
     var result = f1.to_string (true);
@@ -179,14 +178,14 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number2", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number2", () => {
     var expected_val = 1128;
     var val = FastNumber.from_string ("1.128");
     
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $val");
     }
     
@@ -196,7 +195,7 @@ void fast_number_test () {
     raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $val");
     }
     
@@ -206,7 +205,7 @@ void fast_number_test () {
     raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $val");
     }
     
@@ -214,79 +213,79 @@ void fast_number_test () {
   
   
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number3", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number3", () => {
     var expected_val = 15128;
     var val = FastNumber.from_string ("15.128");
     
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $val");
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number4", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number4", () => {
     var expected_val = 20128;
     var val = FastNumber.from_string ("20.128");
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $val");
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number5", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number5", () => {
     var expected_val = 222128;
     var val = FastNumber.from_string ("222.128");
     
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $val");
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number6", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number6", () => {
     var expected_val = 128;
     var val = FastNumber.from_string ("0.128");
     
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $raw");
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number7", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number7", () => {
     var expected_val = 160;
     var val = FastNumber.from_string ("0.16");
     
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $raw");
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "parse_raw_number8", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "parse_raw_number8", () => {
     var expected_val = 800;
     var val = FastNumber.from_string ("0.8");
     
     var raw = val.raw_number;
     if (expected_val != raw) {
       Test.fail ();
-      Test.message ("The raw numbers does not match the exected value.");
+      Test.message ("The raw numbers does not match the expected value.");
       Test.message (@"expected $expected_val, got $raw");
     }
   });
   
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "float", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "float", () => {
     var expected_val = 10.128;
     var f1 = FastNumber.from_float (expected_val);
     var flt = f1.to_float ();
@@ -298,7 +297,7 @@ void fast_number_test () {
     }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "divide/decimal1", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "divide/decimal1", () => {
       var expected_val = FastNumber.from_string ("1.5");
       var f1 = FastNumber (3);
       var f2 = FastNumber (2);
@@ -315,12 +314,12 @@ void fast_number_test () {
         var raw_expected = expected_val.raw_number;
         var raw_got = out_val.raw_number;
         Test.message ("Expected value did not match the got value");
-        Test.message (@"Exected internal value: $raw_expected,\n" +
-                      @"Internel value got: $raw_got .");
+        Test.message (@"Expected internal value: $raw_expected,\n" +
+                      @"Internal value got: $raw_got .");
       }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "divide/decimal2", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "divide/decimal2", () => {
       var expected_val = FastNumber.from_string ("0.25");
       var f1 = FastNumber (1);
       var f2 = FastNumber (4);
@@ -337,12 +336,12 @@ void fast_number_test () {
         var raw_expected = expected_val.raw_number;
         var raw_got = out_val.raw_number;
         Test.message ("Expected value did not match the got value");
-        Test.message (@"Exected internal value: $raw_expected,\n" +
-                      @"Internel value got: $raw_got .");
+        Test.message (@"Expected internal value: $raw_expected,\n" +
+                      @"Internal value got: $raw_got .");
       }
   });
   
-  Test.add_func (UTIL_TEST_FAST_NUMBER_PREFIX + "divide/decimal3", () => {
+  Test.add_func (VEE_TEST_FAST_NUMBER_PREFIX + "divide/decimal3", () => {
       var expected_val = FastNumber.from_string ("0.09");
       var f1 = FastNumber (1);
       var f2 = FastNumber (11);
@@ -359,8 +358,8 @@ void fast_number_test () {
         var raw_expected = expected_val.raw_number;
         var raw_got = out_val.raw_number;
         Test.message ("Expected value did not match the got value");
-        Test.message (@"Exected internal value: $raw_expected,\n" +
-                      @"Internel value got: $raw_got .");
+        Test.message (@"Expected internal value: $raw_expected,\n" +
+                      @"Internal value got: $raw_got .");
       }
   });
   

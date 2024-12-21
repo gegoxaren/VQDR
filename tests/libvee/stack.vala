@@ -1,8 +1,8 @@
-using Utils;
+using Vee;
 using GLib;
 
 void stack_test () {
-  Test.add_func (UTIL_TEST_STACK_PREFIX + "new", () => {
+  Test.add_func (VEE_TEST_STACK_PREFIX + "new", () => {
     var stk = new Stack<int> ();
     if (stk == null) {
       Test.fail ();
@@ -17,7 +17,7 @@ void stack_test () {
     
   });
 
-  Test.add_func (UTIL_TEST_STACK_PREFIX + "push_pop", () => {
+  Test.add_func (VEE_TEST_STACK_PREFIX + "push_pop", () => {
     var stk = new Stack<int> ();
     stk.push (1337);
     if (stk.is_empty ()) {
@@ -31,25 +31,25 @@ void stack_test () {
     if (stk.is_empty () == false) {
       Test.fail ();
       Test.message ("Stack reports that it's not empty," +
-                    " when it's only value has been poped.");
+                    " when it's only value has been popped.");
     }
     
   });
 
 
-  Test.add_func (UTIL_TEST_STACK_PREFIX + "value", () => {
+  Test.add_func (VEE_TEST_STACK_PREFIX + "value", () => {
     var stk = new Stack<int> ();
     
     stk.push (1337);
 
     if (stk.peek () != 1337) {
       Test.fail ();
-      Test.message ("Peeked value did not match exepcted value.");
+      Test.message ("Peeked value did not match expected value.");
     }
 
     if (stk.pop () != 1337) {
       Test.fail ();
-      Test.message ("Poped value does not match expected value.");
+      Test.message ("Popped value does not match expected value.");
     }
     
     foreach (var i in new Range (0, 10000) ) {
@@ -60,7 +60,7 @@ void stack_test () {
       int got_val = stk.pop ();
       if (i != got_val) {
          Test.fail ();
-         Test.message ("Wrong value: Expeted %i, get %i.",
+         Test.message ("Wrong value: Experted %i, get %i.",
                        i, got_val);
       }
     }

@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-using Utils;
+using Vee;
 
 namespace VQDR.Expression {
   public class DiceOperatorToken : OperatorToken, UnaryOperator {

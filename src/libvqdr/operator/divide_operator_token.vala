@@ -21,7 +21,7 @@ namespace VQDR.Expression {
       // Division by zero is not somthing we want to do.
       // Black holes are bad.
       if (l_child.result_value.number == 0) {
-        throw new Utils.MathError.DIVIDE_BY_ZERO
+        throw new Vee.MathError.DIVIDE_BY_ZERO
         ("(DivideOperationToken) The left value is zero.");
       }
       

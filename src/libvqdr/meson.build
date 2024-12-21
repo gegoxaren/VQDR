@@ -6,6 +6,7 @@ libvqdr_source_files += common_source_files
 libvqdr_source_files += files([
   'context.vala',
   'dice.vala',
+  'exceptions.vala',
   'root_token.vala',
   'token.vala',
   'variable.vala',

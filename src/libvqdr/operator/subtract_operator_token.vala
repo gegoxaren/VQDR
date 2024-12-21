@@ -35,7 +35,7 @@ namespace VQDR.Expression {
           sb.append ("both left and right ");
         }
         sb.append ("tokens.");
-        throw new Utils.EvaluationError.MISSING_TOKEN (sb.str);
+        throw new EvaluationError.MISSING_TOKEN (sb.str);
       }
       
       if (is_unary) {

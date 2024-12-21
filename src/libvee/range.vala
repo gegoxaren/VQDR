@@ -3,9 +3,8 @@
  *
  * Created by Gustav Hartivgsson.
  */
-[CCode (cname = "V", cprefix = "v_")]
-namespace Utils {
-  [CCode (cname = "VRangeIterator", cprefix = "v_range_iterator_")]
+
+namespace Vee {
   public class RangeIterator {
     private Range range;
     private int32 current;
@@ -36,7 +35,6 @@ namespace Utils {
     }
   }
 
-  [CCode (cname = "VRange", cprefix = "v_range_")]
   public class Range {
     public bool reverse {get; private set;}
     public int32 start {get; private set;}

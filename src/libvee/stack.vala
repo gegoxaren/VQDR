@@ -3,9 +3,8 @@
  *
  * Created by Gustav Hartivgsson.
  */
-[CCode (cname = "V", cprefix = "v_")]
-namespace Utils {
-  [CCode (cname = "VStack", cprefix = "v_stack_")]
+
+namespace Vee {
   public class Stack <T> {
     private static int32 step_size = 11;
     private T[] stack;
@@ -13,7 +12,7 @@ namespace Utils {
     public size_t elements {get {return pntr + 1;}}
     private size_t size;
     
-    [CCode (has_target = true)]
+    
     public delegate bool ForEachFunc<V> (V item);
 
     public Stack (size_t size = 23) {

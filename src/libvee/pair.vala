@@ -3,9 +3,8 @@
  *
  * Created by Gustav Hartivgsson.
  */
-[CCode (cname = "V", cprefix = "v_")]
-namespace  Utils {
-  [CCode (cname = "VPair", cprefix = "v_pair_")]
+
+namespace  Vee {
   [Compact]
   public class Pair<T1, T2> {
     public T1 v1;
@@ -17,7 +16,7 @@ namespace  Utils {
       this.v1 = v1;
       this.v2 = v2;
     }
-    [CCode (cname = "v_pair_new_with_free_func")]
+    
     public Pair.with_free_func (T1 v1, T2 v2,
                                FreeFunc v1_free_func,
                                FreeFunc v2_free_func) {
@@ -27,7 +26,7 @@ namespace  Utils {
       this.v2_free_func = v2_free_func;
     }
     
-    [CCode (cname = "v_pair_destroy")]
+    
     ~Pair () {
       if (this.v1_free_func != null) {
         this.v1_free_func (v1);

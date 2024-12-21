@@ -4,8 +4,8 @@
  * Created by Gustav Hartivgsson.
  */
 using GLib;
-[CCode (cname = "V", cprefix = "v_")]
-namespace Utils {
+
+namespace Vee {
   
   /**
    * Fast Numbers are a decimal representation of numbers in the form of
@@ -24,8 +24,13 @@ namespace Utils {
    * }}}
    *
    */
-  [CCode (cname = "VFastNumber", cprefix = "v_fast_number_")]
+  
+  public errordomain MathError {
+    DIVIDE_BY_ZERO;
+  }
+  
   public struct FastNumber {
+    
     
     /** Precision used to output values */
     public const int32 PRECISION_DIGITS = 2;
@@ -62,7 +67,7 @@ namespace Utils {
      * 
      * @param decimal  The decimal part of the number. Defaults to 0.
      */
-    [CCode (cname = "v_fast_number_new")]
+    
     public FastNumber (int64 number = 0) {
       if (number != 0) {
         this.raw_number = (number * MUL_FACTOR);
@@ -74,7 +79,7 @@ namespace Utils {
     /**
      * Do a deep copy of a FastNumber.
      */
-    [CCode (cname = "v_fast_number_copy")]
+    
     public FastNumber.copy (FastNumber other) {
       this.raw_number = other.raw_number;
     }
@@ -84,19 +89,19 @@ namespace Utils {
      * 
      * Can be a decimal representation.
      */
-    [CCode (cname = "v_fast_number_new_from_string")]
+    
     public FastNumber.from_string (string str) {
       parse_raw_number (str);
     }
     /**
      * Initialises a FastNumber with the internal representation of that number.
      */
-    [CCode (cname = "v_fast_number_new_raw")]
+    
     public FastNumber.raw (int64 raw) {
       this.raw_number = raw;
     }
     
-    [CCode (cname = "v_fast_number_new_from_float")]
+    
     public FastNumber.from_float (double float_number) {
       // XXX Do we need a faster way of doing this?
       parse_raw_number (float_number.to_string ()); 
@@ -115,7 +120,7 @@ namespace Utils {
      * 
      * @param other The other fast number you want to add to this value.
      */
-    [CCode (cname = "v_fast_number_add")]
+    
     public FastNumber add (FastNumber? other) {
       if (other == null) {
         return  FastNumber.copy (this);
@@ -140,7 +145,7 @@ namespace Utils {
      * @param other  The other fast number you want to subtract from this 
      *               FastNumber.
      */
-    [CCode (cname = "v_fast_number_subtract")]
+    
     public FastNumber subtract (FastNumber? other) {
       if (other == null) {
         return  FastNumber.copy (this);
@@ -164,7 +169,7 @@ namespace Utils {
      * 
      * @param other The value you want to multiply this value with.
      */
-    [CCode (cname = "v_fast_number_multiply")]
+    
     public FastNumber multiply (FastNumber? other) {
       if (other == null || other.raw_number == 0 || this.raw_number == 0) {
         return  FastNumber ();
@@ -188,7 +193,7 @@ namespace Utils {
      * 
      * @param other The value you want to multiply this value with.
      */
-    [CCode (cname = "v_fast_number_divide")]
+    
     public FastNumber divide (FastNumber other) throws MathError {
       if (other.raw_number == 0) {
         throw new MathError.DIVIDE_BY_ZERO ("trying to divide by zero");
@@ -198,7 +203,7 @@ namespace Utils {
       return ret;
     }
     
-    [CCode (cname = "v_fast_number_compare")]
+    
     public int64 compare (FastNumber other) {
       return this.raw_number - other.raw_number;
     }
@@ -208,7 +213,7 @@ namespace Utils {
      * 
      * @return a rounded up FastNumber.
      */
-    [CCode (cname = "v_fast_number_round_up")]
+    
     public FastNumber round_up () {
       FastNumber ret;
       int64 decimal = raw_number % PRECISION_FACTOR;
@@ -245,7 +250,7 @@ namespace Utils {
      * @param decimal whether to return the decimal portion of the number in 
      *                the string. Default = false.
      */
-    [CCode (cname = "v_fast_number_to_string")]
+    
     public string to_string (bool decimal = false) {
       string ret_val = null;
       if (!decimal) {
@@ -282,13 +287,13 @@ namespace Utils {
       return ret_val;
     }
     
-    [CCode (cname = "v_fast_number_to_float")]
+    
     public double to_float () {
       // XXX This probobly needs to something faster?
       return double.parse (this.to_string (true));
     }
     
-    [CCode (cname = "v_fast_number_to_int")]
+    
     public int64 to_int () {
        return (this.raw_number / MUL_FACTOR);
     }
@@ -304,10 +309,10 @@ namespace Utils {
     }
     
     
-    [CCode (cname = "v_fast_number_compare")]
+    
     public static extern int64 static_compare (FastNumber a, FastNumber b);
     
-    [CCode (cname = "v_fast_number_private_parse_raw")]
+    
     private void parse_raw_number (string str) {
       //debug (@"(parse_raw_number) str: $str");
       int64 ret_val = 0;
@@ -354,3 +359,4 @@ namespace Utils {
     }
   }
 }
+
