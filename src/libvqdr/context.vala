@@ -2,7 +2,10 @@ using Gee;
 using Utils;
 
 namespace VQDR.Expression {
-  
+  /**
+   * This is just a glorified key-value store. It is only used to provide
+   * a mapping between variable-names and a Variable instance.
+   */
   public class Context : GLib.Object{
     private bool changed;
     private Gee.TreeMap<string, Variable?> values;
@@ -25,10 +28,10 @@ namespace VQDR.Expression {
     }
     
     public Variable get_variable (string name) throws ArgError {
-    throw_name (name);
-    return values.@get (name.down ());
+      throw_name (name);
+      return values.@get (name.down ());
     }
-    
+
     public void set_variable (string name, Variable? variable) {
       string new_name = name.down ();
       

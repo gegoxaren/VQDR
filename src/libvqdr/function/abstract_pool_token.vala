@@ -1,7 +1,7 @@
 using VQDR.Expression;
 
 public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
-  protected static Dice stadard_dice = new Dice.singel (10);
+  protected static Dice stadard_dice = new Dice.single (10);
 
   protected AbstractPoolToken () {
     base ();
@@ -108,12 +108,12 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
   }
 
   /**
-   * Used to initalize a specific values.
+   * Used to initialize a specific values.
    */
   protected abstract void init_sequence (Context instance);
 
   /**
-   * Return the pool size, or the number of rolls to performe.
+   * Return the pool size, or the number of rolls to perform.
    */
   protected abstract int32 get_pool_size (Context instance);
 
@@ -137,7 +137,7 @@ public abstract class VQDR.Expression.AbstractPoolToken : FunctionToken {
   protected abstract int32 count_successes (Context instance, int32 roll_result) throws GLib.Error;
 
   /**
-   * Used to evetually performe controls after the pool rolls.
+   * Used to evetually perform controls after the pool rolls.
    */
   protected virtual void end_sequence (Context instance) throws GLib.Error {
     // NOOP

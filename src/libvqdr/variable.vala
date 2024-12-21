@@ -30,7 +30,6 @@ namespace VQDR.Expression {
         return this.min_val.compare (other.min_val);
       }
       return 0;
-      
     }
     
     /**

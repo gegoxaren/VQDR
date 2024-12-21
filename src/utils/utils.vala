@@ -5,10 +5,8 @@
  */
 [CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
-  // int32 is missinng the abs method. This will have to do for the time being.
-  // BUG: https://gitlab.gnome.org/GNOME/vala/-/issues/1328
-  [CCode (cname = "v_int32_abs")]
-  static int32 int32_abs (int32 N) { return ((N < 0) ? ( -N ) : (N)); }
+  [CCode (cname = "VFreeFunc")]
+  public delegate void FreeFunc (void * ptr);
 
   [CCode (cname = "v_str_cmp")]
   public int str_cmp (string a, string b) {

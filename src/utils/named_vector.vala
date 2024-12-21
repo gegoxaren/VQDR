@@ -6,6 +6,7 @@
 [CCode (cname = "V", cprefix = "v_")]
 namespace Utils {
   [CCode (cname = "VNamedVector", cprefix = "v_named_vector_")]
+  [Compact]
   public class NamedVector<T> {
     public T[] values;
     public string[] names;
@@ -25,7 +26,8 @@ namespace Utils {
       size_t i = 1;
 
       while (tmp_name != null && tmp_val != null) {
-        T_buf[i] = tmp_val; N_buf[i] = tmp_name;
+        T_buf[i] = tmp_val;
+        N_buf[i] = tmp_name;
         i++;
         tmp_name = list.arg<string?> ();
         tmp_val = list.arg<T?> ();

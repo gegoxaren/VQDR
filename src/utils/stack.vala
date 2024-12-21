@@ -32,7 +32,7 @@ namespace Utils {
 
     public T pop () {
       if (this.pntr < 0) {
-        info ("Tryinng to pop value from empty Stack:\n" +
+        info ("Trying to pop value from empty Stack:\n" +
                  "\treturning NULL.");
         return null;
       }

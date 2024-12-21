@@ -35,7 +35,7 @@ public class VQDR.Expression.Dice {
     this.modifier = modifier;
   }
   
-  public Dice.singel (int32 faces) {
+  public Dice.single (int32 faces) {
     this.times = 1;
     this.faces = faces;
     this.modifier = 0;

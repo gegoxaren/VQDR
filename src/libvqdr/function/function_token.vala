@@ -85,7 +85,7 @@ namespace VQDR.Expression {
     
     
     /**
-     * Ititialise the right functon token by it's name.
+     * Initialise the right function token by it's name.
      * 
      * @param token Token of the Function.
      * @param position Token position.
@@ -94,7 +94,7 @@ namespace VQDR.Expression {
     public static FunctionToken? init_token (string token, int32 position) {
       
       if (_allowed_functions == null) {
-        // Intialise the HashMap if it is not created.
+        // Initialise the HashMap if it is not created.
         _allowed_functions = new Gee.HashMap<string, Type?> ();
         
         Entry[] entries = {

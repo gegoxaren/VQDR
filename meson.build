@@ -5,7 +5,8 @@ project('vqdr', ['c', 'vala'],
                      'c_std=c11',
                    ],
 )
-cc = meson.get_compiler('c')
+cc = meson.get_compiler ('c')
+valac = meson.get_compiler ('vala')
 
 conf = configuration_data()
 
@@ -18,8 +19,17 @@ gobject_dep = dependency ('gobject-2.0', required : true)
 gee_dep = dependency ('gee-0.8', required : true)
 gio_dep = dependency ('gio-2.0', required : true)
 gmodule_dep = dependency ('gmodule-2.0', required : true)
+posix_dep = valac.find_library ('posix', required : true)
 m_dep = cc.find_library('m', required : true)
-dependencies += [glib_dep, gobject_dep, gee_dep, gio_dep, gmodule_dep, m_dep]
+
+dependencies += [
+  glib_dep,
+  gobject_dep,
+  gee_dep,
+  gio_dep,
+  gmodule_dep,
+  posix_dep,
+  m_dep]
 
 subdir('src')
 
