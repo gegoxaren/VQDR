@@ -108,7 +108,7 @@ HACKING (DEVELOPMENT GUIDELINES)
       _NUM_VAL;
 
       public string to_string () {
-        static_assert (Clowns._NUM_VAL = 4 + 1);
+        static_assert (Clowns._NUM_VAL == 4 + 1);
         switch (this) {
           case (BENNY):
             return "BENNY";
