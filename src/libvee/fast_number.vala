@@ -314,7 +314,6 @@ namespace Vee {
     
     
     private void parse_raw_number (string str) {
-      //debug (@"(parse_raw_number) str: $str");
       int64 ret_val = 0;
       int i_of_dot = str.index_of_char ('.');
       if (i_of_dot >= 0) {
@@ -328,24 +327,19 @@ namespace Vee {
           this.leading_zeros = i;
           // remove leading zeros
           intr_str = intr_str.substring (i);
-          //debug (@"(parse_raw_number) Intermediate string: $intr_str");
+          
           ret_val = int64.parse (intr_str);
         }
-        
-        // debug (@"(parse_raw_number) i_of_dot: $i_of_dot, ret_val (decimal): $ret_val\n");
         
         // Normalise the digits.
         while (ret_val > MUL_FACTOR) {
           ret_val = ret_val / 10;
-          // debug (@"(parse_raw_number) retval (loop): $ret_val");
         }
         
         for (var i = leading_zeros; i > 0; i--) {
           ret_val = ret_val / 10;
-          // debug (@"(parse_raw_number) retval (loop2): $ret_val");
         }
         
-        // debug (@"ret_val (normalised): $ret_val\n");
         
         // get integer number
         ret_val = ret_val + (int64.parse (str.substring (0, i_of_dot))
@@ -354,7 +348,6 @@ namespace Vee {
       } else {
         ret_val = (int64.parse (str) * MUL_FACTOR);
       }
-      //debug (@"(parse_raw_number) ret_val (finished): $ret_val\n");
       this.raw_number = ret_val;
     }
   }

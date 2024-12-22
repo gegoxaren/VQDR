@@ -38,6 +38,7 @@ libvee_dependencies += [
   glib_dep,
   gobject_dep,
   posix_dep,
+  m_dep,
 ]
 
 subdir('src')
@@ -46,9 +47,10 @@ libvee = library ('vee',
                   libvee_source_files,
                   vala_header: 'libvee.h',
                   vala_vapi: 'libvee-0.1.vapi',
+                  vala_gir: 'libvee-0.1.gir',
                   dependencies: libvee_dependencies,
                   install: true,
-                  install_dir: [true, true, true])
+                  install_dir: [true, true, true, true])
 
 libvee_dep = declare_dependency (link_with: libvee,
                                 include_directories : include_directories('.'))
@@ -60,10 +62,11 @@ libvqdr = library ('vqdr',
                    libvqdr_source_files,
                    link_with : libvee,
                    vala_header: 'libvqdr.h',
+                   vala_gir: 'libvqdr-0.1.gir',
                    vala_vapi: 'libvqdr-0.1.vapi',
                    dependencies: libvqdr_dependencies,
                    install: true,
-                   install_dir: [true, true, true])
+                   install_dir: [true, true, true, true])
 
 
 libvqdr_dep = declare_dependency(link_with : libvqdr,
