@@ -1,6 +1,6 @@
-common_source_files = []
+libvee_source_files = []
 
-common_source_files += files ([
+libvee_source_files += files ([
   'fast_number.vala',
   'logger.vala',
   'named_vector.vala',

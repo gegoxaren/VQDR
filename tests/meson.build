@@ -1,4 +1,4 @@
-test_dependencies = dependencies
+test_dependencies = libvqdr_dependencies
 
 
 test1_files = files ([

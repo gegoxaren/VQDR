@@ -1,8 +1,5 @@
 libvqdr_source_files = []
 
-#add src/common/ to the mix.
-libvqdr_source_files += common_source_files
-
 libvqdr_source_files += files([
   'context.vala',
   'dice.vala',

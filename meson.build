@@ -12,7 +12,8 @@ conf = configuration_data()
 
 add_project_arguments(['--abi-stability', '--vapi-comments'], language: 'vala')
 
-dependencies = []
+libvqdr_dependencies = []
+libvee_dependencies = []
 
 glib_dep = dependency ('glib-2.0', required : true)
 gobject_dep = dependency ('gobject-2.0', required : true)
@@ -22,35 +23,58 @@ gmodule_dep = dependency ('gmodule-2.0', required : true)
 posix_dep = valac.find_library ('posix', required : true)
 m_dep = cc.find_library('m', required : true)
 
-dependencies += [
+
+libvqdr_dependencies += [
   glib_dep,
   gobject_dep,
   gee_dep,
   gio_dep,
   gmodule_dep,
   posix_dep,
-  m_dep]
+  m_dep,
+]
+
+libvee_dependencies += [
+  glib_dep,
+  gobject_dep,
+  posix_dep,
+]
 
 subdir('src')
 
+libvee = library ('vee',
+                  libvee_source_files,
+                  vala_header: 'libvee.h',
+                  vala_vapi: 'libvee-0.1.vapi',
+                  dependencies: libvee_dependencies,
+                  install: true,
+                  install_dir: [true, true, true])
+
+libvee_dep = declare_dependency (link_with: libvee,
+                                include_directories : include_directories('.'))
+                                
+
+libvqdr_dependencies += libvee_dep
+
 libvqdr = library ('vqdr',
-                        libvqdr_source_files,
-                        vala_header: 'libvqdr.h',
-                        vala_vapi: 'libvqdr-0.1.vapi',
-                        dependencies: dependencies,
-                        install: true,
-                        install_dir: [true, true, true])
+                   libvqdr_source_files,
+                   link_with : libvee,
+                   vala_header: 'libvqdr.h',
+                   vala_vapi: 'libvqdr-0.1.vapi',
+                   dependencies: libvqdr_dependencies,
+                   install: true,
+                   install_dir: [true, true, true])
 
 
 libvqdr_dep = declare_dependency(link_with : libvqdr,
-                               dependencies: dependencies,
+                               dependencies: libvqdr_dependencies,
                                include_directories: include_directories('.'))
 
-vqdr_dependencies = dependencies
+
 vqdr_source_files = source_files + files (['src/main.vala'])
 vqdr = executable ('vqdr',
                    vqdr_source_files,
-                   dependencies: vqdr_dependencies,
+                   dependencies: libvqdr_dependencies,
                    link_with: libvqdr)
 
 
